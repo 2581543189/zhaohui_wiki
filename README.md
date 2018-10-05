@@ -8,8 +8,8 @@ English | [简体中文](./README_zh-CN.md)
 <img src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" width="30" hegiht="30"/>
 <img src="https://avatars2.githubusercontent.com/u/15833670?s=200&v=4" width="30" hegiht="30"/>
 </div>
-
-🌋 My first personal website.
+<br/>
+🌋 My first personal website. 
 
 > Not only a summary of previous learning achievements, But also a support for future learning plans.
 

@@ -8,8 +8,8 @@
 <img src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" width="30" hegiht="30"/>
 <img src="https://avatars2.githubusercontent.com/u/15833670?s=200&v=4" width="30" hegiht="30"/>
 </div>
-
-🌋 我的第一个个人主页。
+<br/>
+🌋 我的第一个个人主页。 
 
 >既是对之前学习成果的总结，也是对将来学习计划的支持。
 
