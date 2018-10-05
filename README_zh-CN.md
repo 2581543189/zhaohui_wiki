@@ -1,4 +1,4 @@
-English | [简体中文](./README_zh-CN.md)
+[English](./README.md) | 简体中文
 
 # zhaohui.wiki 
 
@@ -9,30 +9,30 @@ English | [简体中文](./README_zh-CN.md)
 <img src="https://avatars2.githubusercontent.com/u/15833670?s=200&v=4" width="30" hegiht="30"/>
 </div>
 <br/>
-🌋 My first personal website. 
+🌋 我的第一个个人主页。 
 
-> Not only a summary of previous learning achievements, But also a support for future learning plans.
+>既是对之前学习成果的总结，也是对将来学习计划的支持。
 
 ---
 
-## Catalog
+## 目录
 
-* 📦 **backend:** Using eggjs
-* 🏈 **frontend:** Using umijs and antd
-* 🎉 **nginx:**  Entrance of the Website
+* 📦 **backend:** 后端项目,使用eggjs
+* 🏈 **frontend:** 前端项目，使用umijs+antd
+* 🎉 **nginx:** 网站入口
 
-## Local Test
+## 本地测试
 
 ```bash
-# change the config
+#修改配置
 
-# start nginx
+# 启动nginx
 
-# start backend
+# 启动后台服务
 
-# start frontend
+# 启动前端项目
 
-# access the website via you brower
+# 访问浏览器测试
 
 ```
 
