@@ -1,0 +1,5 @@
+2018/10/05 18:59:00 [emerg] 12108#7276: "types" directive is not allowed here in D:\VSCode\zhaohui_wiki\nginx\windows/conf/mime.types:2
+2018/10/05 18:59:54 [emerg] 7980#13224: "types" directive is not allowed here in D:/VSCode/zhaohui_wiki/nginx/windows/conf/mime.types:2
+2018/10/05 19:30:20 [notice] 12900#8844: signal process started
+2018/10/06 00:15:26 [notice] 13148#11428: signal process started
+2018/10/06 00:15:26 [error] 13148#11428: CreateFile() "D:\VSCode\zhaohui_wiki\nginx\windows/logs/nginx.pid" failed (2: The system cannot find the file specified)
