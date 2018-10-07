@@ -20,7 +20,7 @@ export default {
         payload: response,
       });
       // Login successfully
-      if (response.status === 'ok') {
+      if (response.status === true) {
         reloadAuthorized();
         const urlParams = new URL(window.location.href);
         const params = getPageQuery();
@@ -37,7 +37,7 @@ export default {
             return;
           }
         }
-        yield put(routerRedux.replace(redirect || '/'));
+        yield put(routerRedux.replace(redirect || '/website'));
       }
     },
 
@@ -51,12 +51,13 @@ export default {
         payload: {
           status: false,
           currentAuthority: 'guest',
+          logout:true,
         },
       });
       reloadAuthorized();
       yield put(
         routerRedux.push({
-          pathname: '/user/login',
+          pathname: '/login/main',
           search: stringify({
             redirect: window.location.href,
           }),
@@ -67,11 +68,14 @@ export default {
 
   reducers: {
     changeLoginStatus(state, { payload }) {
+      if(typeof(payload.logout)=='undefined'){
+        payload.logout=false;
+      }
       setAuthority(payload.currentAuthority);
       return {
         ...state,
         status: payload.status,
-        type: payload.type,
+        logout: payload.logout,
       };
     },
   },

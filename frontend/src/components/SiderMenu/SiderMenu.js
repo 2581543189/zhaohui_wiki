@@ -108,9 +108,9 @@ export default class SiderMenu extends PureComponent {
         className={siderClassName}
       >
         <div className={styles.logo} id="logo">
-          <Link to="/">
-            {/*<img src={logo} alt="logo" />*/}
-             {/*<h1>个人主页</h1>*/}
+          <Link to="/website">
+            <img src={logo} alt="logo" />
+             <h1>Pokémon Go</h1>
           </Link>
         </div>
         <BaseMenu

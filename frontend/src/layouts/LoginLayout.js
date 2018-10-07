@@ -1,9 +1,32 @@
+import React, { Fragment } from 'react';
+import Link from 'umi/link';
 
-const LoginLayout = ()=>{
+import styles from './UserLayout.less';
+import logo from '../assets/logo.png';
 
-    return(
-        <div>LoginLayout</div>
-    )
+
+class UserLayout extends React.PureComponent {
+
+  render() {
+    const { children } = this.props;
+    return (
+      // @TODO <DocumentTitle title={this.getPageTitle()}>
+      <div className={styles.container}>
+        <div className={styles.content}>
+          <div className={styles.top}>
+            <div className={styles.header}>
+              <Link to="/">
+                <img alt="logo" className={styles.logo} src={logo} />
+                <span className={styles.title}>Pokémon</span>
+              </Link>
+            </div>
+            <div className={styles.desc}></div>
+          </div>
+          {children}
+        </div>
+      </div>
+    );
+  }
 }
 
-export default LoginLayout;
+export default UserLayout;

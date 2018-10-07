@@ -2,6 +2,7 @@
 
 export default {
   'navbar.lang': 'English',
+  'menu.account.logout': '退出登录',
   'menu.home': '首页',
   'menu.workbench': '工作台',
   'menu.workbench.overview': '总览',

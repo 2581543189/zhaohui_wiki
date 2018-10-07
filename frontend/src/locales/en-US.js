@@ -1,5 +1,6 @@
 export default {
   'navbar.lang': '中文',
+  'menu.account.logout': 'Logout',
   'menu.home': 'Home',
   'menu.workbench': 'Workbench',
   'menu.workbench.overview': 'Overview',

@@ -104,10 +104,27 @@ export async function updateFakeList(params) {
 }
 
 export async function fakeAccountLogin(params) {
-  return request('/api/login/account', {
-    method: 'POST',
-    body: params,
-  });
+  // return request('/api/login/account', {
+  //   method: 'POST',
+  //   body: params,
+  // });
+
+  if(params.username==='zhaohui' && params.password==='123456'){
+    return Promise.resolve({
+      status:'ok',
+      currentAuthority:'admin',
+      status: true,
+    });
+
+  }else{
+    return Promise.resolve( {
+      status:'ok',
+      currentAuthority:'user',
+      status: false,
+    });
+  }
+
+  
 }
 
 export async function fakeRegister(params) {
