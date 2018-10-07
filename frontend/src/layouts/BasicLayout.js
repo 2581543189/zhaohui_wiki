@@ -16,6 +16,7 @@ import logo from '../assets/logo.png';
 import Header from './Header';
 import Context from './MenuContext';
 import Exception403 from '../pages/Exception/403';
+import { getUsername } from '../utils/authority';
 
 const { Content } = Layout;
 
@@ -88,6 +89,10 @@ class BasicLayout extends React.PureComponent {
     const { dispatch } = this.props;
     dispatch({
       type: 'user/fetchCurrent',
+      payload:{
+        username:getUsername(),
+      }
+
     });
     dispatch({
       type: 'setting/getSetting',

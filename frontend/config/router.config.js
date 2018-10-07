@@ -19,7 +19,7 @@ export default [
     path: '/website',
     component: '../layouts/BasicLayout',
     Routes: ['src/pages/Authorized'],//umi会根据这个文件生成一个<switch><Router/>...</switch> 的结构 生成的时候调用React的createElement 方法 第一个参数是类型，默认是"react-router-dom".Route类型 配置了就用配置的类型.
-    authority: ['admin', 'user'],
+    authority: ['admin', 'user','guest'],
     routes: [
       // dashboard
       { path: '/website', redirect: '/website/workbench/overview' },

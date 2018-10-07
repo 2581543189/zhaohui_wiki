@@ -57,6 +57,7 @@ class Login extends Component {
   }
 }
 Login.Submit = LoginSubmit;
+
 Object.keys(LoginItem).forEach(item => {
   Login[item] = LoginItem[item];
 });

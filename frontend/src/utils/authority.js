@@ -2,6 +2,8 @@
 
 let _authority=[];
 
+let _userName="";
+
 export function getAuthority(str) {
   // // return localStorage.getItem('antd-pro-authority') || ['admin', 'user'];
   // const authorityString =
@@ -24,4 +26,12 @@ export function setAuthority(authority) {
   // const proAuthority = typeof authority === 'string' ? [authority] : authority;
   // return localStorage.setItem('antd-pro-authority', JSON.stringify(proAuthority));
   _authority = authority;
+}
+
+export function getUsername(){
+  return _userName;
+}
+
+export function setUsername(username){
+  _userName=username;
 }

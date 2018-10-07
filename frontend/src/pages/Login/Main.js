@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
-import Link from 'umi/link';
 import { Alert} from 'antd';
 import Login from '@/components/Login';
 import styles from './Login.less';
@@ -33,6 +32,16 @@ class LoginPage extends Component {
     <Alert style={{ marginBottom: 24 }} message={content} type="error" showIcon />
   );
 
+  guestLogin=()=>{
+    const { dispatch } = this.props;
+    dispatch({
+        type: 'login/login',
+        payload: {
+          guest:true,
+        },
+      });
+  }
+
     /**ref属性可以设置为一个回调函数，这也是官方强烈推荐的用法；这个函数执行的时机为：
 
     组件被挂载后，回调函数被立即执行，回调函数的参数为该组件的具体实例。
@@ -58,7 +67,7 @@ class LoginPage extends Component {
             placeholder="密码"
             onPressEnter={() => this.loginForm.validateFields(this.handleSubmit)}
         />
-          <Submit loading={submitting}>登录</Submit>
+          <Submit loading={submitting} guestlogin={this.guestLogin}>登录</Submit>
         </Login>
       </div>
     );
