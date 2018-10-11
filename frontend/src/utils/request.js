@@ -3,6 +3,7 @@ import { notification } from 'antd';
 import router from 'umi/router';
 import hash from 'hash.js';
 import { isAntdPro } from './utils';
+import {openNotification} from './utils';
 
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
@@ -26,6 +27,13 @@ const checkStatus = response => {
   if (response.status >= 200 && response.status < 300) {
     return response;
   }
+  if (response.status == 600) {//600说明服务要求前端展示一段文字说明
+    openNotification('error',response.text());
+    error.name = response.status;
+    error.response = response;
+    throw error;
+  }
+
   const errortext = codeMessage[response.status] || response.statusText;
   notification.error({
     message: `请求错误 ${response.status}: ${response.url}`,
@@ -121,7 +129,7 @@ export default function request(
   }
   return fetch(url, newOptions)
     .then(checkStatus)
-    .then(response => cachedSave(response, hashcode))
+    //.then(response => cachedSave(response, hashcode))
     .then(response => {
       // DELETE and 204 do not return data by default
       // using .json will report an error.
@@ -151,6 +159,8 @@ export default function request(
       }
       if (status >= 404 && status < 422) {
         router.push('/exception/404');
+        return;
       }
+      throw e
     });
 }

@@ -458,7 +458,13 @@ iSlider.prototype = {
   },
   _touchmove_mouse: function(e) {
     var parent = e.target;
+    if(parent==null || typeof(parent)=='undefined'){
+      return;
+    }
     do {
+      if(parent==null || typeof(parent)=='undefined'){
+        return;
+      }
       parent = parent.parentNode;
     } while (parent !== this.wrap);
 

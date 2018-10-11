@@ -101,9 +101,9 @@ export default {
   cssnano: {
     mergeRules: false
   },
-  publicPath: "http://www.zhaohui.wiki/frontend/",
-  //base:'VSCode/ant-design-pro/dist/index.html#/',
-  //runtimePublicPath:true,
+  publicPath: "http://localhost/frontend/",//build 的时候使用
+  //base:'/frontend/',//会被拼到网站根目录后边window.routerBase 没有什么卵用
+  runtimePublicPath:true,
   history: "hash",
   //exportStatic:true,
   devtool: "inline-source-map"
