@@ -76,7 +76,7 @@ const CreateForm = Form.create()(props => {
         title="新建用户"
         visible={modalVisible}
         onOk={okHandle}
-        onCancel={() => handleModalVisible()}
+        onCancel={() => handleModalVisible(false)}
       >
         <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="用户名">
           {form.getFieldDecorator('name', {
@@ -373,11 +373,12 @@ class User extends Component {
     //toogle新增的弹窗.
     handleModalVisible = flag => {
         const { dispatch } = this.props;
+        if(typeof(flag)=='undefined'){
+            flag=false;
+        }
         dispatch({
             type: 'data_user/setModalVisible',
-            payload: {
-                modalVisible: !!flag,
-            },
+            payload:!!flag,
         });
     };
 
