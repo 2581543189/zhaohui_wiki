@@ -4,7 +4,7 @@ import { makeFormData } from '../utils/utils';
 import request from '@/utils/request';
 
 
-let _BASE_PATH="http://localhost/backend";
+let _BASE_PATH="http://47.99.76.20/backend";
 /**查询用户信息 */
 export async function queryUsers(payload={}) {
     console.log('queryUsers',payload);

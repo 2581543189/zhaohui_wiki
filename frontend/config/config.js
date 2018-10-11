@@ -106,5 +106,5 @@ export default {
   runtimePublicPath:true,
   history: "hash",
   //exportStatic:true,
-  devtool: "inline-source-map"
+  //devtool: "inline-source-map"
 };
