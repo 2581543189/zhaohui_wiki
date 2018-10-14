@@ -27,6 +27,7 @@ export default [
         path: '/website/workbench',
         name: 'workbench',
         icon: 'home',
+        authority: ['admin', 'user','guest'],
         routes: [
           {
             path: '/website/workbench/overview',
@@ -59,6 +60,7 @@ export default [
         path: '/website/data',
         name: 'data',
         icon: 'database',
+        authority: ['admin'],
         routes: [
           {
             path: '/website/data/user',

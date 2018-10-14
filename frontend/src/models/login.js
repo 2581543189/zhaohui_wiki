@@ -4,6 +4,7 @@ import { fakeAccountLogin, getFakeCaptcha } from '@/services/api';
 import { setAuthority ,setUsername} from '@/utils/authority';
 import { getPageQuery } from '@/utils/utils';
 import { reloadAuthorized } from '@/utils/Authorized';
+import {login }from '@/services/data'
 
 export default {
   namespace: 'login',
@@ -25,7 +26,7 @@ export default {
         };
         setUsername('guest');
       }else{
-        response = yield call(fakeAccountLogin, payload);
+        response = yield call(login, payload);
         setUsername(payload.username);
       }
      

@@ -2,9 +2,10 @@
 import { stringify } from 'qs';
 import { makeFormData } from '../utils/utils';
 import request from '@/utils/request';
+import {rolesLogin} from '../constant/DataConstant'
 
 
-let _BASE_PATH="http://47.99.76.20/backend";
+let _BASE_PATH="http://localhost/backend";
 /**查询用户信息 */
 export async function queryUsers(payload={}) {
     console.log('queryUsers',payload);
@@ -76,4 +77,44 @@ export async function deleteUser(payload){
 /**授予管理员权限 */
 export async function managerUser(payload){
     
+}
+
+export async function login(payload){
+
+    console.log('login',payload);
+
+    let option={
+        method:'POST',
+    }
+    if(Object.keys(payload).length!=0){
+        //var formData = new FormData();
+        //makeFormData(payload,formData);
+
+        option={
+            method:'POST',
+            body:payload,
+        }
+    }
+
+    const response = await request(_BASE_PATH + '/user/query',option);
+
+    let result = {};
+
+    const count = response.count;
+    if(count!=0){
+        result = {
+            status:true,
+            currentAuthority:rolesLogin[response.rows[0].role],
+            logout:false,
+        }
+    }else {
+
+        result = {
+            status:false,
+            currentAuthority:'guest',
+            logout:false,
+        }
+    }
+    return result;
+
 }

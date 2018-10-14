@@ -3,6 +3,7 @@ import { connect } from 'dva';
 import { Alert} from 'antd';
 import Login from '@/components/Login';
 import styles from './Login.less';
+import crypto from 'crypto' ;
 
 const {  UserName, Password, Submit } = Login;
 
@@ -19,6 +20,10 @@ class LoginPage extends Component {
   handleSubmit = (err, values) => {
     if (!err) {
       const { dispatch } = this.props;
+
+      //密码进行md5
+      const md5 = crypto.createHash('md5');
+      values.password = md5.update(values.password).digest('hex');
       dispatch({
         type: 'login/login',
         payload: {

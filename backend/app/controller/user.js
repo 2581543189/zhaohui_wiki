@@ -43,6 +43,19 @@ class UserController extends Controller {
     if(typeof(name)!= 'undefined'){
       util.dealKeyLike(query,'name',name);
     }
+
+    //处理username
+    const {username} = body;
+    if(typeof(username)!= 'undefined'){
+      util.dealKeyEqual(query,'name',username);
+    }
+
+    //处理password
+    const {password} = body;
+    if(typeof(password)!= 'undefined'){
+      util.dealKeyEqual(query,'password',password);
+    }
+
     //处理role
     const {role} = body;
     if(typeof(role)!= 'undefined' && role != ''){

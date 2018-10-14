@@ -1,4 +1,5 @@
 //角色相关
+export const rolesLogin = ['admin', 'user', 'guest'];
 export const roles = ['管理员', '用户', '访客'];
 export const rolesIcon = ['crown', 'smile', 'eye'];
 //表单验证  必填 字母数字下划线  5-100

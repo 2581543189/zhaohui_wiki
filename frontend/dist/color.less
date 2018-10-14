@@ -2550,6 +2550,14 @@ mark {
   border-color: color(~`colorPalette("@{primary-color}", 5)`);
   border-right-width: 1px !important;
 }
+.ant-select-auto-complete.ant-select .ant-input[disabled] {
+  background-color: #f5f5f5;
+  color: rgba(0, 0, 0, 0.25);
+}
+.ant-select-auto-complete.ant-select .ant-input[disabled]:hover {
+  border-color: #e6d8d8;
+  border-right-width: 1px !important;
+}
 .ant-avatar {
   color: rgba(0, 0, 0, 0.65);
   background: #ccc;
@@ -3652,6 +3660,7 @@ mark {
 }
 .ant-checkbox-disabled .ant-checkbox-inner:after {
   border-color: #f5f5f5;
+  border-collapse: separate;
 }
 .ant-checkbox-disabled + span {
   color: rgba(0, 0, 0, 0.25);
@@ -5491,23 +5500,23 @@ form .ant-upload {
 .ant-modal-mask {
   background-color: rgba(0, 0, 0, 0.65);
 }
-.ant-confirm-body .ant-confirm-title {
+.ant-modal-confirm-body .ant-modal-confirm-title {
   color: rgba(0, 0, 0, 0.85);
 }
-.ant-confirm-body .ant-confirm-content {
+.ant-modal-confirm-body .ant-modal-confirm-content {
   color: rgba(0, 0, 0, 0.65);
 }
-.ant-confirm-error .ant-confirm-body > .anticon {
+.ant-modal-confirm-error .ant-modal-confirm-body > .anticon {
   color: #f5222d;
 }
-.ant-confirm-warning .ant-confirm-body > .anticon,
-.ant-confirm-confirm .ant-confirm-body > .anticon {
+.ant-modal-confirm-warning .ant-modal-confirm-body > .anticon,
+.ant-modal-confirm-confirm .ant-modal-confirm-body > .anticon {
   color: #faad14;
 }
-.ant-confirm-info .ant-confirm-body > .anticon {
+.ant-modal-confirm-info .ant-modal-confirm-body > .anticon {
   color: @primary-color;
 }
-.ant-confirm-success .ant-confirm-body > .anticon {
+.ant-modal-confirm-success .ant-modal-confirm-body > .anticon {
   color: #52c41a;
 }
 .ant-notification {
@@ -6358,29 +6367,29 @@ form .ant-upload {
 .ant-table-thead > tr > th .ant-table-column-sorter-down.on {
   color: @primary-color;
 }
-.ant-table-thead > tr > th.ant-table-column-has-actions:hover {
-  background: #f5f5f5;
-}
-.ant-table-thead > tr > th.ant-table-column-has-actions:hover .anticon-filter,
-.ant-table-thead > tr > th.ant-table-column-has-actions:hover .ant-table-filter-icon {
-  background: #f5f5f5;
-}
-.ant-table-thead > tr > th.ant-table-column-has-actions:hover .anticon-filter:hover,
-.ant-table-thead > tr > th.ant-table-column-has-actions:hover .ant-table-filter-icon:hover {
+.ant-table-thead > tr > th.ant-table-column-has-actions.ant-table-column-has-filters .anticon-filter.ant-table-filter-open,
+.ant-table-thead > tr > th.ant-table-column-has-actions.ant-table-column-has-filters .ant-table-filter-icon.ant-table-filter-open {
   color: rgba(0, 0, 0, 0.45);
   background: #ebebeb;
 }
-.ant-table-thead > tr > th.ant-table-column-has-actions:hover .anticon-filter:active,
-.ant-table-thead > tr > th.ant-table-column-has-actions:hover .ant-table-filter-icon:active {
+.ant-table-thead > tr > th.ant-table-column-has-actions.ant-table-column-has-filters:hover .anticon-filter:hover,
+.ant-table-thead > tr > th.ant-table-column-has-actions.ant-table-column-has-filters:hover .ant-table-filter-icon:hover {
+  color: rgba(0, 0, 0, 0.45);
+  background: #ebebeb;
+}
+.ant-table-thead > tr > th.ant-table-column-has-actions.ant-table-column-has-filters:hover .anticon-filter:active,
+.ant-table-thead > tr > th.ant-table-column-has-actions.ant-table-column-has-filters:hover .ant-table-filter-icon:active {
   color: rgba(0, 0, 0, 0.65);
 }
-.ant-table-thead > tr > th.ant-table-column-has-actions .anticon-filter.ant-table-filter-open,
-.ant-table-thead > tr > th.ant-table-column-has-actions .ant-table-filter-icon.ant-table-filter-open {
-  color: rgba(0, 0, 0, 0.45);
-  background: #ebebeb;
+.ant-table-thead > tr > th.ant-table-column-has-actions.ant-table-column-has-sorters:hover {
+  background: #f5f5f5;
 }
-.ant-table-thead > tr > th.ant-table-column-has-actions:active .ant-table-column-sorter-up:not(.on),
-.ant-table-thead > tr > th.ant-table-column-has-actions:active .ant-table-column-sorter-down:not(.on) {
+.ant-table-thead > tr > th.ant-table-column-has-actions.ant-table-column-has-sorters:hover .anticon-filter,
+.ant-table-thead > tr > th.ant-table-column-has-actions.ant-table-column-has-sorters:hover .ant-table-filter-icon {
+  background: #f5f5f5;
+}
+.ant-table-thead > tr > th.ant-table-column-has-actions.ant-table-column-has-sorters:active .ant-table-column-sorter-up:not(.on),
+.ant-table-thead > tr > th.ant-table-column-has-actions.ant-table-column-has-sorters:active .ant-table-column-sorter-down:not(.on) {
   color: rgba(0, 0, 0, 0.45);
 }
 .ant-table-thead > tr > th .ant-table-column-sorters:before {
@@ -6621,6 +6630,16 @@ tr.ant-table-expanded-row:hover {
 .ant-table-small > .ant-table-content > .ant-table-fixed-right > .ant-table-body-outer > .ant-table-body-inner > table > .ant-table-thead > tr > th {
   background: #fff;
   border-bottom: 1px solid #e8e8e8;
+}
+.ant-table-small > .ant-table-content > .ant-table-header > table > .ant-table-thead > tr > th.ant-table-column-sort,
+.ant-table-small > .ant-table-content > .ant-table-body > table > .ant-table-thead > tr > th.ant-table-column-sort,
+.ant-table-small > .ant-table-content > .ant-table-scroll > .ant-table-header > table > .ant-table-thead > tr > th.ant-table-column-sort,
+.ant-table-small > .ant-table-content > .ant-table-scroll > .ant-table-body > table > .ant-table-thead > tr > th.ant-table-column-sort,
+.ant-table-small > .ant-table-content > .ant-table-fixed-left > .ant-table-header > table > .ant-table-thead > tr > th.ant-table-column-sort,
+.ant-table-small > .ant-table-content > .ant-table-fixed-right > .ant-table-header > table > .ant-table-thead > tr > th.ant-table-column-sort,
+.ant-table-small > .ant-table-content > .ant-table-fixed-left > .ant-table-body-outer > .ant-table-body-inner > table > .ant-table-thead > tr > th.ant-table-column-sort,
+.ant-table-small > .ant-table-content > .ant-table-fixed-right > .ant-table-body-outer > .ant-table-body-inner > table > .ant-table-thead > tr > th.ant-table-column-sort {
+  background: rgba(0, 0, 0, 0.01);
 }
 .ant-table-small > .ant-table-content .ant-table-header {
   background: #fff;
@@ -7198,6 +7217,7 @@ li.ant-time-picker-panel-select-option-disabled:hover {
 }
 .ant-select-tree-checkbox-disabled .ant-select-tree-checkbox-inner:after {
   border-color: #f5f5f5;
+  border-collapse: separate;
 }
 .ant-select-tree-checkbox-disabled + span {
   color: rgba(0, 0, 0, 0.25);
@@ -7338,6 +7358,7 @@ li.ant-select-tree-treenode-disabled > .ant-select-tree-node-content-wrapper:hov
 }
 .ant-tree-checkbox-disabled .ant-tree-checkbox-inner:after {
   border-color: #f5f5f5;
+  border-collapse: separate;
 }
 .ant-tree-checkbox-disabled + span {
   color: rgba(0, 0, 0, 0.25);

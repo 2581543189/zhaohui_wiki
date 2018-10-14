@@ -31,10 +31,6 @@ import {roles,rolesIcon,normalValidFunction} from '../../constant/DataConstant';
 import styles from './TableList.less';
 
 const FormItem = Form.Item;
-const md5 = crypto.createHash('md5');
-
-
-
 
 const getValue = function(obj){
 
@@ -55,7 +51,7 @@ const CreateForm = Form.create()(props => {
       form.validateFields((err, fieldsValue) => {
         if (err) return;
         form.resetFields();
-
+        const md5 = crypto.createHash('md5');
         fieldsValue.password = md5.update(fieldsValue.password).digest('hex');
         handleAdd(fieldsValue);
       });
