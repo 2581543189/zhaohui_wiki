@@ -16,7 +16,7 @@ module.exports = appInfo => {
   // };
     config.sequelize = {
       username: "root",
-      password: "ioenINL.031527",
+      password: "123456",
       database: "test",
       host: "127.0.0.1",
       port:3306,
