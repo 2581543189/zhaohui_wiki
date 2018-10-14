@@ -5,7 +5,7 @@ import request from '@/utils/request';
 import {rolesLogin} from '../constant/DataConstant'
 
 
-let _BASE_PATH="http://localhost/backend";
+let _BASE_PATH="http://47.99.76.20/backend";
 /**查询用户信息 */
 export async function queryUsers(payload={}) {
     console.log('queryUsers',payload);
