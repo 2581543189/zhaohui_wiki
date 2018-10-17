@@ -74,7 +74,7 @@
     "onerror": {
       "errorPageUrl": "",
       "appErrorFilter": null,
-      "templatePath": "D:\\VSCode\\zhaohui_wiki\\backend\\node_modules\\egg-onerror\\lib\\onerror_page.mustache"
+      "templatePath": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-onerror/lib/onerror_page.mustache"
     },
     "i18n": {
       "defaultLocale": "en_US",
@@ -86,14 +86,14 @@
     "watcher": {
       "type": "development",
       "eventSources": {
-        "default": "D:\\VSCode\\zhaohui_wiki\\backend\\node_modules\\egg-watcher\\lib\\event-sources\\default",
-        "development": "D:\\VSCode\\zhaohui_wiki\\backend\\node_modules\\egg-watcher\\lib\\event-sources\\development"
+        "default": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-watcher/lib/event-sources/default",
+        "development": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-watcher/lib/event-sources/development"
       }
     },
     "customLogger": {
       "scheduleLogger": {
         "consoleLevel": "NONE",
-        "file": "D:\\VSCode\\zhaohui_wiki\\backend\\logs\\sequelize-example\\egg-schedule.log"
+        "file": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/logs/sequelize-example/egg-schedule.log"
       }
     },
     "multipart": {
@@ -107,7 +107,7 @@
       "files": 10,
       "fileExtensions": [],
       "whitelist": null,
-      "tmpdir": "D:\\MyConfiguration\\hui.zhao\\AppData\\Local\\Temp\\egg-multipart-tmp\\sequelize-example",
+      "tmpdir": "/var/folders/66/dxjzfqxx0xjb9c21qdh81h3m0000gn/T/egg-multipart-tmp/sequelize-example",
       "cleanSchedule": {
         "cron": "0 30 4 * * *"
       }
@@ -130,14 +130,14 @@
     },
     "static": {
       "prefix": "/public/",
-      "dir": "D:\\VSCode\\zhaohui_wiki\\backend\\app\\public",
+      "dir": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/app/public",
       "dynamic": true,
       "preload": false,
       "buffer": false,
       "maxFiles": 1000
     },
     "view": {
-      "root": "D:\\VSCode\\zhaohui_wiki\\backend\\app\\view",
+      "root": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/app/view",
       "cache": false,
       "defaultExtension": ".html",
       "defaultViewEngine": "",
@@ -146,10 +146,10 @@
     "sequelize": {
       "dialect": "mysql",
       "database": "test",
-      "host": "10.100.41.207",
-      "port": 3425,
-      "username": "tcdsfservstatV2",
-      "password": "<String len: 24>"
+      "host": "47.99.76.20",
+      "port": 3306,
+      "username": "root",
+      "password": "<String len: 6>"
     },
     "env": "local",
     "name": "sequelize-example",
@@ -181,7 +181,7 @@
       },
       "scripts": {
         "dev": "egg-bin dev",
-        "test": "NODE_ENV=test npm run sequelize -- db:migrate && egg-bin test",
+        "test": "NODE_ENV=test egg-bin test",
         "cov": "egg-bin cov",
         "ci": "npm run cov",
         "autod": "autod",
@@ -191,9 +191,9 @@
       "author": "Qi Yu <njuyuqi@gmail.coom>",
       "license": "MIT"
     },
-    "baseDir": "D:\\VSCode\\zhaohui_wiki\\backend",
-    "HOME": "D:\\MyConfiguration\\hui.zhao",
-    "rundir": "D:\\VSCode\\zhaohui_wiki\\backend\\run",
+    "baseDir": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend",
+    "HOME": "/Users/hui.zhao",
+    "rundir": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/run",
     "dump": {
       "ignore": "<Set>"
     },
@@ -223,7 +223,7 @@
       }
     },
     "logger": {
-      "dir": "D:\\VSCode\\zhaohui_wiki\\backend\\logs\\sequelize-example",
+      "dir": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/logs/sequelize-example",
       "encoding": "utf8",
       "env": "local",
       "level": "INFO",
@@ -297,8 +297,8 @@
       "dependencies": [],
       "optionalDependencies": [],
       "env": [],
-      "from": "D:\\VSCode\\zhaohui_wiki\\backend\\node_modules\\egg\\config\\plugin.js",
-      "path": "D:\\VSCode\\zhaohui_wiki\\backend\\node_modules\\egg-session",
+      "from": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/plugin.js",
+      "path": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-session",
       "version": "3.1.0"
     },
     "security": {
@@ -310,8 +310,8 @@
         "session"
       ],
       "env": [],
-      "from": "D:\\VSCode\\zhaohui_wiki\\backend\\node_modules\\egg\\config\\plugin.js",
-      "path": "D:\\VSCode\\zhaohui_wiki\\backend\\node_modules\\egg-security",
+      "from": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/plugin.js",
+      "path": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-security",
       "version": "2.4.0"
     },
     "jsonp": {
@@ -323,8 +323,8 @@
         "security"
       ],
       "env": [],
-      "from": "D:\\VSCode\\zhaohui_wiki\\backend\\node_modules\\egg\\config\\plugin.js",
-      "path": "D:\\VSCode\\zhaohui_wiki\\backend\\node_modules\\egg-jsonp",
+      "from": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/plugin.js",
+      "path": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-jsonp",
       "version": "2.0.0"
     },
     "onerror": {
@@ -336,8 +336,8 @@
         "jsonp"
       ],
       "env": [],
-      "from": "D:\\VSCode\\zhaohui_wiki\\backend\\node_modules\\egg\\config\\plugin.js",
-      "path": "D:\\VSCode\\zhaohui_wiki\\backend\\node_modules\\egg-onerror",
+      "from": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/plugin.js",
+      "path": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-onerror",
       "version": "2.1.0"
     },
     "i18n": {
@@ -347,8 +347,8 @@
       "dependencies": [],
       "optionalDependencies": [],
       "env": [],
-      "from": "D:\\VSCode\\zhaohui_wiki\\backend\\node_modules\\egg\\config\\plugin.js",
-      "path": "D:\\VSCode\\zhaohui_wiki\\backend\\node_modules\\egg-i18n",
+      "from": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/plugin.js",
+      "path": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-i18n",
       "version": "2.0.0"
     },
     "watcher": {
@@ -358,8 +358,8 @@
       "dependencies": [],
       "optionalDependencies": [],
       "env": [],
-      "from": "D:\\VSCode\\zhaohui_wiki\\backend\\node_modules\\egg\\config\\plugin.js",
-      "path": "D:\\VSCode\\zhaohui_wiki\\backend\\node_modules\\egg-watcher",
+      "from": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/plugin.js",
+      "path": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-watcher",
       "version": "3.1.0"
     },
     "schedule": {
@@ -369,8 +369,8 @@
       "dependencies": [],
       "optionalDependencies": [],
       "env": [],
-      "from": "D:\\VSCode\\zhaohui_wiki\\backend\\node_modules\\egg\\config\\plugin.js",
-      "path": "D:\\VSCode\\zhaohui_wiki\\backend\\node_modules\\egg-schedule",
+      "from": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/plugin.js",
+      "path": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-schedule",
       "version": "3.4.0"
     },
     "multipart": {
@@ -382,8 +382,8 @@
         "schedule"
       ],
       "env": [],
-      "from": "D:\\VSCode\\zhaohui_wiki\\backend\\node_modules\\egg\\config\\plugin.js",
-      "path": "D:\\VSCode\\zhaohui_wiki\\backend\\node_modules\\egg-multipart",
+      "from": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/plugin.js",
+      "path": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-multipart",
       "version": "2.2.1"
     },
     "development": {
@@ -397,8 +397,8 @@
       "env": [
         "local"
       ],
-      "from": "D:\\VSCode\\zhaohui_wiki\\backend\\node_modules\\egg\\config\\plugin.js",
-      "path": "D:\\VSCode\\zhaohui_wiki\\backend\\node_modules\\egg-development",
+      "from": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/plugin.js",
+      "path": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-development",
       "version": "2.4.1"
     },
     "logrotator": {
@@ -410,8 +410,8 @@
       ],
       "optionalDependencies": [],
       "env": [],
-      "from": "D:\\VSCode\\zhaohui_wiki\\backend\\node_modules\\egg\\config\\plugin.js",
-      "path": "D:\\VSCode\\zhaohui_wiki\\backend\\node_modules\\egg-logrotator",
+      "from": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/plugin.js",
+      "path": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-logrotator",
       "version": "3.0.3"
     },
     "static": {
@@ -421,8 +421,8 @@
       "dependencies": [],
       "optionalDependencies": [],
       "env": [],
-      "from": "D:\\VSCode\\zhaohui_wiki\\backend\\node_modules\\egg\\config\\plugin.js",
-      "path": "D:\\VSCode\\zhaohui_wiki\\backend\\node_modules\\egg-static",
+      "from": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/plugin.js",
+      "path": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-static",
       "version": "2.1.1"
     },
     "view": {
@@ -432,8 +432,8 @@
       "dependencies": [],
       "optionalDependencies": [],
       "env": [],
-      "from": "D:\\VSCode\\zhaohui_wiki\\backend\\node_modules\\egg\\config\\plugin.js",
-      "path": "D:\\VSCode\\zhaohui_wiki\\backend\\node_modules\\egg-view",
+      "from": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/plugin.js",
+      "path": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-view",
       "version": "2.1.0"
     },
     "sequelize": {
@@ -443,8 +443,8 @@
       "dependencies": [],
       "optionalDependencies": [],
       "env": [],
-      "from": "D:\\VSCode\\zhaohui_wiki\\backend\\config\\plugin.js",
-      "path": "D:\\VSCode\\zhaohui_wiki\\backend\\node_modules\\egg-sequelize",
+      "from": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/config/plugin.js",
+      "path": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-sequelize",
       "version": "4.1.0"
     }
   }

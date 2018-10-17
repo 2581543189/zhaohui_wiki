@@ -1,13 +1,11 @@
-import { queryUser ,deleteUser,managerUser,addUser ,updateUser} from '@/services/data';
+import { querySkill ,deleteSkill,addSkill ,updateSkill} from '@/services/data';
 import {openNotification} from '../../../utils/utils';
-
 // if(response.error!=1){
 // }else{
 //     openNotification('error',response.message);
 // }
-
 export default {
-    namespace: 'data_user',
+    namespace: 'data_skill',
   
     state: {
         //列表页信息
@@ -23,10 +21,9 @@ export default {
         updateModalVisible:false,
         updateModalData:{
             id:0,
-            name:'-',
-            password:'-',
-            role:2,
-            avatar:''
+            first:'-',
+            second:'-',
+            third:'-',
         }
 
     },
@@ -34,7 +31,7 @@ export default {
     effects: {
         //查询数据
         *fetch({ payload }, { call, put }) {
-            const response = yield call(queryUser, payload);
+            const response = yield call(querySkill, payload);
             if(response.error!=1){
                 yield put({
                     type: 'save',
@@ -43,17 +40,17 @@ export default {
             }else{
                 openNotification('error',response.message);
             }
-            
+
         },
         //新增用户
         *add({ payload,callback }, { call, put }) {
-            const response = yield call(addUser, payload);
+            const response = yield call(addSkill, payload);
             if(response.error!=1){
                 yield put({
                     type: 'setModalVisible',
                     payload:false,
                 });
-                openNotification('success','新增用户'+response.name+'['+response.id+']成功')
+                openNotification('success','新增技能'+response.name+'['+response.id+']成功')
                 yield put({
                     type: 'fetch',
                     payload:{
@@ -69,9 +66,9 @@ export default {
         },
         //删除用户
         *delete ({ payload }, { call, put }){
-            const response = yield call(deleteUser, payload);
+            const response = yield call(deleteSkill, payload);
             if(response.error!=1){
-                openNotification('success','删除用户['+response.id+']成功')
+                openNotification('success','删除技能['+response.id+']成功')
                 yield put({
                     type: 'fetch',
                     payload:{
@@ -82,6 +79,7 @@ export default {
             }else{
                 openNotification('error',response.message);
             }
+
         },
         //更新用户step1
         *updateStep1({ payload }, { call, put }){
@@ -89,7 +87,7 @@ export default {
             const param = {
                 id:payload.id,
             }
-            const response = yield call(queryUser, param);
+            const response = yield call(querySkill, param);
             if(response.error!=1){
                 yield put({
                     type: 'setUpdateModalVisible',
@@ -101,11 +99,11 @@ export default {
             }else{
                 openNotification('error',response.message);
             }
-            
+
         },
         //更新用户step2
         *updateStep2({ payload }, { call, put }){
-            const response = yield call(updateUser, payload);
+            const response = yield call(updateSkill, payload);
             if(response.error!=1){
                 yield put({
                     type: 'setUpdateModalVisible',
@@ -124,7 +122,11 @@ export default {
             }else{
                 openNotification('error',response.message);
             }
+
         },
+
+
+
 
         // *manager ({ payload }, { call, put }){
         //     const response = yield call(managerUser, payload);

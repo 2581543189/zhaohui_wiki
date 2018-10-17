@@ -50,6 +50,12 @@ class UserController extends Controller {
       util.dealKeyEqual(query,'name',username);
     }
 
+    //处理id
+    const {id} = body;
+    if(typeof(id)!= 'undefined'){
+      util.dealKeyEqual(query,'id',id);
+    }
+
     //处理password
     const {password} = body;
     if(typeof(password)!= 'undefined'){
@@ -64,10 +70,10 @@ class UserController extends Controller {
     ctx.body = await ctx.service.user.query(query);
   }
 
-  async show() {
-    const ctx = this.ctx;
-    ctx.body = await ctx.service.user.find(ctx.helper.parseInt(ctx.params.id));
-  }
+  // async show() {
+  //   const ctx = this.ctx;
+  //   ctx.body = await ctx.service.user.find(ctx.helper.parseInt(ctx.params.id));
+  // }
 
   async add() {
     const ctx = this.ctx;
@@ -80,7 +86,7 @@ class UserController extends Controller {
     }
     let count = await ctx.service.user.count(query);
     if(count > 0){
-      ctx.status = 600;
+      ctx.status = 510;
       ctx.body = '用户已经存在';
     }else{
       const user = await ctx.service.user.create(ctx.request.body);

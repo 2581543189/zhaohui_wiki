@@ -5,6 +5,7 @@ import moment from 'moment';
 import groupBy from 'lodash/groupBy';
 import HeaderSearch from '../HeaderSearch';
 import styles from './index.less';
+import {rolesIcon} from '../../constant/DataConstant';
 
 export default class GlobalHeaderRight extends PureComponent {
   getNoticeData() {
@@ -47,6 +48,25 @@ export default class GlobalHeaderRight extends PureComponent {
     }
   };
 
+  renderAvatar(currentUser){
+    if(typeof(currentUser.avatar)=='undefined' || currentUser.avatar==''||currentUser.avatar==null){
+      return (<Avatar
+        size="small"
+        className={styles.avatar}
+        src="https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png"
+        alt="avatar"
+      />);
+    }else{
+      return(<Avatar
+        size="small"
+        className={styles.avatar}
+        src={currentUser.avatar}
+        alt="avatar"
+      />);
+    }
+
+  }
+
   render() {
     const {
       currentUser,
@@ -64,6 +84,8 @@ export default class GlobalHeaderRight extends PureComponent {
         </Menu.Item>
       </Menu>
     );
+
+
     const noticeData = this.getNoticeData();
     let className = styles.right;
     if (theme === 'dark') {
@@ -96,13 +118,8 @@ export default class GlobalHeaderRight extends PureComponent {
         {currentUser.name ? (
           <Dropdown overlay={menu}>
             <span className={`${styles.action} ${styles.account}`}>
-              <Avatar
-                size="small"
-                className={styles.avatar}
-                src={currentUser.avatar}
-                alt="avatar"
-              />
-              <span className={styles.name}>{currentUser.name}</span>
+            {this.renderAvatar(currentUser)}
+              <span className={styles.name}>{currentUser.name}<Icon type={rolesIcon[currentUser.role]} style={{ color: 'rgba(0,0,0,.25)' }} theme="twoTone"/></span>
             </span>
           </Dropdown>
         ) : (

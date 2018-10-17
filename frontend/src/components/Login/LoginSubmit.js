@@ -18,8 +18,8 @@ class LoginSubmit extends Component {
   
     return (
       <FormItem>
-        <Button size="large" className={clsString} type="primary" htmlType="submit" {...this.props} >用户登陆</Button>
-        <Button size="large" className={clsString} type="primary" onClick={guestlogin}  {...this.props} >访客身份</Button>
+        <Button size="large" className={clsString} type="primary" htmlType="submit"  >用户登陆</Button>
+        <Button size="large" className={clsString} type="primary" onClick={guestlogin}  >访客身份</Button>
       </FormItem>
     );
 

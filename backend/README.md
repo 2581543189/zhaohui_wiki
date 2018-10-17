@@ -49,8 +49,10 @@ CREATE TABLE `skill` (
   `_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '时间戳',
   `first` varchar(128) NOT NULL DEFAULT '其他' COMMENT '大分类',
   `second` varchar(128) NOT NULL DEFAULT '其他' COMMENT '二级分类',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `third` varchar(128) NOT NULL DEFAULT '其他' COMMENT '三级分类',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `ix_unique` (`first`,`second`,`third`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
 ```
 
 ##### &#160; &#160; &#160; &#160; 2.3 文章信息表(article)

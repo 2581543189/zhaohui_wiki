@@ -4,6 +4,7 @@ import router from 'umi/router';
 import hash from 'hash.js';
 import { isAntdPro } from './utils';
 import {openNotification} from './utils';
+import { isYieldExpression } from 'typescript';
 
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
@@ -23,12 +24,14 @@ const codeMessage = {
   504: '网关超时。',
 };
 
-const checkStatus = response => {
+const  checkStatus = async response => {
   if (response.status >= 200 && response.status < 300) {
     return response;
   }
-  if (response.status == 600) {//600说明服务要求前端展示一段文字说明
-    openNotification('error',response.text());
+  if (response.status == 510) {//510
+    
+    const text = await response.text().then(text=>{return text});
+    const error = new Error(text);
     error.name = response.status;
     error.response = response;
     throw error;
