@@ -317,3 +317,43 @@ export async function updateSkill(payload){
         };
     }
 }
+
+/**获取级联筛选框数据 */
+export async function distinctValue(payload){
+    try{
+        if(typeof(payload)=='undefined'){
+            payload={};
+        }
+        let name='first';
+        if(payload.name){
+            name=payload.name;
+        }
+        //name:字段
+        //first/second/具体的查询条件
+        console.log('distinctValue',payload);
+        let option={
+            method:'POST',
+            body:payload
+        }
+
+        let response = await request(_BASE_PATH + '/skill/distinctValue',option);
+        let array=[];
+        response.map(function(data){
+            array.push(data[name]);
+        })
+        response={};
+        response.body = {
+            name:name,
+            array:array,
+            second:payload.second,
+            first:payload.first,
+        }
+        return response;
+    }catch(e){
+        console.log(e);
+        return {
+            error:1,
+            message:e.message,
+        };
+    }
+}

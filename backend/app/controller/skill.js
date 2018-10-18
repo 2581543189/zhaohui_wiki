@@ -29,21 +29,28 @@ class SkillController extends Controller {
       util.dealSorter(query,sorter);
     }
 
+
+    //处理id
+    const {id} = body;
+    if(typeof(id)!= 'undefined'){
+      util.dealKeyEqual(query,'id',id);
+    }
+
     //处理first
     const {first} = body;
-    if(typeof(first)!= 'undefined'){
+    if(typeof(first)!= 'undefined'&&first!=null &&first!=''){
       util.dealKeyEqual(query,'first',first);
     }
 
     //处理second
     const {second} = body;
-    if(typeof(second)!= 'undefined'){
+    if(typeof(second)!= 'undefined'&&second!=null &&second!=''){
       util.dealKeyEqual(query,'second',second);
     }
 
     //处理third
     const {third} = body;
-    if(typeof(third)!= 'undefined'){
+    if(typeof(third)!= 'undefined'&&third!=null &&third!=''){
       util.dealKeyEqual(query,'third',third);
     }
 
@@ -89,6 +96,49 @@ class SkillController extends Controller {
     ctx.body={
       id:id
     };
+  }
+
+  //级联查询使用
+  async distinctValue(){
+    const ctx = this.ctx;
+    //参数检验
+    let body = ctx.request.body;
+    if(typeof(body)=='undefined'){
+      body={};
+    }
+    let name = 'first';
+    let first='';
+    let second='';
+    let third='';
+    if(typeof(body.name)!= 'undefined' &&body.name!=null && body.name!=''){
+      name = body.name;
+    }
+    if(typeof(body.first)!= 'undefined' &&body.first!=null && body.first!=''){
+      first = body.first;
+    }
+    if(typeof(body.second)!= 'undefined' &&body.second!=null && body.second!=''){
+      second = body.second;
+    }
+    if(typeof(body.third)!= 'undefined' &&body.third!=null && body.third!=''){
+      third = body.third;
+    }
+    //分别查询
+    let sql = 'SELECT DISTINCT '+name+' FROM skill WHERE 1 = 1';
+    if(first!=''){
+      sql+=' AND first=\''+first+'\'';
+    }
+    if(second!=''){
+      sql+=' AND second=\''+second+'\'';
+    }
+    if(third!=''){
+      sql+=' AND third=\''+third+'\'';
+    }
+
+    //const Sequelize = ctx.app.Sequelize;
+    ctx.body = await this.app.model.query(sql, {type : this.app.model.QueryTypes.SELECT});
+    ctx.status = 200;
+
+
   }
 }
 

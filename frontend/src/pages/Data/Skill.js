@@ -27,6 +27,7 @@ import {
   Avatar,
   Tooltip,
   Switch,
+  Cascader,
 } from 'antd';
 import {roles,rolesIcon,hanziValidFunction,getValue} from '../../constant/DataConstant';
 import styles from './TableList.less';
@@ -151,7 +152,6 @@ class UpdateForm extends PureComponent {
 class Skill extends Component {
     //控件自己维护的状态信息  
     state = {
-        formValues:{},//查询条件
         selectedRows: [],//多选
     };
     //数据表表头
@@ -234,7 +234,6 @@ class Skill extends Component {
     //表格操作回调函数
     handleStandardTableChange = (pagination, filtersArg, sorter) => {
         const { dispatch } = this.props;
-        const { formValues } = this.state;
     
         const filters = Object.keys(filtersArg).reduce((obj, key) => {
             const newObj = { ...obj };
@@ -245,7 +244,6 @@ class Skill extends Component {
         const params = {
             currentPage: pagination.current,
             pageSize: pagination.pageSize,
-            ...formValues,
             ...filters,
         };
         if (sorter.field) {
@@ -259,27 +257,110 @@ class Skill extends Component {
     };
 
 
+    //获取option数据
+    loadData(selectedOptions){
+        console.log(selectedOptions);
+        const { dispatch } = this.props;
+        let deepth = selectedOptions.length;
+        let param={};
+        if(deepth==3){
+
+        }else if(deepth==2){
+            param={
+                name:'third',
+                first:selectedOptions[0].value,
+                second:selectedOptions[1].value,
+            }
+
+        }else if(deepth==1){
+            param={
+                name:'second',
+                first:selectedOptions[0].value,
+            }
+
+        }else{
+            param={
+                name:'first',
+            }
+        }
+        dispatch({
+            type: 'data_skill/getOption',
+            payload: param,
+        });
+
+    };
+    onChange(value, selectedOptions){
+        const { dispatch } = this.props;
+        let deepth = selectedOptions.length;
+        if(deepth==3){
+            dispatch({
+                type: 'data_skill/setFormValues',
+                payload: {
+                    formValues:{
+                        first:selectedOptions[0].value,
+                        second:selectedOptions[1].value,
+                        third:selectedOptions[2].value,
+                    }
+                },
+            });
+        }else if(deepth==2){
+            dispatch({
+                type: 'data_skill/setFormValues',
+                payload: {
+                    formValues:{
+                        first:selectedOptions[0].value,
+                        second:selectedOptions[1].value,
+                        third:'',
+                    }
+                },
+            });
+        }else if(deepth==1){
+            dispatch({
+                type: 'data_skill/setFormValues',
+                payload: {
+                    formValues:{
+                        first:selectedOptions[0].value,
+                        second:'',
+                        third:'',
+                    }
+                },
+            });
+        }else{
+            dispatch({
+                type: 'data_skill/setFormValues',
+                payload: {
+                    formValues:{
+                        first:'',
+                        second:'',
+                        third:'',
+                    },
+                }
+            });
+
+        }
+
+        console.log(value, selectedOptions);
+    };
+    //select 选中
+
     //查询条件
-    renderForm(){
+    renderForm(options){
         const {
              form: { getFieldDecorator },
         } = this.props;
         return (
             <Form onSubmit={this.handleSearch} layout="inline">
               <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-                <Col md={8} sm={24}>
-                  <FormItem label="分类1">
-                    {getFieldDecorator('first')(<Input placeholder="请输入" />)}
-                  </FormItem>
-                </Col>
-                <Col md={8} sm={24}>
-                  <FormItem label="分类2">
-                    {getFieldDecorator('second')(<Input placeholder="请输入" />)}
-                  </FormItem>
-                </Col>
-                <Col md={8} sm={24}>
-                  <FormItem label="分类3">
-                    {getFieldDecorator('third')(<Input placeholder="请输入" />)}
+                <Col md={15} sm={24}>
+                  <FormItem label="筛选">
+                    {getFieldDecorator('option')(
+                        <Cascader
+                            options={options}
+                            loadData={(selectedOptions)=>this.loadData(selectedOptions)}
+                            onChange={(value, selectedOptions)=>this.onChange(value, selectedOptions)}
+                            changeOnSelect
+                        />
+                    )}
                   </FormItem>
                 </Col>
                 <Col md={8} sm={24}>
@@ -301,12 +382,18 @@ class Skill extends Component {
     handleFormReset = () => {
         const { form, dispatch } = this.props;
         form.resetFields();
-        this.setState({
-            formValues: {},
+        dispatch({
+            type: 'data_skill/setFormValues',
+            payload: {
+                formValues:{
+                    first:'',
+                    second:'',
+                    third:'',
+                },
+            }
         });
         dispatch({
             type: 'data_skill/fetch',
-            payload: {},
         });
     };
 
@@ -316,15 +403,8 @@ class Skill extends Component {
         const { dispatch, form } = this.props;
         form.validateFields((err, fieldsValue) => {
             if (err) return;
-            const values = {
-            ...fieldsValue
-            };
-            this.setState({
-            formValues: values,
-            });
             dispatch({
-            type: 'data_skill/fetch',
-            payload: values,
+                type: 'data_skill/fetch',
             });
         });
     };
@@ -416,11 +496,14 @@ class Skill extends Component {
         dispatch({
           type: 'data_skill/fetch',
         });
+        dispatch({
+            type: 'data_skill/getOption',
+        });
     }
 
     render(){
         const {
-            data_skill: { list,pagination,modalVisible,updateModalVisible,updateModalData},
+            data_skill: { list,pagination,modalVisible,updateModalVisible,updateModalData,options},
             loading,
         } = this.props;
 
@@ -452,7 +535,7 @@ class Skill extends Component {
                 <Card bordered={false}>
                 <div className={styles.tableList}>
                     {/*查询条件*/}
-                    <div className={styles.tableListForm}>{this.renderForm()}</div>
+                    <div className={styles.tableListForm}>{this.renderForm(options)}</div>
                     <div className={styles.tableListOperator}>
                         <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true)}>
                             新建

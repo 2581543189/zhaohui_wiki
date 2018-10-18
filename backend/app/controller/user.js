@@ -38,6 +38,12 @@ class UserController extends Controller {
       util.dealSorter(query,sorter);
     }
 
+    //处理id
+    const {id} = body;
+    if(typeof(id)!= 'undefined'){
+      util.dealKeyLike(query,'id',id);
+    }
+
     //处理name
     const {name} = body;
     if(typeof(name)!= 'undefined'){
@@ -50,11 +56,6 @@ class UserController extends Controller {
       util.dealKeyEqual(query,'name',username);
     }
 
-    //处理id
-    const {id} = body;
-    if(typeof(id)!= 'undefined'){
-      util.dealKeyEqual(query,'id',id);
-    }
 
     //处理password
     const {password} = body;

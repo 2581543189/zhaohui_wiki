@@ -21,4 +21,8 @@ module.exports = app => {
   app.get('/skill/delete/:id', app.controller.skill.delete);
   app.post('/skill/update/:id', app.controller.skill.update);
   app.get('/skill/update/:id', app.controller.skill.update);
+  app.post('/skill/distinctValue', app.controller.skill.distinctValue);
+  app.get('/skill/distinctValue', app.controller.skill.distinctValue);
+
+  
 };
