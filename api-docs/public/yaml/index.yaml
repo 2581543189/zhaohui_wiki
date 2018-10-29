@@ -9,7 +9,7 @@ info:
   license:
     name: "MIT"
     url: "https://github.com/2581543189/zhaohui_wiki/blob/master/LICENSE"
-host: "localhost"
+host: "www.zhaohui.wiki"
 basePath: "/backend"
 tags:
 - name: "用户相关"
