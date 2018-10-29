@@ -4,32 +4,22 @@ import React, { Component ,Fragment,PureComponent} from 'react';
 import { connect } from 'dva';
 import moment from 'moment';
 import {openNotification} from '../../utils/utils';
-import crypto from 'crypto' ;
+
 import {
   Row,
   Col,
   Card,
   Form,
   Input,
-  Select,
   Icon,
   Button,
   Dropdown,
   Menu,
-  InputNumber,
-  DatePicker,
   Modal,
-  message,
-  Badge,
   Divider,
-  Steps,
-  Radio,
-  Avatar,
-  Tooltip,
-  Switch,
   Cascader,
 } from 'antd';
-import {roles,rolesIcon,hanziValidFunction,getValue} from '../../constant/DataConstant';
+import {hanziValidFunction,getValue} from '../../constant/DataConstant';
 import styles from './TableList.less';
 
 const FormItem = Form.Item;
@@ -207,7 +197,7 @@ class Skill extends Component {
     dealDelete(item){
         const { dispatch } = this.props;
         Modal.confirm({
-            title: '删除用户',
+            title: '删除能力',
             content: '确定删除能力['+item.first+'-'+item.second+'-'+item.third+']['+item.id+']吗?',
             okText: '确认',
             cancelText: '取消',
@@ -462,8 +452,6 @@ class Skill extends Component {
                 });
             },
         });
-        
-
     };
 
     //批量操作
@@ -528,7 +516,7 @@ class Skill extends Component {
             <Menu onClick={this.handleMenuClick} selectedKeys={[]}>
               <Menu.Item key="remove">删除</Menu.Item>
             </Menu>
-          );
+        );
 
         return(
             <PageHeaderWrapper title="技能信息管理" >

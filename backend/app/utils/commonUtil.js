@@ -45,6 +45,15 @@ module.exports = {
         ];
     },
 
+    //处理sorter
+    dealSorterRelative(query,obj, sorter) {
+        const array = sorter.split('_');
+        const type = array[1] == 'descend' ? 'desc' : 'asc';
+        query.order = [
+            [obj, 'id', type]
+        ];
+    },
+
     //处理like
     dealKeyLike(query, key, value) {
         if (typeof (query.where) == 'undefined') {
@@ -62,4 +71,13 @@ module.exports = {
         }
         query.where[key] = value;
     },
+    //处理时间范围
+    dealKeyRange(query,key,start,end){
+        if (typeof (query.where) == 'undefined') {
+            query.where = {};
+        }
+        query.where[key]={
+            $between:[start,end],
+        }
+    }
 }

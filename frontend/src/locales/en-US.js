@@ -7,6 +7,7 @@ export default {
   'menu.workbench.footprint': 'Footprint',
   'menu.workbench.ladder': 'Ladder',
   'menu.workbench.note': 'Note',
+  'menu.workbench.apiDocs':'Swagger',
   'menu.data': 'Data',
   'menu.data.user': 'User',
   'menu.data.skill': 'Skill',

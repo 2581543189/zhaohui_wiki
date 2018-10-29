@@ -121,6 +121,18 @@ export default class BaseMenu extends PureComponent {
       );
     }
     const { location, isMobile, onCollapse } = this.props;
+    // Is it a http link
+    if (itemPath.indexOf('[nginxs]')>0) {
+      let position = itemPath.indexOf('[nginxs]');
+      let tail = itemPath.substr(position+8,itemPath.length - position-8);
+      return (
+        <a href={tail} target={target}>
+          {icon}
+          <span>{name}</span>
+        </a>
+      );
+    }
+    
     return (
       <Link
         to={itemPath}

@@ -149,10 +149,12 @@ CREATE TABLE `note` (
 | :-: | :-: | :-: | :-: |
 | id | bigint(128) | 唯一主键 | - |
 | _timestamp | timedtamp | 时间戳 | CURRENT_TIMESTAMP |
-| date | date | 任务发布日期 | 1970-01-01 |
+| startDate | date | 任务发布日期 | 1970-01-01 |
+| endDate | date | 任务完成日期 | 1970-01-01 |
 | level | int(32) | 任务难度 | 1 |
 | sketch | varchar(1024) | 任务简述 | Empty String |
-| url | varchar(1024) | 进行链接 | Empty String |
+| startUrl | varchar(1024) | 开始链接 | Empty String |
+| endUrl | varchar(1024) | 任务总结 | Empty String |
 
 ##### &#160; &#160; &#160; &#160; 建表语句
 
@@ -160,10 +162,12 @@ CREATE TABLE `note` (
 CREATE TABLE `bulletin` (
   `id` bigint(128) NOT NULL AUTO_INCREMENT COMMENT '唯一主键',
   `_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '时间戳',
-  `date` date NOT NULL DEFAULT '1970-01-01' COMMENT '任务发布时间',
+  `start_date` date NOT NULL DEFAULT '1970-01-01' COMMENT '任务发布时间',
+  `end_date` date COMMENT '任务完成时间',
   `level` int(32) NOT NULL DEFAULT '1' COMMENT '任务难度',
   `sketch` varchar(1024) NOT NULL DEFAULT '该任务没有描述...' COMMENT '任务简述',
-  `url` varchar(1024) NOT NULL DEFAULT '' COMMENT '进行任务的链接',
+  `start_url` varchar(1024) NOT NULL DEFAULT '' COMMENT '进行任务的链接',
+  `end_url` varchar(1024) COMMENT '任务总结',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ```

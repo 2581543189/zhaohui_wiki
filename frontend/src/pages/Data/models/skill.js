@@ -125,7 +125,12 @@ export default {
                     type: 'setUpdateModalVisible',
                     payload:{
                         updateModalVisible:false,
-                        updateModalData:{},
+                        updateModalData:{
+                            id:0,
+                            first:'-',
+                            second:'-',
+                            third:'-',
+                        },
                     },
                 });
                 const formValues = yield select(state => state.data_skill.formValues);
@@ -189,17 +194,16 @@ export default {
             };
         },
         setUpdateModalVisible(state, action){
-            const default_ = {
+            const _default = {
                 id:0,
-                name:'-',
-                password:'-',
-                role:2,
-                avatar:''
-            }
+                first:'-',
+                second:'-',
+                third:'-',
+            };
             return {
                 ...state,
                 updateModalVisible: action.payload.updateModalVisible,
-                updateModalData:action.payload.updateModalData?action.payload.updateModalData:default_,
+                updateModalData:action.payload.updateModalData?action.payload.updateModalData:_default,
             };
         },
         //处理级联select

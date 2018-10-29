@@ -9,6 +9,7 @@ export default {
   'menu.workbench.footprint': '足迹',
   'menu.workbench.ladder': '阶梯',
   'menu.workbench.note': '便签',
+  'menu.workbench.apiDocs':'swagger',
   'menu.data': '数据管理',
   'menu.data.user': '用户',
   'menu.data.skill': '技能',

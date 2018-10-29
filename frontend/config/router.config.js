@@ -53,6 +53,12 @@ export default [
             component: './Workbench/Note',
             icon: 'bulb',
           },
+          {
+            path: '[nginxs]/api-docs/',
+            name: 'apiDocs',
+            icon: 'api',
+            target:'_blank'
+          },
         ],
       },
       //数据管理

@@ -20,6 +20,10 @@ module.exports = app => {
     timestamps: false,
     freezeTableName: true,
   });
+  //Skill.associate = function() {
+    //Skill.hasMany(app.model.Article, { foreignKey: 'skill' });
+    //Skill.belongsTo(app.model.Article, { foreignKey: 'id' })
+  //}
 
   return Skill;
 };
