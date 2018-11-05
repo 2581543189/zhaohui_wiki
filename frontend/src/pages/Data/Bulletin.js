@@ -211,7 +211,7 @@ class UpdateForm extends PureComponent {
  */
 @connect(({ data_bulletin, loading }) => ({
     data_bulletin,
-    loading: loading.models.rule,
+    loading: loading.models.data_bulletin,
 }))
 @Form.create()
 class Bulletin extends Component {

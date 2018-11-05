@@ -10,45 +10,61 @@ let _user={
 };
 
 export function getAuthority(str) {
-  // // return localStorage.getItem('antd-pro-authority') || ['admin', 'user'];
-  // const authorityString =
-  //   typeof str === 'undefined' ? localStorage.getItem('antd-pro-authority') : str;
-  // // authorityString could be admin, "admin", ["admin"]
-  // let authority;
-  // try {
-  //   authority = JSON.parse(authorityString);
-  // } catch (e) {
-  //   authority = authorityString;
-  // }
-  // if (typeof authority === 'string') {
-  //   return [authority];
-  // }
-  // return authority || ['admin'];
-  return _authority;
+  
+  // return localStorage.getItem('antd-pro-authority') || ['admin', 'user'];
+  const authorityString =
+    typeof str === 'undefined' ? localStorage.getItem('zh-authority') : str;
+  // authorityString could be admin, "admin", ["admin"]
+  let authority;
+  try {
+    authority = JSON.parse(authorityString);
+  } catch (e) {
+    authority = authorityString;
+  }
+  if (typeof authority === 'string') {
+    return [authority];
+  }
+  return authority || _authority;
+  //return _authority;
 }
 
 export function setAuthority(authority) {
-  // const proAuthority = typeof authority === 'string' ? [authority] : authority;
-  // return localStorage.setItem('antd-pro-authority', JSON.stringify(proAuthority));
   _authority = authority;
+  const proAuthority = typeof authority === 'string' ? [authority] : authority;
+  return localStorage.setItem('zh-authority', JSON.stringify(proAuthority));
+  
 }
 
 export function getUsername(){
-  return _userName;
+  return localStorage.getItem('zh-username') || _userName;
 }
 
 export function setUsername(username){
-  _userName=username;
+  _userName = username;
+  return localStorage.setItem('zh-username',username);
 }
 
 export function getUser(){
-  return _user;
+  const userString =localStorage.getItem('zh-user');
+  let user;
+  try {
+    user = JSON.parse(userString);
+  } catch (e) {
+    user = userString;
+  }
+  return user ||_user;
 }
 
 export function setUser(user){
   if(typeof(user)=='undefined'){
-    return;
+    user={
+      name:'guest',
+      role:2,
+    }
   }
   _user=user;
+  return localStorage.setItem('zh-user', JSON.stringify(user));
+
+
 }
 

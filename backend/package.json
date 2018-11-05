@@ -5,18 +5,19 @@
   "private": true,
   "dependencies": {
     "egg": "^2.10.0",
-    "egg-sequelize": "^4.0.1",
-    "mysql2": "^1.6.1",
     "egg-jwt": "^3.0.0",
-    "egg-shell-decorators": "^1.0.4"
+    "egg-sequelize": "^4.0.1",
+    "egg-shell-decorators": "^1.0.4",
+    "moment": "^2.22.2",
+    "mysql2": "^1.6.1"
   },
   "devDependencies": {
     "autod": "^3.0.1",
     "egg-bin": "^4.8.1",
+    "egg-cors": "^2.1.0",
     "egg-mock": "^3.19.2",
     "factory-girl": "^5.0.2",
     "lodash": "^4.17.10",
-    "egg-cors": "^2.1.0",
     "sequelize-cli": "^4.0.0"
   },
   "engines": {
@@ -29,7 +30,7 @@
     "ci": "npm run cov",
     "autod": "autod",
     "sequelize": "sequelize --",
-    "debug":"egg-bin debug --inspect"
+    "debug": "egg-bin debug --inspect"
   },
   "author": "Qi Yu <njuyuqi@gmail.coom>",
   "license": "MIT"

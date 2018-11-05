@@ -259,7 +259,7 @@ class UpdateForm extends PureComponent {
  */
 @connect(({ data_book, loading }) => ({
     data_book,
-    loading: loading.models.rule,
+    loading: loading.models.data_book,
 }))
 @Form.create()
 class Book extends Component {

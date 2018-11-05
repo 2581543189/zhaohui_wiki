@@ -9,7 +9,6 @@ import {
     Progress,
 } from 'antd';
 import { connect } from 'dva';
-import {bulletinLevelClass} from '../../constant/DataConstant'
 const colorArray=['#32CD32','#4B69FF','#D32CE6','#8847FF','red'];
 class Achievement extends React.PureComponent {
 
@@ -25,7 +24,7 @@ class Achievement extends React.PureComponent {
               <Divider orientation="left">下一等级</Divider>
               <p style={{textAlign: 'center'}}>{desc.next}</p>
               <Divider orientation="left">进度</Divider>
-              <p style={{textAlign: 'center'}}><Progress percent={desc.current*100/desc.total} size="small" />{desc.current}/{desc.total}</p>
+              <span style={{textAlign: 'center'}}><Progress percent={desc.current*100/desc.total} size="small" />{desc.current}/{desc.total}</span>
             </div>
         );
 

@@ -136,7 +136,7 @@ class UpdateForm extends PureComponent {
  */
 @connect(({ data_skill, loading }) => ({
     data_skill,
-    loading: loading.models.rule,
+    loading: loading.models.data_skill,
 }))
 @Form.create()
 class Skill extends Component {

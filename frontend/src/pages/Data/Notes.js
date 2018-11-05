@@ -133,7 +133,7 @@ class CreateForm extends Component {
  */
 @connect(({ data_note, loading }) => ({
     data_note,
-    loading: loading.models.rule,
+    loading: loading.models.data_note,
 }))
 @Form.create()
 class Notes extends Component {

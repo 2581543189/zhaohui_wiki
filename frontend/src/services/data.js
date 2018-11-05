@@ -3,8 +3,8 @@ import request from '@/utils/request';
 import {rolesLogin} from '../constant/DataConstant'
 
 
-//let _BASE_PATH="http://localhost/backend";
-let _BASE_PATH="http://www.zhaohui.wiki/backend";
+let _BASE_PATH="http://localhost/backend";
+//let _BASE_PATH="http://www.zhaohui.wiki/backend";
 
 //TODO:模版方法希望后续能找到切面的方法不用每个方法都写这么费劲
 // export async function xxx(payload={}) {
@@ -810,5 +810,116 @@ export async function updateBulletin(payload){
 }
 
 
+/**
+ * =======================================================================================
+ *                                      首页相关查询
+ * =======================================================================================
+ */
 
+/**获取鸡汤 */
+export async function getJitang(payload){
+    try{
+        console.log('getJitang',payload);
+        let option={
+            method:'POST'
+        }
+        const response = await request(_BASE_PATH + '/overview/randomJitang',option);
+        return response;
+    }catch(e){
+        console.log(e);
+        return {
+            error:1,
+            message:e.message,
+        };
+    }
+}
 
+/**获取成就 */
+export async function getAchievement(payload){
+    try{
+        console.log('getAchievement',payload);
+        let option={
+            method:'POST'
+        }
+        const response = await request(_BASE_PATH + '/overview/getAchievement',option);
+        return response;
+    }catch(e){
+        console.log(e);
+        return {
+            error:1,
+            message:e.message,
+        };
+    }
+}
+
+/**获取任务列表 */
+export async function getTaskList(payload){
+    try{
+        console.log('getTaskList',payload);
+        let option={
+            method:'POST'
+        }
+        const response = await request(_BASE_PATH + '/overview/getTaskList',option);
+        return response;
+    }catch(e){
+        console.log(e);
+        return {
+            error:1,
+            message:e.message,
+        };
+    }
+}
+
+/**获取最新动态 */
+export async function getNews(payload){
+    try{
+        console.log('getNews',payload);
+        let option={
+            method:'POST'
+        }
+        const response = await request(_BASE_PATH + '/overview/getNews',option);
+        return response;
+    }catch(e){
+        console.log(e);
+        return {
+            error:1,
+            message:e.message,
+        };
+    }
+}
+
+/**获取活跃度数据 */
+export async function getActivity(payload){
+    try{
+        console.log('getActivity',payload);
+        let option={
+            method:'POST'
+        }
+        const response = await request(_BASE_PATH + '/overview/getActivity',option);
+        return response;
+    }catch(e){
+        console.log(e);
+        return {
+            error:1,
+            message:e.message,
+        };
+    }
+}
+
+/**获取兴趣数据 */
+export async function getInterest(payload){
+    try{
+        console.log('getInterest',payload);
+        let option={
+            method:'POST'
+        }
+        const response = await request(_BASE_PATH + '/overview/getInterest',option);
+        return response;
+    }catch(e){
+        console.log(e);
+        return {
+            error:1,
+            message:e.message,
+        };
+    }
+}

@@ -61,6 +61,18 @@ module.exports = app => {
   app.get('/bulletin/delete/:id', app.controller.bulletin.delete);
   app.post('/bulletin/update/:id', app.controller.bulletin.update);
   app.get('/bulletin/update/:id', app.controller.bulletin.update);
+  //首页相关方法
+  app.post('/overview/randomJitang', app.controller.overview.randomJitang);
+  app.get('/overview/randomJitang', app.controller.overview.randomJitang);
+  app.post('/overview/getAchievement', app.controller.overview.getAchievement);
+  app.get('/overview/getAchievement', app.controller.overview.getAchievement);
+  app.post('/overview/getTaskList', app.controller.overview.getTaskList);
+  app.get('/overview/getTaskList', app.controller.overview.getTaskList);
+  app.post('/overview/getNews', app.controller.overview.getNews);
+  app.get('/overview/getNews', app.controller.overview.getNews);
+  app.post('/overview/getActivity', app.controller.overview.getActivity);
+  app.get('/overview/getActivity', app.controller.overview.getActivity);
+  app.post('/overview/getInterest', app.controller.overview.getInterest);
+  app.get('/overview/getInterest', app.controller.overview.getInterest);
   
-
 };

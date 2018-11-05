@@ -6,6 +6,7 @@ import groupBy from 'lodash/groupBy';
 import HeaderSearch from '../HeaderSearch';
 import styles from './index.less';
 import {rolesIcon} from '../../constant/DataConstant';
+import {getUser}from '../../utils/authority'
 
 export default class GlobalHeaderRight extends PureComponent {
   getNoticeData() {
@@ -69,13 +70,15 @@ export default class GlobalHeaderRight extends PureComponent {
 
   render() {
     const {
-      currentUser,
+      //currentUser,
       fetchingNotices,
       onNoticeVisibleChange,
       onMenuClick,
       onNoticeClear,
       theme,
     } = this.props;
+    const currentUser = getUser();
+
     const menu = (
       <Menu className={styles.menu} selectedKeys={[]} onClick={onMenuClick}>
         <Menu.Item key="logout">

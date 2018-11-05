@@ -1,21 +1,9 @@
 import request from '@/utils/request';
 
 export async function query() {
-  return request('https://my-json-server.typicode.com/2581543189/Mock/apiUsers');
+  return request('/api/users');
 }
 
-export async function queryCurrent(payload) {
-  //return request('https://my-json-server.typicode.com/2581543189/Mock/apiCurrentUser');
-
-  if(payload.username==='guest'){
-    return Promise.resolve({
-      name:payload.username,
-      "avatar": "https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png",
-    });
-  }
-
-  return Promise.resolve({
-    name:payload.username,
-    "avatar": "https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png",
-  });
+export async function queryCurrent() {
+  return request('/api/currentUser');
 }
