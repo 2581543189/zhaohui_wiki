@@ -25,7 +25,7 @@ import {bulletinLevelText,bulletinLevelClass} from '../../constant/DataConstant'
 
 @connect(({ data_overview, loading }) => ({
     data_overview,
-    loading: loading.models.data_overview,
+    loading: loading,
 }))
 class Overview extends PureComponent {
     //初始化获取数据
@@ -130,7 +130,7 @@ class Overview extends PureComponent {
                     title="任务栏"
                     bordered={false}
                     extra={<Link to="/">more...</Link>}
-                    //loading={loading.getTaskList}
+                    loading={loading.effects['data_overview/getTaskList']}
                     bodyStyle={{ padding: 0 }}
                     >
                     {taskList.map(item => (
@@ -156,7 +156,7 @@ class Overview extends PureComponent {
                     bordered={false}
                     className={styles.activeCard}
                     title="动态"
-                    //loading={loading.getNews}
+                    loading={loading.effects['data_overview/getNews']}
                     extra={<Link to="/">more...</Link>}
                     >   <div className={styles.activitiesList}>
 
@@ -191,7 +191,7 @@ class Overview extends PureComponent {
                     style={{ marginBottom: 24 }}
                     bordered={false}
                     title="活跃度"
-                    //loading={loading.getActivity}
+                    loading={loading.effects['data_overview/getActivity']}
                     >
                     <div className={styles.chart}>
                         <Radar hasLegend height={343} data={activitys} />
@@ -199,7 +199,7 @@ class Overview extends PureComponent {
                     </Card>
                     <Card
                     title={"兴趣关键字"}
-                    //loading={loading.getInterest}
+                    loading={loading.effects['data_overview/getInterest']}
                     bordered={false}
                     bodyStyle={{ overflow: 'hidden' }}
                     >

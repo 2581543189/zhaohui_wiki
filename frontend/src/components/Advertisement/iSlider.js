@@ -172,7 +172,8 @@ iSlider.prototype = {
     //全屏滑动 设置样式
     if (this.opts.fullScr) {
       var s = document.createElement("style");
-      s.innerHTML = "html,body{width:100%;height:100%;overflow:hidden}";
+      //s.innerHTML = "html,body{width:100%;height:100%;overflow:hidden}";
+      s.innerHTML = "html,body{width:100%;height:100%;}";
       document.head.appendChild(s);
       s = null;
     }
