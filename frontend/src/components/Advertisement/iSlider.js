@@ -392,7 +392,7 @@ iSlider.prototype = {
     var parent = e.target;
     do {
       if(typeof(parent)=='undefined' ||parent==null){
-       break;
+       return;
       }
       parent = parent.parentNode;
     } while (parent !== this.wrap);
