@@ -28,4 +28,5 @@ export default config => {
       indexFileName: "index.html"
     }
   ]);
+  //console.log(config.plugin('HtmlWebpackPlugin'));
 };
