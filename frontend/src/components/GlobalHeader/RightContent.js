@@ -7,6 +7,7 @@ import HeaderSearch from '../HeaderSearch';
 import styles from './index.less';
 import {rolesIcon} from '../../constant/DataConstant';
 import {getUser}from '../../utils/authority'
+import Link from 'umi/link';
 
 export default class GlobalHeaderRight extends PureComponent {
   getNoticeData() {
@@ -98,8 +99,8 @@ export default class GlobalHeaderRight extends PureComponent {
       <div className={className}>
         <HeaderSearch
           className={`${styles.action} ${styles.search}`}
-          placeholder="站内搜索"
-          dataSource={['搜索提示一', '搜索提示二', '搜索提示三']}
+          placeholder="该功能未实现"
+          dataSource={['没有提示...']}
           onSearch={value => {
             console.log('input', value); // eslint-disable-line
           }}
@@ -107,6 +108,9 @@ export default class GlobalHeaderRight extends PureComponent {
             console.log('enter', value); // eslint-disable-line
           }}
         />
+        <Tooltip title="测试页面" >
+          <Link to="/" style={{padding: '0 12px'}}><Icon type="gift" theme="filled" style={{fontSize: '19px'}}/></Link>
+        </Tooltip>
         <Tooltip title="github">
           <a
             target="_blank"
@@ -114,10 +118,13 @@ export default class GlobalHeaderRight extends PureComponent {
             rel="noopener noreferrer"
             className={styles.action}
             title="github"
+            style={{fontSize: '19px'}}
           >
             <Icon type="github" theme="filled" />
           </a>
         </Tooltip>
+
+
         {currentUser.name ? (
           <Dropdown overlay={menu}>
             <span className={`${styles.action} ${styles.account}`}>

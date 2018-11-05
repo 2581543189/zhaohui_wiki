@@ -83,14 +83,14 @@ class SkillController extends Controller {
 
   async update() {
     const ctx = this.ctx;
-    const id = ctx.helper.parseInt(ctx.params.id);
+    const id = util.parseInt(ctx.params.id);
     const body = ctx.request.body;
     ctx.body = await ctx.service.skill.update({ id, updates: body });
   }
 
   async delete() {
     const ctx = this.ctx;
-    const id = ctx.helper.parseInt(ctx.params.id);
+    const id = util.parseInt(ctx.params.id);
     await ctx.service.skill.del(id);
     ctx.status = 200;
     ctx.body={

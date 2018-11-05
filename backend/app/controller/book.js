@@ -87,11 +87,6 @@ class BookController extends Controller {
     ctx.body = await ctx.service.book.query(query);
   }
 
-  // async show() {
-  //   const ctx = this.ctx;
-  //   ctx.body = await ctx.service.user.find(ctx.helper.parseInt(ctx.params.id));
-  // }
-
   async add() {
     const ctx = this.ctx;
     const book = ctx.request.body;
@@ -118,7 +113,7 @@ class BookController extends Controller {
 
   async update() {
     const ctx = this.ctx;
-    const id = ctx.helper.parseInt(ctx.params.id);
+    const id = util.parseInt(ctx.params.id);
     const book = ctx.request.body;
     //获取分类
     //查询skill
@@ -144,7 +139,7 @@ class BookController extends Controller {
 
   async delete() {
     const ctx = this.ctx;
-    const id = ctx.helper.parseInt(ctx.params.id);
+    const id = util.parseInt(ctx.params.id);
     await ctx.service.book.del(id);
     ctx.status = 200;
     ctx.body={

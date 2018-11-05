@@ -190,5 +190,11 @@ module.exports = {
             });
         }); 
         return radarData;
-    }
+    },
+    parseInt(string) {
+        if (typeof string === 'number') return string;
+        if (!string) return string;
+        return parseInt(string) || 0;
+    },
+    
 }

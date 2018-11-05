@@ -59,10 +59,6 @@ class NoteController extends Controller {
     ctx.body = await ctx.service.note.query(query);
   }
 
-  // async show() {
-  //   const ctx = this.ctx;
-  //   ctx.body = await ctx.service.user.find(ctx.helper.parseInt(ctx.params.id));
-  // }
 
   async add() {
     const ctx = this.ctx;
@@ -90,7 +86,7 @@ class NoteController extends Controller {
 
   async update() {
     const ctx = this.ctx;
-    const id = ctx.helper.parseInt(ctx.params.id);
+    const id = util.parseInt(ctx.params.id);
     const note = ctx.request.body;
     ctx.body = await ctx.service.note.update({ id, updates: note });
     ctx.status = 201;
@@ -98,7 +94,7 @@ class NoteController extends Controller {
 
   async delete() {
     const ctx = this.ctx;
-    const id = ctx.helper.parseInt(ctx.params.id);
+    const id = util.parseInt(ctx.params.id);
     await ctx.service.note.del(id);
     ctx.status = 200;
     ctx.body={

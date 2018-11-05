@@ -84,10 +84,6 @@ class ArticleController extends Controller {
     ctx.body = await ctx.service.article.query(query);
   }
 
-  // async show() {
-  //   const ctx = this.ctx;
-  //   ctx.body = await ctx.service.user.find(ctx.helper.parseInt(ctx.params.id));
-  // }
 
   async add() {
     const ctx = this.ctx;
@@ -115,7 +111,7 @@ class ArticleController extends Controller {
 
   async update() {
     const ctx = this.ctx;
-    const id = ctx.helper.parseInt(ctx.params.id);
+    const id = util.parseInt(ctx.params.id);
     const article = ctx.request.body;
     //获取分类
     //查询skill
@@ -141,7 +137,7 @@ class ArticleController extends Controller {
 
   async delete() {
     const ctx = this.ctx;
-    const id = ctx.helper.parseInt(ctx.params.id);
+    const id = util.parseInt(ctx.params.id);
     await ctx.service.article.del(id);
     ctx.status = 200;
     ctx.body={

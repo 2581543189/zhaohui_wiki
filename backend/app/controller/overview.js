@@ -93,7 +93,7 @@ class OverviewController extends Controller {
             })
         }else{
             let books = await ctx.service.book.query(param);
-            let book = books.rows[0];
+            let book = books.rows[books.rows.length-1];
             tasks.push({
                 level:0,
                 title:'阅读书籍',
@@ -155,24 +155,7 @@ class OverviewController extends Controller {
                     });
                 });
             }
-            //查询skill
-            param ={
-                'where':{
-                    'timestamp':{
-                        '$between':[start.format('YYYY-MM-DD HH:mm:ss'),end.format('YYYY-MM-DD HH:mm:ss')]
-                    }
-                }
-            }
-            const skills =  await ctx.service.skill.query(param);
-            if(skills.count >0){
-                skills.rows.forEach((x)=>{
-                    news.push({
-                        icon:'tool',
-                        date:moment(x.timestamp).format('YYYY-MM-DD HH:mm:ss'),
-                        desc:'在'+x.first+'分类中增加了'+x.second+'-'+x.third,
-                    });
-                });
-            }
+
 
             //查询书籍 新增
             param ={
@@ -271,6 +254,25 @@ class OverviewController extends Controller {
                     });
                 });
             }
+
+            //查询skill
+            param ={
+                'where':{
+                    'timestamp':{
+                        '$between':[start.format('YYYY-MM-DD HH:mm:ss'),end.format('YYYY-MM-DD HH:mm:ss')]
+                    }
+                }
+            }
+            const skills =  await ctx.service.skill.query(param);
+            if(skills.count >0){
+                skills.rows.forEach((x)=>{
+                    news.push({
+                        icon:'tool',
+                        date:moment(x.timestamp).format('YYYY-MM-DD HH:mm:ss'),
+                        desc:'在'+x.first+'分类中增加了'+x.second+'-'+x.third,
+                    });
+                });
+            }
         }
 
         //排序
@@ -306,7 +308,7 @@ class OverviewController extends Controller {
         //笔记
         numbers['note'] = await ctx.service.note.count({});
         //文章
-        numbers['article'] = await ctx.service.book.count({});
+        numbers['article'] = await ctx.service.article.count({});
 
         ctx.status = 200;
         ctx.body = util.generateActivity(numbers);

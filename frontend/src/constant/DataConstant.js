@@ -18,7 +18,7 @@ const re1 = new RegExp(/^\w+$/);
 export function normalValidFunction(rule, value, callback) {
 
     
-    if(typeof(value)=='undefined'||value==''){
+    if(typeof(value)=='undefined'||value===''){
         callback('不能为空');
         return;
     }
@@ -43,7 +43,7 @@ const re2 = new RegExp(/^[A-Za-z0-9\u4e00-\u9fa5]+$/);
 export function hanziValidFunction(rule, value, callback) {
 
     
-    if(typeof(value)=='undefined'||value==''){
+    if(typeof(value)=='undefined'||value===''){
         callback('不能为空');
         return;
     }
@@ -66,7 +66,7 @@ export function hanziValidFunction(rule, value, callback) {
 export function skillsValidFunction(rule, value, callback) {
 
     
-    if(typeof(value)=='undefined'||value==''){
+    if(typeof(value)=='undefined'||value===''){
         callback('不能为空');
         return;
     }
@@ -83,7 +83,7 @@ var urlMmatch = /^((ht|f)tps?):\/\/([\w\-]+(\.[\w\-]+)*\/)*[\w\-]+(\.[\w\-]+)*\/
 export function urlValidFunction(rule, value, callback) {
 
     
-    if(typeof(value)=='undefined'||value==''){
+    if(typeof(value)=='undefined'||value===''){
         callback('不能为空');
         return;
     }
@@ -97,7 +97,7 @@ export function urlValidFunction(rule, value, callback) {
 //表单验证  必须是正整数。
 var positiveInteger =/^[0-9]+$/ ;
 export function  positiveIntegerValidFunction(srule, value, callback){//是否为正整数
-    if(typeof(value)=='undefined'||value==''){
+    if(typeof(value)=='undefined'||value===''){
         callback('不能为空');
         return;
     }
@@ -111,7 +111,7 @@ export function  positiveIntegerValidFunction(srule, value, callback){//是否�
 
 //表单验证  评分 0 - 10 的数字
 export function  scoreValidFunction(rule, value, callback){
-    if(typeof(value)=='undefined'||value==''){
+    if(typeof(value)=='undefined'||value===''){
         callback('不能为空');
         return;
     }
