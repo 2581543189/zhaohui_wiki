@@ -4,7 +4,7 @@
     }
 
     *, *::before, *::after {
-      box-sizing: content-box;
+      box-sizing: inherit;
     }
     .base {
       height: 9em;
@@ -84,10 +84,11 @@
     .demo13 {
       color: rgba(25, 202, 173,1);
       text-shadow: 3px 3px 0 rgba(160,238,225,0.25);
-      font-size: 50px;
+      font-size: 30px;
+      font-weight: 900;
       text-align: center;
       position: absolute;
-      top: 60%;
+      top: 65%;
       width: 100%;
     }</style><script src="./js/prefixfree.min.js"></script><script>window.routerBase = "/";
   window.publicPath = "http://47.99.76.20/frontend/";</script></head><body><div id="root" style="display:none"></div><div id="cubes" class="base"><div class="cube"></div><div class="cube"></div><div class="cube"></div><div class="cube"></div><div class="cube"></div><div class="cube"></div><div class="cube"></div><div class="cube"></div><div class="cube"></div></div><h4 id="desc" class="demo13">&#x963F;&#x91CC;&#x4E91;1M&#x5C0F;&#x6C34;&#x7BA1;&#x771F;&#x7684;&#x597D;&#x6162;T_T</h4><script type="text/javascript">window.onload=function (){
@@ -96,8 +97,8 @@
       var cubes = document.getElementById('cubes');
       var desc = document.getElementById('desc');
       //设置loading 隐藏
-      cubes.style.display='none';
-      desc.style.display='none';
-      //设置root显示
-      root.style.display='';
+      // cubes.style.display='none';
+      // desc.style.display='none';
+      // //设置root显示
+      // root.style.display='';
     }</script><script src="http://47.99.76.20/frontend/umi.js"></script></body></html>
