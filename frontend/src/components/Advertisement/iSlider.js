@@ -230,7 +230,7 @@ iSlider.prototype = {
         if (!self.opts.fullScr) {
           //修复手Q中局部使用时的一个bug
           e.stopPropagation();
-          e.preventDefault();
+          //e.preventDefault();
         }
       },
       { passive: false }
@@ -245,7 +245,7 @@ iSlider.prototype = {
         if (!self.opts.fullScr) {
           //修复手Q中局部使用时的一个bug
           e.stopPropagation();
-          e.preventDefault();
+          //e.preventDefault();
         }
       },
       { passive: false }
@@ -280,7 +280,7 @@ iSlider.prototype = {
       handlrElm.addEventListener(
         "touchmove",
         function(e) {
-          e.preventDefault();
+          //e.preventDefault();
         },
         { passive: false }
       );
@@ -391,6 +391,9 @@ iSlider.prototype = {
   _touchmove: function(e) {
     var parent = e.target;
     do {
+      if(typeof(parent)=='undefined' ||parent==null){
+       break;
+      }
       parent = parent.parentNode;
     } while (parent !== this.wrap);
 
