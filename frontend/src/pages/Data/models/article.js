@@ -89,22 +89,6 @@ export default {
             }
 
         },
-        /**
-         * 获取级联下拉框数据。
-         * 
-         */
-        *getOption({ payload }, { call, put }){
-            const response = yield call(distinctValue, payload);
-            if(response.error!=1){
-                yield put({
-                    type: 'addOptions',
-                    payload:response,
-                });
-                
-            }else{
-                openNotification('error',response.message);
-            }
-        },
         //增加article
         *add({ payload,callback }, { call, put,select }) {
             const response = yield call(addArticle, payload);
@@ -251,64 +235,7 @@ export default {
                 updateModalData:action.payload.updateModalData?action.payload.updateModalData:_default,
             };
         },
-        //处理级联select
-        addOptions(state, action){
-            const response = action.payload.body;
-            if(typeof(response.first)=='undefined' ||response.first===null){
-                //无条件
-                let options = [];
-                response.array.map(data=>{
-                    options.unshift({
-                        value: data,
-                        label: data,
-                        isLeaf: false,
-                    })
-                })
-                state.options = options;
 
-            }else{
-                let children=[];
-                const first = response.first;
-
-                if(typeof(response.second)=='undefined' ||response.second===null){ 
-                    //根据1 查2
-                    response.array.map(data=>{
-                        children.unshift({
-                            label: data,
-                            value: data,
-                            isLeaf: false,
-                        })
-                    })
-                    state.options.map(data=>{
-                        if(data.value===first){
-                            data.children = children;
-                        }
-                    })
-    
-                }else{
-                    //根据1 2 查3
-                    const second = response.second;
-                    response.array.map(data=>{
-                        children.unshift({
-                            label: data,
-                            value: data,
-                        })
-                    })
-                    state.options.map(data=>{
-                        if(data.value===first){
-                            data.children.map(data2=>{
-                                if(data2.value===second){
-                                    data2.children = children;
-                                }
-                            })
-                        }
-                    })
-                }
-            }
-            return{
-                ...state,
-            }
-        },
     }
 
 }

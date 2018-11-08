@@ -20,7 +20,7 @@ import {
     Divider,
     Tooltip,
     Tag,
-  } from 'antd';
+} from 'antd';
 
 const { RangePicker } = DatePicker;
 
@@ -650,12 +650,7 @@ class Bulletin extends Component {
             <UpdateForm {...updateParams} updateModalVisible={updateModalVisible} updateModalData={updateModalData}/>
             </PageHeaderWrapper>
         )
-
     }
-
-
-
-
 }
 
 export default Bulletin;

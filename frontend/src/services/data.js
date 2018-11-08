@@ -19,6 +19,24 @@ let _BASE_PATH="http://www.zhaohui.wiki/backend";
 //     }
 // }
 
+//尝试高阶函数
+
+function globalTryCatch(innerFunction){
+
+    return function(payload={}){
+        try{
+            return innerFunction(payload);
+        }catch(e){
+        console.log(e);
+        return {
+            error:1,
+            message:e.message,
+        };
+    }
+
+    }
+}
+
 
 /**
  * =======================================================================================
@@ -28,8 +46,8 @@ let _BASE_PATH="http://www.zhaohui.wiki/backend";
 
 
 /**查询用户信息 */
-export async function queryUser(payload={}) {
-    try{
+export const queryUser = globalTryCatch(
+    async function(payload) {
         console.log('queryUser',payload);
         //分页信息
         let pagination = {
@@ -42,22 +60,15 @@ export async function queryUser(payload={}) {
             pageSize:payload.pageSize,
             }
         }
-    
         let option={
             method:'POST',
         }
         if(Object.keys(payload).length!=0){
-            //var formData = new FormData();
-            //makeFormData(payload,formData);
-        
             option={
                 method:'POST',
                 body:payload,
             }
-        
         }
-    
-        
         const response = await request(_BASE_PATH + '/user/query',option);
     
         let result = {};
@@ -68,100 +79,55 @@ export async function queryUser(payload={}) {
             value.role = parseInt(value.role);
             return value;
         });
-    
         return result;
-    
-    }catch(e){
-        console.log(e);
-        return {
-            error:1,
-            message:e.message,
-        };
     }
-}
+);
 
 /**新增用户信息 */
-export async function addUser(payload={}) {
-    try{
-        console.log('addUser',payload);
-        let option={
-            method:'POST',
-            body:payload,
-        }
-        const response = await request(_BASE_PATH + '/user/add',option);
-        return response;
-    }catch(e){
-        console.log(e);
-        return {
-            error:1,
-            message:e.message,
-        };
+export const addUser = globalTryCatch(async function (payload) {
+    console.log('addUser',payload);
+    let option={
+        method:'POST',
+        body:payload,
     }
-}
+    const response = await request(_BASE_PATH + '/user/add',option);
+    return response;
+});
 
 
 /**删除用户信息 */
-export async function deleteUser(payload={}) {
-    try{
-        console.log('deleteUser',payload);
-        let option={
-            method:'POST',
-        }
-        const response = await request(_BASE_PATH + '/user/delete/'+payload,option);
-        return response;
-    }catch(e){
-        console.log(e);
-        return {
-            error:1,
-            message:e.message,
-        };
+export const deleteUser = globalTryCatch(async function (payload) {
+    console.log('deleteUser',payload);
+    let option={
+        method:'POST',
     }
-}
+    const response = await request(_BASE_PATH + '/user/delete/'+payload,option);
+    return response;
+});
 
 /**授予管理员权限 */
-export async function managerUser(payload={}) {
-    try{
+export const managerUser = globalTryCatch(async function (payload) {
 
-    }catch(e){
-        console.log(e);
-        return {
-            error:1,
-            message:e.message,
-        };
-    }
-}
+});
 
 /**更新用户 */
-export async function updateUser(payload={}) {
-    try{
-        console.log('updateUser',payload);
-        let option={
-            method:'POST',
-            body:payload
-        }
-        const response = await request(_BASE_PATH + '/user/update/'+payload.id,option);
-        return response;
-    }catch(e){
-        console.log(e);
-        return {
-            error:1,
-            message:e.message,
-        };
+export const updateUser = globalTryCatch(async function (payload) {
+    console.log('updateUser',payload);
+    let option={
+        method:'POST',
+        body:payload
     }
-}
+    const response = await request(_BASE_PATH + '/user/update/'+payload.id,option);
+    return response;
+});
 
 /**登陆 */
-export async function login(payload={}) {
-    try{
+export const login = globalTryCatch(async function (payload) {
         console.log('login',payload);
-
         let option={
             method:'POST',
         }
         if(Object.keys(payload).length!=0){
-            //var formData = new FormData();
-            //makeFormData(payload,formData);
-    
             option={
                 method:'POST',
                 body:payload,
@@ -181,7 +147,6 @@ export async function login(payload={}) {
                 user:response.rows[0],
             }
         }else {
-    
             result = {
                 status:false,
                 currentAuthority:'guest',
@@ -190,15 +155,7 @@ export async function login(payload={}) {
             }
         }
         return result;
-    
-    }catch(e){
-        console.log(e);
-        return {
-            error:1,
-            message:e.message,
-        };
-    }
-}
+});
 
 
 
@@ -210,147 +167,107 @@ export async function login(payload={}) {
 
 
 /**查询用户信息 */
-export async function querySkill(payload={}) {
-    try{
-        console.log('querySkill',payload);
-        //分页信息
-        let pagination = {
-            current:1,
-            pageSize:10,
-        }
-        if(payload.currentPage){
-            pagination = {
-            current:payload.currentPage,
-            pageSize:payload.pageSize,
-            }
-        }
-    
-        let option={
-            method:'POST',
-        }
-        if(Object.keys(payload).length!=0){   
-            option={
-                method:'POST',
-                body:payload,
-            }
-        }
-        
-        const response = await request(_BASE_PATH + '/skill/query',option);
-    
-        let result = {};
-        result.pagination = pagination;
-        result.pagination.total = response.count;
-        result.list = response.rows.map(function(value,key,arr){
-            value.key = value.id;
-            return value;
-        });
-    
-        return result;
-    }catch(e){
-        console.log(e);
-        return {
-            error:1,
-            message:e.message,
-        };
+export const querySkill = globalTryCatch(async function (payload) {
+    console.log('querySkill',payload);
+    //分页信息
+    let pagination = {
+        current:1,
+        pageSize:10,
     }
-}
+    if(payload.currentPage){
+        pagination = {
+        current:payload.currentPage,
+        pageSize:payload.pageSize,
+        }
+    }
 
-/**新增技能信息 */
-export async function addSkill(payload={}) {
-    try{
-        console.log('addSkill',payload);
-        let option={
+    let option={
+        method:'POST',
+    }
+    if(Object.keys(payload).length!=0){   
+        option={
             method:'POST',
             body:payload,
         }
-        const response = await request(_BASE_PATH + '/skill/add',option);
-        return response;
-    }catch(e){
-        console.log(e);
-        return {
-            error:1,
-            message:e.message,
-        };
     }
-}
+    
+    const response = await request(_BASE_PATH + '/skill/query',option);
+
+    let result = {};
+    result.pagination = pagination;
+    result.pagination.total = response.count;
+    result.list = response.rows.map(function(value,key,arr){
+        value.key = value.id;
+        return value;
+    });
+
+    return result;
+});
+
+/**新增技能信息 */
+export const addSkill = globalTryCatch(async function (payload) {
+    console.log('addSkill',payload);
+    let option={
+        method:'POST',
+        body:payload,
+    }
+    const response = await request(_BASE_PATH + '/skill/add',option);
+    return response;
+});
 
 
 /**删除技能信息 */
-export async function deleteSkill(payload){
-    try{
-        console.log('deleteSkill',payload);
-        let option={
-            method:'POST',
-        }
-        const response = await request(_BASE_PATH + '/skill/delete/'+payload,option);
-        return response;
-    }catch(e){
-        console.log(e);
-        return {
-            error:1,
-            message:e.message,
-        };
+export const deleteSkill = globalTryCatch(async function (payload) {
+    console.log('deleteSkill',payload);
+    let option={
+        method:'POST',
     }
-}
+    const response = await request(_BASE_PATH + '/skill/delete/'+payload,option);
+    return response;
+});
 
 /**更新技能 */
-export async function updateSkill(payload){
-    try{
-        console.log('updateSkill',payload);
-        let option={
-            method:'POST',
-            body:payload
-        }
-        const response = await request(_BASE_PATH + '/skill/update/'+payload.id,option);
-        return response;
-    }catch(e){
-        console.log(e);
-        return {
-            error:1,
-            message:e.message,
-        };
+export const updateSkill = globalTryCatch(async function (payload) {
+    console.log('updateSkill',payload);
+    let option={
+        method:'POST',
+        body:payload
     }
-}
+    const response = await request(_BASE_PATH + '/skill/update/'+payload.id,option);
+    return response;
+});
 
 /**获取级联筛选框数据 */
-export async function distinctValue(payload){
-    try{
-        if(typeof(payload)=='undefined'){
-            payload={};
-        }
-        let name='first';
-        if(payload.name){
-            name=payload.name;
-        }
-        //name:字段
-        //first/second/具体的查询条件
-        console.log('distinctValue',payload);
-        let option={
-            method:'POST',
-            body:payload
-        }
-
-        let response = await request(_BASE_PATH + '/skill/distinctValue',option);
-        let array=[];
-        response.map(function(data){
-            array.push(data[name]);
-        })
-        response={};
-        response.body = {
-            name:name,
-            array:array,
-            second:payload.second,
-            first:payload.first,
-        }
-        return response;
-    }catch(e){
-        console.log(e);
-        return {
-            error:1,
-            message:e.message,
-        };
+export const distinctValue = globalTryCatch(async function (payload) {
+    if(typeof(payload)=='undefined'){
+        payload={};
     }
-}
+    let name='first';
+    if(payload.name){
+        name=payload.name;
+    }
+    //name:字段
+    //first/second/具体的查询条件
+    console.log('distinctValue',payload);
+    let option={
+        method:'POST',
+        body:payload
+    }
+
+    let response = await request(_BASE_PATH + '/skill/distinctValue',option);
+    let array=[];
+    response.map(function(data){
+        array.push(data[name]);
+    })
+    response={};
+    response.body = {
+        name:name,
+        array:array,
+        second:payload.second,
+        first:payload.first,
+    }
+    return response;
+});
 
 /**
  * =======================================================================================
@@ -359,134 +276,94 @@ export async function distinctValue(payload){
  */
 
  /**查询文章信息 */
-export async function queryArticle(payload={}) {
-    try{
-        console.log('queryArticle',payload);
-        //分页信息
-        let pagination = {
-            current:1,
-            pageSize:10,
-        }
-        if(payload.currentPage){
-            pagination = {
-            current:payload.currentPage,
-            pageSize:payload.pageSize,
-            }
-        }
-    
-        let option={
-            method:'POST',
-        }
-        if(Object.keys(payload).length!=0){
-            option={
-                method:'POST',
-                body:payload,
-            }
-        }
-        
-        const response = await request(_BASE_PATH + '/article/query',option);
-    
-        let result = {};
-        result.pagination = pagination;
-        result.pagination.total = response.count;
-        result.list = response.rows.map(function(value,key,arr){
-            value.key = value.id;
-            return value;
-        });
-    
-        return result;
-    }catch(e){
-        console.log(e);
-        return {
-            error:1,
-            message:e.message,
-        };
+export const queryArticle = globalTryCatch(async function (payload) {
+    console.log('queryArticle',payload);
+    //分页信息
+    let pagination = {
+        current:1,
+        pageSize:10,
     }
-}
-
-
-/**获取平台列表 */
-export async function distinctPlatforms(payload){
-    try{
-        //first/second/具体的查询条件
-        console.log('distinctPlatforms',payload);
-        let option={
-            method:'POST'
+    if(payload.currentPage){
+        pagination = {
+        current:payload.currentPage,
+        pageSize:payload.pageSize,
         }
-
-        let response = await request(_BASE_PATH + '/article/distinctPlatform',option);
-        let array=[];
-        response.map(function(data){
-            array.push(data['platform']);
-        })
-        response={};
-        response.body = {
-            array:array,
-        }
-        return response;
-    }catch(e){
-        console.log(e);
-        return {
-            error:1,
-            message:e.message,
-        };
     }
-}
-/**新增文章 */
-export async function addArticle(payload){
-    try{
-        console.log('addArticle',payload);
-        let option={
+
+    let option={
+        method:'POST',
+    }
+    if(Object.keys(payload).length!=0){
+        option={
             method:'POST',
             body:payload,
         }
-        const response = await request(_BASE_PATH + '/article/add',option);
-        return response;
-    }catch(e){
-        console.log(e);
-        return {
-            error:1,
-            message:e.message,
-        };
     }
-}
+    
+    const response = await request(_BASE_PATH + '/article/query',option);
+
+    let result = {};
+    result.pagination = pagination;
+    result.pagination.total = response.count;
+    result.list = response.rows.map(function(value,key,arr){
+        value.key = value.id;
+        return value;
+    });
+
+    return result;
+});
+
+
+/**获取平台列表 */
+export const distinctPlatforms = globalTryCatch(async function (payload) {
+    //first/second/具体的查询条件
+    console.log('distinctPlatforms',payload);
+    let option={
+        method:'POST'
+    }
+
+    let response = await request(_BASE_PATH + '/article/distinctPlatform',option);
+    let array=[];
+    response.map(function(data){
+        array.push(data['platform']);
+    })
+    response={};
+    response.body = {
+        array:array,
+    }
+    return response;
+});
+/**新增文章 */
+export const addArticle = globalTryCatch(async function (payload) {
+    console.log('addArticle',payload);
+    let option={
+        method:'POST',
+        body:payload,
+    }
+    const response = await request(_BASE_PATH + '/article/add',option);
+    return response;
+});
 
 /**删除文章信息 */
-export async function deleteArticle(payload){
-    try{
-        console.log('deleteArticle',payload);
-        let option={
-            method:'POST',
-        }
-        const response = await request(_BASE_PATH + '/article/delete/'+payload,option);
-        return response;
-    }catch(e){
-        console.log(e);
-        return {
-            error:1,
-            message:e.message,
-        };
+export const deleteArticle = globalTryCatch(async function (payload) {
+    console.log('deleteArticle',payload);
+    let option={
+        method:'POST',
     }
-}
+    const response = await request(_BASE_PATH + '/article/delete/'+payload,option);
+    return response;
+});
 
 /**更新文章 */
-export async function updateArticle(payload){
-    try{
-        console.log('updateArticle',payload);
-        let option={
-            method:'POST',
-            body:payload
-        }
-        const response = await request(_BASE_PATH + '/article/update/'+payload.id,option);
-        return response;
-    }catch(e){
-        console.log(e);
-        return {
-            error:1,
-            message:e.message,
-        };
+export const updateArticle = globalTryCatch(async function (payload) {
+    console.log('updateArticle',payload);
+    let option={
+        method:'POST',
+        body:payload
     }
-}
+    const response = await request(_BASE_PATH + '/article/update/'+payload.id,option);
+    return response;
+});
 
 /**
  * =======================================================================================
@@ -495,8 +372,7 @@ export async function updateArticle(payload){
  */
 
 /**查询文章信息 */
-export async function queryBook(payload={}) {
-    try{
+export const queryBook = globalTryCatch(async function (payload) {
         console.log('queryBook',payload);
         //分页信息
         let pagination = {
@@ -530,70 +406,39 @@ export async function queryBook(payload={}) {
         });
     
         return result;
-    }catch(e){
-        console.log(e);
-        return {
-            error:1,
-            message:e.message,
-        };
-    }
-}
+});
 
 /**新增文章 */
-export async function addBook(payload){
-    try{
-        console.log('addBook',payload);
-        let option={
-            method:'POST',
-            body:payload,
-        }
-        const response = await request(_BASE_PATH + '/book/add',option);
-        return response;
-    }catch(e){
-        console.log(e);
-        return {
-            error:1,
-            message:e.message,
-        };
+export const addBook = globalTryCatch(async function (payload) {
+    console.log('addBook',payload);
+    let option={
+        method:'POST',
+        body:payload,
     }
-}
+    const response = await request(_BASE_PATH + '/book/add',option);
+    return response;
+});
 
 /**删除书籍信息 */
-export async function deleteBook(payload){
-    try{
-        console.log('deleteBook',payload);
-        let option={
-            method:'POST',
-        }
-        const response = await request(_BASE_PATH + '/book/delete/'+payload,option);
-        return response;
-    }catch(e){
-        console.log(e);
-        return {
-            error:1,
-            message:e.message,
-        };
+export const deleteBook = globalTryCatch(async function (payload) {
+    console.log('deleteBook',payload);
+    let option={
+        method:'POST',
     }
-}
+    const response = await request(_BASE_PATH + '/book/delete/'+payload,option);
+    return response;
+});
 
 /**更新文章 */
-export async function updateBook(payload){
-    try{
-        console.log('updateBook',payload);
-        let option={
-            method:'POST',
-            body:payload
-        }
-        const response = await request(_BASE_PATH + '/book/update/'+payload.id,option);
-        return response;
-    }catch(e){
-        console.log(e);
-        return {
-            error:1,
-            message:e.message,
-        };
+export const updateBook = globalTryCatch(async function (payload) {
+    console.log('updateBook',payload);
+    let option={
+        method:'POST',
+        body:payload
     }
-}
+    const response = await request(_BASE_PATH + '/book/update/'+payload.id,option);
+    return response;
+});
 
 /**
  * =======================================================================================
@@ -602,8 +447,7 @@ export async function updateBook(payload){
  */
 
  /**查询笔记信息 */
-export async function queryNote(payload={}) {
-    try{
+export const queryNote = globalTryCatch(async function (payload) {
         console.log('queryNote',payload);
         //分页信息
         let pagination = {
@@ -637,70 +481,39 @@ export async function queryNote(payload={}) {
         });
     
         return result;
-    }catch(e){
-        console.log(e);
-        return {
-            error:1,
-            message:e.message,
-        };
-    }
-}
+});
 
 /**新增笔记 */
-export async function addNote(payload){
-    try{
-        console.log('addNote',payload);
-        let option={
-            method:'POST',
-            body:payload,
-        }
-        const response = await request(_BASE_PATH + '/note/add',option);
-        return response;
-    }catch(e){
-        console.log(e);
-        return {
-            error:1,
-            message:e.message,
-        };
+export const addNote = globalTryCatch(async function (payload) {
+    console.log('addNote',payload);
+    let option={
+        method:'POST',
+        body:payload,
     }
-}
+    const response = await request(_BASE_PATH + '/note/add',option);
+    return response;
+});
 
 /**删除笔记信息 */
-export async function deleteNote(payload){
-    try{
-        console.log('deleteNote',payload);
-        let option={
-            method:'POST',
-        }
-        const response = await request(_BASE_PATH + '/note/delete/'+payload,option);
-        return response;
-    }catch(e){
-        console.log(e);
-        return {
-            error:1,
-            message:e.message,
-        };
+export const deleteNote = globalTryCatch(async function (payload) {
+    console.log('deleteNote',payload);
+    let option={
+        method:'POST',
     }
-}
+    const response = await request(_BASE_PATH + '/note/delete/'+payload,option);
+    return response;
+});
 
 /**笔记文章 */
-export async function updateNote(payload){
-    try{
-        console.log('updateNote',payload);
-        let option={
-            method:'POST',
-            body:payload
-        }
-        const response = await request(_BASE_PATH + '/note/update/'+payload.id,option);
-        return response;
-    }catch(e){
-        console.log(e);
-        return {
-            error:1,
-            message:e.message,
-        };
+export const updateNote = globalTryCatch(async function (payload) {
+    console.log('updateNote',payload);
+    let option={
+        method:'POST',
+        body:payload
     }
-}
+    const response = await request(_BASE_PATH + '/note/update/'+payload.id,option);
+    return response;
+});
 
 /**
  * =======================================================================================
@@ -709,105 +522,73 @@ export async function updateNote(payload){
  */
 
  /**查询笔记信息 */
-export async function queryBulletin(payload={}) {
-    try{
-        console.log('queryBulletin',payload);
-        //分页信息
-        let pagination = {
-            current:1,
-            pageSize:10,
-        }
-        if(payload.currentPage){
-            pagination = {
-            current:payload.currentPage,
-            pageSize:payload.pageSize,
-            }
-        }
-    
-        let option={
-            method:'POST',
-        }
-        if(Object.keys(payload).length!=0){   
-            option={
-                method:'POST',
-                body:payload,
-            }
-        }
-        const response = await request(_BASE_PATH + '/bulletin/query',option);
-    
-        let result = {};
-        result.pagination = pagination;
-        result.pagination.total = response.count;
-        result.list = response.rows.map(function(value,key,arr){
-            value.key = value.id;
-            return value;
-        });
-    
-        return result;
-    }catch(e){
-        console.log(e);
-        return {
-            error:1,
-            message:e.message,
-        };
+export const queryBulletin = globalTryCatch(async function (payload) {
+    console.log('queryBulletin',payload);
+    //分页信息
+    let pagination = {
+        current:1,
+        pageSize:10,
     }
-}
+    if(payload.currentPage){
+        pagination = {
+        current:payload.currentPage,
+        pageSize:payload.pageSize,
+        }
+    }
 
-/**新增笔记 */
-export async function addBulletin(payload){
-    try{
-        console.log('addBulletin',payload);
-        let option={
+    let option={
+        method:'POST',
+    }
+    if(Object.keys(payload).length!=0){   
+        option={
             method:'POST',
             body:payload,
         }
-        const response = await request(_BASE_PATH + '/bulletin/add',option);
-        return response;
-    }catch(e){
-        console.log(e);
-        return {
-            error:1,
-            message:e.message,
-        };
     }
-}
+    const response = await request(_BASE_PATH + '/bulletin/query',option);
+
+    let result = {};
+    result.pagination = pagination;
+    result.pagination.total = response.count;
+    result.list = response.rows.map(function(value,key,arr){
+        value.key = value.id;
+        return value;
+    });
+
+    return result;
+});
+
+/**新增笔记 */
+export const addBulletin = globalTryCatch(async function (payload) {
+    console.log('addBulletin',payload);
+    let option={
+        method:'POST',
+        body:payload,
+    }
+    const response = await request(_BASE_PATH + '/bulletin/add',option);
+    return response;
+});
 
 /**删除笔记信息 */
-export async function deleteBulletin(payload){
-    try{
-        console.log('deleteBulletin',payload);
-        let option={
-            method:'POST',
-        }
-        const response = await request(_BASE_PATH + '/bulletin/delete/'+payload,option);
-        return response;
-    }catch(e){
-        console.log(e);
-        return {
-            error:1,
-            message:e.message,
-        };
+export const deleteBulletin = globalTryCatch(async function (payload) {
+    console.log('deleteBulletin',payload);
+    let option={
+        method:'POST',
     }
-}
+    const response = await request(_BASE_PATH + '/bulletin/delete/'+payload,option);
+    return response;
+});
 
 /**笔记文章 */
-export async function updateBulletin(payload){
-    try{
-        console.log('updateBulletin',payload);
-        let option={
-            method:'POST',
-            body:payload
-        }
-        const response = await request(_BASE_PATH + '/bulletin/update/'+payload.id,option);
-        return response;
-    }catch(e){
-        console.log(e);
-        return {
-            error:1,
-            message:e.message,
-        };
+export const updateBulletin = globalTryCatch(async function (payload) {
+    console.log('updateBulletin',payload);
+    let option={
+        method:'POST',
+        body:payload
     }
-}
+    const response = await request(_BASE_PATH + '/bulletin/update/'+payload.id,option);
+    return response;
+});
 
 
 /**
@@ -817,109 +598,61 @@ export async function updateBulletin(payload){
  */
 
 /**获取鸡汤 */
-export async function getJitang(payload){
-    try{
-        console.log('getJitang',payload);
-        let option={
-            method:'POST'
-        }
-        const response = await request(_BASE_PATH + '/overview/randomJitang',option);
-        return response;
-    }catch(e){
-        console.log(e);
-        return {
-            error:1,
-            message:e.message,
-        };
+export const getJitang = globalTryCatch(async function (payload) {
+    console.log('getJitang',payload);
+    let option={
+        method:'POST'
     }
-}
+    const response = await request(_BASE_PATH + '/overview/randomJitang',option);
+    return response;
+});
 
 /**获取成就 */
-export async function getAchievement(payload){
-    try{
-        console.log('getAchievement',payload);
-        let option={
-            method:'POST'
-        }
-        const response = await request(_BASE_PATH + '/overview/getAchievement',option);
-        return response;
-    }catch(e){
-        console.log(e);
-        return {
-            error:1,
-            message:e.message,
-        };
+export const getAchievement = globalTryCatch(async function (payload) {
+    console.log('getAchievement',payload);
+    let option={
+        method:'POST'
     }
-}
+    const response = await request(_BASE_PATH + '/overview/getAchievement',option);
+    return response;
+});
 
 /**获取任务列表 */
-export async function getTaskList(payload){
-    try{
-        console.log('getTaskList',payload);
-        let option={
-            method:'POST'
-        }
-        const response = await request(_BASE_PATH + '/overview/getTaskList',option);
-        return response;
-    }catch(e){
-        console.log(e);
-        return {
-            error:1,
-            message:e.message,
-        };
+export const getTaskList = globalTryCatch(async function (payload) {
+    console.log('getTaskList',payload);
+    let option={
+        method:'POST'
     }
-}
+    const response = await request(_BASE_PATH + '/overview/getTaskList',option);
+    return response;
+});
 
 /**获取最新动态 */
-export async function getNews(payload){
-    try{
-        console.log('getNews',payload);
-        let option={
-            method:'POST'
-        }
-        const response = await request(_BASE_PATH + '/overview/getNews',option);
-        return response;
-    }catch(e){
-        console.log(e);
-        return {
-            error:1,
-            message:e.message,
-        };
+export const getNews = globalTryCatch(async function (payload) {
+    console.log('getNews',payload);
+    let option={
+        method:'POST'
     }
-}
+    const response = await request(_BASE_PATH + '/overview/getNews',option);
+    return response;
+});
 
 /**获取活跃度数据 */
-export async function getActivity(payload){
-    try{
-        console.log('getActivity',payload);
-        let option={
-            method:'POST'
-        }
-        const response = await request(_BASE_PATH + '/overview/getActivity',option);
-        return response;
-    }catch(e){
-        console.log(e);
-        return {
-            error:1,
-            message:e.message,
-        };
+export const getActivity = globalTryCatch(async function (payload) {
+    console.log('getActivity',payload);
+    let option={
+        method:'POST'
     }
-}
+    const response = await request(_BASE_PATH + '/overview/getActivity',option);
+    return response;
+});
 
 /**获取兴趣数据 */
-export async function getInterest(payload){
-    try{
-        console.log('getInterest',payload);
-        let option={
-            method:'POST'
-        }
-        const response = await request(_BASE_PATH + '/overview/getInterest',option);
-        return response;
-    }catch(e){
-        console.log(e);
-        return {
-            error:1,
-            message:e.message,
-        };
+export const getInterest = globalTryCatch(async function (payload) {
+    console.log('getInterest',payload);
+    let option={
+        method:'POST'
     }
-}
+    const response = await request(_BASE_PATH + '/overview/getInterest',option);
+    return response;
+});

@@ -1,5 +1,6 @@
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import StandardTable from '@/components/StandardTable';
+import SkillCascader from '@/components/custom/SkillCascader';
 import React, { Component ,Fragment,PureComponent} from 'react';
 import { connect } from 'dva';
 import moment from 'moment';
@@ -19,7 +20,6 @@ import {
     Modal,
     Divider,
     Tooltip,
-    Cascader,
 } from 'antd';
 const { Option } = Select;
 import styles from './TableList.less';
@@ -35,8 +35,6 @@ class CreateForm extends Component {
 
     constructor(props) {
         super(props);
-        this.loadData=this.props.loadData;
-        this.onChange=this.props.onChange;
         this.handleModalVisible=this.props.handleModalVisible;
         this.handleAdd=this.props.handleAdd;
         this.dispatch=this.props.dispatch;
@@ -83,13 +81,7 @@ class CreateForm extends Component {
               {form.getFieldDecorator('type', {
                 rules: [{required: true,validator:skillsValidFunction}],
               })(
-                <Cascader
-                    options={options}
-                    loadData={(selectedOptions)=>this.loadData(selectedOptions)}
-                    //onChange={(value, selectedOptions)=>this.onChange(value, selectedOptions)}
-                    changeOnSelect
-                    style={{ width: '100%' }}
-                />
+                <SkillCascader style={{ width: '100%' }} />
               )}
             </FormItem> 
             <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="url">
@@ -113,8 +105,6 @@ class UpdateForm extends PureComponent {
 
   constructor(props) {
     super(props);
-    this.loadData=this.props.loadData;
-    this.onChange=this.props.onChange;
     this.handleUpdateModalVisible=this.props.handleUpdateModalVisible;
     this.handleUpdate=this.props.handleUpdate;
     this.dispatch=this.props.dispatch;
@@ -140,7 +130,7 @@ class UpdateForm extends PureComponent {
   }
 
   render() {
-    const { updateModalVisible, form,options,updateModalData} = this.props;
+    const { updateModalVisible, form,updateModalData} = this.props;
     return (
       <Modal
         destroyOnClose
@@ -181,13 +171,7 @@ class UpdateForm extends PureComponent {
                 rules: [{required: true,validator:skillsValidFunction}],
                 initialValue: this.transfer(updateModalData.skill),
               })(
-                <Cascader
-                    options={options}
-                    loadData={(selectedOptions)=>this.loadData(selectedOptions)}
-                    //onChange={(value, selectedOptions)=>this.onChange(value, selectedOptions)}
-                    changeOnSelect
-                    style={{ width: '100%' }}
-                />
+                    <SkillCascader style={{ width: '100%' }} initdata={updateModalData.skill}/> 
               )}
             </FormItem> 
             <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="url">
@@ -359,14 +343,11 @@ class Article extends Component {
     };
 
     //默认查询第一页
-    componentDidMount() {
+    componentWillMount() {
     
         const { dispatch } = this.props;
         dispatch({
             type: 'data_article/getPlatforms',
-        });
-        dispatch({
-            type: 'data_article/getOption',
         });
         dispatch({
             type: 'data_article/fetch',
@@ -374,7 +355,7 @@ class Article extends Component {
     }
 
     //查询条件。
-    renderForm(options,platforms){
+    renderForm(platforms){
         const {
             form: { getFieldDecorator },
         } = this.props;
@@ -408,12 +389,7 @@ class Article extends Component {
             <Col md={8} sm={24}>
                 <FormItem label="分类">
                 {getFieldDecorator('skills')(
-                    <Cascader
-                        options={options}
-                        loadData={(selectedOptions)=>this.loadData(selectedOptions)}
-                        onChange={(value, selectedOptions)=>this.onChange(value, selectedOptions)}
-                        changeOnSelect
-                    />
+                    <SkillCascader />
                 )}
                 </FormItem>
             </Col>
@@ -432,92 +408,6 @@ class Article extends Component {
         </Form>
         );
     }
-
-    //获取option数据
-    loadData(selectedOptions){
-        console.log(selectedOptions);
-        const { dispatch } = this.props;
-        let deepth = selectedOptions.length;
-        let param={};
-        if(deepth==3){
-
-        }else if(deepth==2){
-            param={
-                name:'third',
-                first:selectedOptions[0].value,
-                second:selectedOptions[1].value,
-            }
-
-        }else if(deepth==1){
-            param={
-                name:'second',
-                first:selectedOptions[0].value,
-            }
-
-        }else{
-            param={
-                name:'first',
-            }
-        }
-        dispatch({
-            type: 'data_article/getOption',
-            payload: param,
-        });
-
-    };
-
-    onChange(value, selectedOptions){
-        //console.log(this);
-        const { dispatch } = this.props;
-        let deepth = selectedOptions.length;
-        if(deepth==3){
-            dispatch({
-                type: 'data_article/setFormValues',
-                payload: {
-                    formValues:{
-                        first:selectedOptions[0].value,
-                        second:selectedOptions[1].value,
-                        third:selectedOptions[2].value,
-                    }
-                },
-            });
-        }else if(deepth==2){
-            dispatch({
-                type: 'data_article/setFormValues',
-                payload: {
-                    formValues:{
-                        first:selectedOptions[0].value,
-                        second:selectedOptions[1].value,
-                        third:'',
-                    }
-                },
-            });
-        }else if(deepth==1){
-            dispatch({
-                type: 'data_article/setFormValues',
-                payload: {
-                    formValues:{
-                        first:selectedOptions[0].value,
-                        second:'',
-                        third:'',
-                    }
-                },
-            });
-        }else{
-            dispatch({
-                type: 'data_article/setFormValues',
-                payload: {
-                    formValues:{
-                        first:'',
-                        second:'',
-                        third:'',
-                    },
-                }
-            });
-
-        }
-        console.log(value, selectedOptions);
-    };
 
     //查询数据
     handleSearch = e => {
@@ -659,7 +549,7 @@ class Article extends Component {
     render(){
 
         const {
-            data_article: { list,pagination,platforms,options,modalVisible,updateModalData,updateModalVisible},
+            data_article: { list,pagination,platforms,modalVisible,updateModalData,updateModalVisible},
             loading,
         } = this.props;
 
@@ -679,18 +569,12 @@ class Article extends Component {
         const addParams = {
             handleAdd: this.handleAdd,
             handleModalVisible: this.handleModalVisible,
-            loadData:this.loadData,
-            onChange:this.onChange,
-            options:options,
             dispatch:this.props.dispatch,
         };
 
         const updateParams = {
             handleUpdate: this.handleUpdate,
             handleUpdateModalVisible: this.handleUpdateModalVisible,
-            loadData:this.loadData,
-            onChange:this.onChange,
-            options:options,
             dispatch:this.props.dispatch,
         }
 
@@ -699,7 +583,7 @@ class Article extends Component {
                 <Card bordered={false}>
                     <div className={styles.tableList}>
                         {/*查询条件*/}
-                        <div className={styles.tableListForm}>{this.renderForm(options,platforms)}</div>
+                        <div className={styles.tableListForm}>{this.renderForm(platforms)}</div>
                         <div className={styles.tableListOperator}>
                             <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true)}>
                                 新建

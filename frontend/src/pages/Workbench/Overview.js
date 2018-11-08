@@ -1,4 +1,3 @@
-
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import Achievement from '@/components/Achievement';
 import { getUser } from '../../utils/authority';
@@ -23,31 +22,31 @@ const TabPane = Tabs.TabPane;
 import {bulletinLevelText,bulletinLevelClass} from '../../constant/DataConstant';
 
 
-@connect(({ data_overview, loading }) => ({
-    data_overview,
-    loading: loading,
+@connect(({ workbench_overview, loading }) => ({
+    workbench_overview,
+    loading
 }))
 class Overview extends PureComponent {
     //初始化获取数据
     componentDidMount() {
         const { dispatch } = this.props;
         dispatch({
-            type:'data_overview/getJitang'
+            type:'workbench_overview/getJitang'
         });
         dispatch({
-            type:'data_overview/getAchievement'
+            type:'workbench_overview/getAchievement'
         });
         dispatch({
-            type:'data_overview/getTaskList'
+            type:'workbench_overview/getTaskList'
         });
         dispatch({
-            type:'data_overview/getNews'
+            type:'workbench_overview/getNews'
         });
         dispatch({
-            type:'data_overview/getActivity'
+            type:'workbench_overview/getActivity'
         });
         dispatch({
-            type:'data_overview/getInterest'
+            type:'workbench_overview/getInterest'
         });
 
     }
@@ -56,9 +55,9 @@ class Overview extends PureComponent {
      */
     render(){
 
-
+        let a=1;
         let {
-            data_overview:{jitang,achievement,taskList,news,activitys,interest},
+            workbench_overview:{jitang,achievement,taskList,news,activitys,interest},
             loading,
         } = this.props;
 
@@ -129,8 +128,8 @@ class Overview extends PureComponent {
                     style={{ marginBottom: 24 }}
                     title="任务栏"
                     bordered={false}
-                    extra={<Link to="/">more...</Link>}
-                    loading={loading.effects['data_overview/getTaskList']}
+                    extra={<Link to="/website/workbench/index/missions">more...</Link>}
+                    loading={loading.effects['workbench_overview/getTaskList']}
                     bodyStyle={{ padding: 0 }}
                     >
                     {taskList.map(item => (
@@ -156,8 +155,8 @@ class Overview extends PureComponent {
                     bordered={false}
                     className={styles.activeCard}
                     title="动态"
-                    loading={loading.effects['data_overview/getNews']}
-                    extra={<Link to="/">more...</Link>}
+                    loading={loading.effects['workbench_overview/getNews']}
+                    extra={<Link to="/website/workbench/index/news">more...</Link>}
                     >   <div className={styles.activitiesList}>
 
                         <List 
@@ -191,7 +190,7 @@ class Overview extends PureComponent {
                     style={{ marginBottom: 24 }}
                     bordered={false}
                     title="活跃度"
-                    loading={loading.effects['data_overview/getActivity']}
+                    loading={loading.effects['workbench_overview/getActivity']}
                     >
                     <div className={styles.chart}>
                         <Radar hasLegend height={343} data={activitys} />
@@ -199,7 +198,7 @@ class Overview extends PureComponent {
                     </Card>
                     <Card
                     title={"兴趣关键字"}
-                    loading={loading.effects['data_overview/getInterest']}
+                    loading={loading.effects['workbench_overview/getInterest']}
                     bordered={false}
                     bodyStyle={{ overflow: 'hidden' }}
                     >

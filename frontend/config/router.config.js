@@ -34,24 +34,48 @@ export default [
             name: 'overview',
             component: './Workbench/Overview',
             icon: 'eye',
-          },
-          {
-            path: '/website/workbench/footprint',
-            name: 'footprint',
-            component: './Workbench/Footprint',
-            icon: 'form',
-          },
-          {
-            path: '/website/workbench/ladder',
-            name: 'ladder',
-            component: './Workbench/Ladder',
-            icon: 'read',
-          },
-          {
-            path: '/website/workbench/note',
-            name: 'note',
-            component: './Workbench/Note',
-            icon: 'bulb',
+          },{
+            path: '/website/workbench/index',
+            name: 'index',
+            component: './Workbench/TabContainer',
+            icon:'appstore',
+            routes: [
+              {
+                path: '/website/workbench/index',
+                redirt:'website/workbench/index/articles'
+              },
+              {
+                path: '/website/workbench/index/articles',
+                name: 'articles',
+                component: './Workbench/Article',
+                icon: 'form',
+              },
+              {
+                path: '/website/workbench/index/books',
+                name: 'books',
+                component: './Workbench/Book',
+                icon: 'read',
+              },
+              {
+                path: '/website/workbench/index/missions',
+                name: 'missions',
+                component: './Workbench/Mission',
+                icon: 'bulb',
+              },
+              {
+                path: '/website/workbench/index/news',
+                name: 'news',
+                component: './Workbench/News',
+                icon: 'fire',
+              },
+              {
+                path: '/website/workbench/index/messages',
+                name: 'messages',
+                component: './Workbench/Message',
+                icon: 'message',
+              }
+
+            ]
           },
           {
             path: '[nginxs]/api-docs/',

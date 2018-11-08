@@ -1,7 +1,7 @@
 import {getJitang,getAchievement,getTaskList,getNews,getActivity,getInterest} from '@/services/data';
 import {openNotification} from '../../../utils/utils';
 export default {
-    namespace: 'data_overview',
+    namespace: 'workbench_overview',
 
     state:{
         jitang:'',

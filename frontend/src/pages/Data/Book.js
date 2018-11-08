@@ -1,5 +1,6 @@
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import StandardTable from '@/components/StandardTable';
+import SkillCascader from '@/components/custom/SkillCascader';
 import React, { Component ,Fragment,PureComponent} from 'react';
 import { connect } from 'dva';
 import moment from 'moment';
@@ -19,7 +20,6 @@ import {
     Divider,
     Avatar,
     Tooltip,
-    Cascader,
     Progress,
     Popover,
   } from 'antd';
@@ -39,7 +39,6 @@ class CreateForm extends Component {
 
     constructor(props) {
         super(props);
-        this.loadData=this.props.loadData;
         this.handleModalVisible=this.props.handleModalVisible;
         this.handleAdd=this.props.handleAdd;
         this.dispatch=this.props.dispatch;
@@ -56,7 +55,7 @@ class CreateForm extends Component {
 
     render() {
     
-        const {form,options,modalVisible} = this.props;
+        const {form,modalVisible} = this.props;
         return (
           <Modal
             destroyOnClose
@@ -70,7 +69,7 @@ class CreateForm extends Component {
                 rules: [{required: true}],
               })(<Input placeholder="书籍名称" />)}
             </FormItem>
-            <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="名称">
+            <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="作者">
               {form.getFieldDecorator('author', {
                 rules: [{required: true}],
               })(<Input placeholder="作者" />)}
@@ -79,12 +78,7 @@ class CreateForm extends Component {
               {form.getFieldDecorator('type', {
                 rules: [{required: true,validator:skillsValidFunction}],
               })(
-                <Cascader
-                    options={options}
-                    loadData={(selectedOptions)=>this.loadData(selectedOptions)}
-                    changeOnSelect
-                    style={{ width: '100%' }}
-                />
+                <SkillCascader style={{width:'100%'}}/>
               )}
             </FormItem> 
             <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="总页数">
@@ -139,7 +133,6 @@ class UpdateForm extends PureComponent {
 
   constructor(props) {
     super(props);
-    this.loadData=this.props.loadData;
     this.handleUpdateModalVisible=this.props.handleUpdateModalVisible;
     this.handleUpdate=this.props.handleUpdate;
     this.dispatch=this.props.dispatch;
@@ -165,7 +158,7 @@ class UpdateForm extends PureComponent {
   }
 
   render() {
-    const { updateModalVisible, form,options,updateModalData} = this.props;
+    const { updateModalVisible, form,updateModalData} = this.props;
     return (
       <Modal
         destroyOnClose
@@ -186,7 +179,7 @@ class UpdateForm extends PureComponent {
             initialValue: updateModalData.name,
             })(<Input placeholder="书籍名称" />)}
         </FormItem>
-        <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="名称">
+        <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="作者">
             {form.getFieldDecorator('author', {
             rules: [{required: true}],
             initialValue: updateModalData.author,
@@ -197,12 +190,7 @@ class UpdateForm extends PureComponent {
             rules: [{required: true,validator:skillsValidFunction}],
             initialValue: this.transfer(updateModalData.skill),
             })(
-            <Cascader
-                options={options}
-                loadData={(selectedOptions)=>this.loadData(selectedOptions)}
-                changeOnSelect
-                style={{ width: '100%' }}
-            />
+                <SkillCascader style={{width:'100%'}} initdata={updateModalData.skill}/>
             )}
         </FormItem> 
         <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="总页数">
@@ -228,7 +216,7 @@ class UpdateForm extends PureComponent {
         <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="结束日期">
             {form.getFieldDecorator('endDate', {
             rules: [],
-            initialValue: updateModalData.endDate?moment(updateModalData.endDate):'',
+            initialValue: updateModalData.endDate?moment(updateModalData.endDate):null,
             })(
             <DatePicker style={{ width: '100%' }}/>
             )}
@@ -441,20 +429,16 @@ class Book extends Component {
     };
 
     //默认查询第一页
-    componentDidMount() {
+    componentWillMount() {
     
         const { dispatch } = this.props;
-
-        dispatch({
-            type: 'data_book/getOption',
-        });
         dispatch({
             type: 'data_book/fetch',
         });
     }
 
     //查询条件。
-    renderForm(options){
+    renderForm(){
         const {
             form: { getFieldDecorator },
         } = this.props;
@@ -472,12 +456,7 @@ class Book extends Component {
             <Col md={8} sm={24}>
                 <FormItem label="分类">
                 {getFieldDecorator('skills')(
-                    <Cascader
-                        options={options}
-                        loadData={(selectedOptions)=>this.loadData(selectedOptions)}
-                        onChange={(value, selectedOptions)=>this.onChange(value, selectedOptions)}
-                        changeOnSelect
-                    />
+                    <SkillCascader />
                 )}
                 </FormItem>
             </Col>
@@ -546,92 +525,6 @@ class Book extends Component {
         dispatch({
             type: 'data_book/fetch',
         });
-    };
-
-    //获取option数据
-    loadData(selectedOptions){
-        console.log(selectedOptions);
-        const { dispatch } = this.props;
-        let deepth = selectedOptions.length;
-        let param={};
-        if(deepth==3){
-
-        }else if(deepth==2){
-            param={
-                name:'third',
-                first:selectedOptions[0].value,
-                second:selectedOptions[1].value,
-            }
-
-        }else if(deepth==1){
-            param={
-                name:'second',
-                first:selectedOptions[0].value,
-            }
-
-        }else{
-            param={
-                name:'first',
-            }
-        }
-        dispatch({
-            type: 'data_book/getOption',
-            payload: param,
-        });
-
-    };
-
-    onChange(value, selectedOptions){
-        //console.log(this);
-        const { dispatch } = this.props;
-        let deepth = selectedOptions.length;
-        if(deepth==3){
-            dispatch({
-                type: 'data_book/setFormValues',
-                payload: {
-                    formValues:{
-                        first:selectedOptions[0].value,
-                        second:selectedOptions[1].value,
-                        third:selectedOptions[2].value,
-                    }
-                },
-            });
-        }else if(deepth==2){
-            dispatch({
-                type: 'data_book/setFormValues',
-                payload: {
-                    formValues:{
-                        first:selectedOptions[0].value,
-                        second:selectedOptions[1].value,
-                        third:'',
-                    }
-                },
-            });
-        }else if(deepth==1){
-            dispatch({
-                type: 'data_book/setFormValues',
-                payload: {
-                    formValues:{
-                        first:selectedOptions[0].value,
-                        second:'',
-                        third:'',
-                    }
-                },
-            });
-        }else{
-            dispatch({
-                type: 'data_book/setFormValues',
-                payload: {
-                    formValues:{
-                        first:'',
-                        second:'',
-                        third:'',
-                    },
-                }
-            });
-
-        }
-        console.log(value, selectedOptions);
     };
 
     //处理添加逻辑
@@ -727,11 +620,10 @@ class Book extends Component {
     
 
 
-
     render(){
 
         const {
-            data_book: { list,pagination,options,modalVisible,updateModalData,updateModalVisible},
+            data_book: { list,pagination,modalVisible,updateModalData,updateModalVisible},
             loading,
         } = this.props;
 
@@ -751,16 +643,12 @@ class Book extends Component {
         const addParams = {
             handleAdd: this.handleAdd,
             handleModalVisible: this.handleModalVisible,
-            loadData:this.loadData,
-            options:options,
             dispatch:this.props.dispatch,
         };
 
         const updateParams = {
             handleUpdate: this.handleUpdate,
             handleUpdateModalVisible: this.handleUpdateModalVisible,
-            loadData:this.loadData,
-            options:options,
             dispatch:this.props.dispatch,
         }
 
@@ -769,7 +657,7 @@ class Book extends Component {
                 <Card bordered={false}>
                     <div className={styles.tableList}>
                         {/*查询条件*/}
-                        <div className={styles.tableListForm}>{this.renderForm(options)}</div>
+                        <div className={styles.tableListForm}>{this.renderForm()}</div>
                         <div className={styles.tableListOperator}>
                             <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true)}>
                                 新建

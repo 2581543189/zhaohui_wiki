@@ -2206,6 +2206,9 @@ this.tinycolor = tinycolor;
 .radar .legend .dot {
   border-radius: 6px;
 }
+.lines .shadow {
+  color: transparent;
+}
 .exception .imgEle {
   background-repeat: no-repeat;
   background-position: 50% 50%;
@@ -2372,6 +2375,18 @@ i.trigger:hover {
 :global .drawer .drawer-content {
   background: #001529;
 }
+.standardFormRow {
+  border-bottom: 1px dashed #e8e8e8;
+}
+.standardFormRow :global .ant-form-item-label label {
+  color: rgba(0, 0, 0, 0.65);
+}
+.standardFormRow .label {
+  color: rgba(0, 0, 0, 0.85);
+}
+.standardFormRowLast {
+  border: none;
+}
 
 .head {
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
@@ -2404,6 +2419,15 @@ i.trigger:hover {
 }
 .main .icon:hover {
   color: @primary-color;
+}
+.listContent .extra {
+  color: rgba(0, 0, 0, 0.45);
+}
+.listContent .extra > em {
+  color: rgba(0, 0, 0, 0.25);
+}
+a.listItemMetaTitle {
+  color: rgba(0, 0, 0, 0.85);
 }
 html {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -7699,6 +7723,9 @@ li.ant-tree-treenode-disabled > .ant-tree-node-content-wrapper:hover {
 .antd-pro-components-charts-radar-index-radar .antd-pro-components-charts-radar-index-legend .antd-pro-components-charts-radar-index-dot {
   border-radius: 6px;
 }
+.antd-pro-components-ellipsis-index-lines .antd-pro-components-ellipsis-index-shadow {
+  color: transparent;
+}
 .antd-pro-components-exception-index-exception .antd-pro-components-exception-index-imgEle {
   background-repeat: no-repeat;
   background-position: 50% 50%;
@@ -7864,6 +7891,18 @@ i.antd-pro-components-global-header-index-trigger:hover {
 .drawer .drawer-content {
   background: #001529;
 }
+.antd-pro-components-standard-form-row-index-standardFormRow {
+  border-bottom: 1px dashed #e8e8e8;
+}
+.antd-pro-components-standard-form-row-index-standardFormRow .antd-pro-components-standard-form-row-index-ant-form-item-label label {
+  color: rgba(0, 0, 0, 0.65);
+}
+.antd-pro-components-standard-form-row-index-standardFormRow .label {
+  color: rgba(0, 0, 0, 0.85);
+}
+.antd-pro-components-standard-form-row-index-standardFormRowLast {
+  border: none;
+}
 .antd-pro-components-top-nav-header-index-head {
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
 }
@@ -7893,6 +7932,24 @@ i.antd-pro-components-global-header-index-trigger:hover {
 }
 .antd-pro-pages-login-login-main .antd-pro-pages-login-login-icon:hover {
   color: @primary-color;
+}
+.antd-pro-pages-workbench-article-listContent .antd-pro-pages-workbench-article-extra {
+  color: rgba(0, 0, 0, 0.45);
+}
+.antd-pro-pages-workbench-article-listContent .antd-pro-pages-workbench-article-extra > em {
+  color: rgba(0, 0, 0, 0.25);
+}
+a.antd-pro-pages-workbench-article-listItemMetaTitle {
+  color: rgba(0, 0, 0, 0.85);
+}
+.antd-pro-pages-workbench-book-coverCardList .antd-pro-pages-workbench-book-card .ant-card-meta-title > a {
+  color: rgba(0, 0, 0, 0.85);
+}
+.antd-pro-pages-workbench-book-coverCardList .antd-pro-pages-workbench-book-card:hover :global .ant-card-meta-title > a {
+  color: @primary-color;
+}
+.antd-pro-pages-workbench-book-coverCardList .antd-pro-pages-workbench-book-cardItemContent > span {
+  color: rgba(0, 0, 0, 0.45);
 }
 .antd-pro-pages-workbench-overview-activitiesList .antd-pro-pages-workbench-overview-username {
   color: rgba(0, 0, 0, 0.65);
