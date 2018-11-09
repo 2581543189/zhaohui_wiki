@@ -1,5 +1,4 @@
 'use strict';
-
 module.exports = app => {
   const Sequelize = app.Sequelize;
 
@@ -11,7 +10,7 @@ module.exports = app => {
     },
     timestamp: {
       type:Sequelize.DATE,
-      field:'_timestamp'
+      field:'_timestamp',
     },
     name: Sequelize.STRING(128),
     avatar:Sequelize.STRING(1024),

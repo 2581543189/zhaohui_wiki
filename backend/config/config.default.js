@@ -20,7 +20,8 @@ module.exports = appInfo => {
       database: "test",
       host: "47.99.76.20",
       port:3306,
-      dialect: "mysql"
+      dialect: "mysql",
+      timezone:'+08:00'
   };
   config.security= {
     csrf: {

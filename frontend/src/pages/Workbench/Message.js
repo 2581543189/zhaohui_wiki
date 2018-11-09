@@ -1,23 +1,17 @@
-import SkillCascader from '@/components/custom/SkillCascader';
 import React, { Component,Fragment} from 'react';
 import { connect } from 'dva';
 import {
     Form, 
     Card, 
-    Select, 
     List, 
-    Tag, 
     Icon, 
     Row, 
     Col, 
     Button,
     Input,
-    Divider,
-    Alert,
     Avatar,
 } from 'antd';
 
-const {Option} = Select;
 const FormItem = Form.Item;
 import styles from './Article.less';
 import moment from 'moment';
