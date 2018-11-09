@@ -77,29 +77,29 @@ class Mission extends Component {
             });
         });
     }
-        //点击查询
-        handleSearch = e => {
-            e.preventDefault();
-            const { dispatch, form } = this.props;
-            form.validateFields((err, fieldsValue) => {
-                if (err) return;
-                let payload = {
-                    state:fieldsValue.state,
-                }
-    
-               //设置分页
-               payload.pagination={
-                current:1,
-                pageSize:8,
-                total:0,
-               }
-    
-                dispatch({
-                    type:'workbench_index/mission_fetch',
-                    payload:payload
-                });
+    //点击查询
+    handleSearch = e => {
+        e.preventDefault();
+        const { dispatch, form } = this.props;
+        form.validateFields((err, fieldsValue) => {
+            if (err) return;
+            let payload = {
+                state:fieldsValue.state,
+            }
+
+            //设置分页
+            payload.pagination={
+            current:1,
+            pageSize:8,
+            total:0,
+            }
+
+            dispatch({
+                type:'workbench_index/mission_fetch',
+                payload:payload
             });
-        };
+        });
+    };
     
     render(){
         let {
