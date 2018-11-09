@@ -3,6 +3,8 @@ import styles from "./index.less";
 import classNames from "classnames";
 import { connect } from "dva";
 import React from "react";
+import router from 'umi/router';
+import {Link} from "react-router-dom";
 
 //className={classNames(styles.box,styles.item_1)}
 //className={styles.}
@@ -29,6 +31,10 @@ class SliderLayout extends React.PureComponent {
     if (this.myslider) {
       this.myslider.next();
     }
+  }
+
+  skip() {
+    router.push('/website');
   }
 
   render() {
@@ -123,13 +129,9 @@ class SliderLayout extends React.PureComponent {
                 <p className={classNames(styles.sprite, styles.text_1)} />
                 <p className={classNames(styles.sprite, styles.text_2)} />
                 <div className={classNames(styles.sprite, styles.scene)} />
-                <a
-                  className={styles.btn_open_vip}
-                  href="javascript:;"
-                  id="J_openvip"
-                >
+                <Link className={styles.btn_open_vip} to='/website'>          
                   进入主页
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -149,7 +151,7 @@ class SliderLayout extends React.PureComponent {
           <div className={styles.skip}>
             <span
               className={styles.sprite_global}
-              onClick={() => this.buttonClick()}
+              onClick={() => this.skip()}
             />
           </div>
         </div>

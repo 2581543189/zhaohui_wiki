@@ -172,7 +172,8 @@ iSlider.prototype = {
     //全屏滑动 设置样式
     if (this.opts.fullScr) {
       var s = document.createElement("style");
-      s.innerHTML = "html,body{width:100%;height:100%;overflow:hidden}";
+      //s.innerHTML = "html,body{width:100%;height:100%;overflow:hidden}";
+      s.innerHTML = "html,body{width:100%;height:100%;}";
       document.head.appendChild(s);
       s = null;
     }
@@ -229,7 +230,7 @@ iSlider.prototype = {
         if (!self.opts.fullScr) {
           //修复手Q中局部使用时的一个bug
           e.stopPropagation();
-          e.preventDefault();
+          //e.preventDefault();
         }
       },
       { passive: false }
@@ -244,7 +245,7 @@ iSlider.prototype = {
         if (!self.opts.fullScr) {
           //修复手Q中局部使用时的一个bug
           e.stopPropagation();
-          e.preventDefault();
+          //e.preventDefault();
         }
       },
       { passive: false }
@@ -279,7 +280,7 @@ iSlider.prototype = {
       handlrElm.addEventListener(
         "touchmove",
         function(e) {
-          e.preventDefault();
+          //e.preventDefault();
         },
         { passive: false }
       );
@@ -390,6 +391,9 @@ iSlider.prototype = {
   _touchmove: function(e) {
     var parent = e.target;
     do {
+      if(typeof(parent)=='undefined' ||parent==null){
+       return;
+      }
       parent = parent.parentNode;
     } while (parent !== this.wrap);
 
@@ -458,7 +462,13 @@ iSlider.prototype = {
   },
   _touchmove_mouse: function(e) {
     var parent = e.target;
+    if(parent==null || typeof(parent)=='undefined'){
+      return;
+    }
     do {
+      if(parent==null || typeof(parent)=='undefined'){
+        return;
+      }
       parent = parent.parentNode;
     } while (parent !== this.wrap);
 

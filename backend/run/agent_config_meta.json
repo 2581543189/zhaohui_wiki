@@ -1,0 +1,276 @@
+{
+  "keys": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/config/config.default.js",
+  "sequelize": {
+    "username": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/config/config.default.js",
+    "password": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/config/config.default.js",
+    "database": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/config/config.default.js",
+    "host": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/config/config.default.js",
+    "port": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/config/config.default.js",
+    "dialect": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/config/config.default.js"
+  },
+  "security": {
+    "csrf": {
+      "ignore": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/config/config.default.js",
+      "enable": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-security/config/config.default.js",
+      "useSession": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-security/config/config.default.js",
+      "ignoreJSON": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-security/config/config.default.js",
+      "cookieName": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-security/config/config.default.js",
+      "sessionName": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-security/config/config.default.js",
+      "headerName": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-security/config/config.default.js",
+      "bodyName": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-security/config/config.default.js",
+      "queryName": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-security/config/config.default.js"
+    },
+    "domainWhiteList": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-security/config/config.default.js",
+    "protocolWhiteList": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-security/config/config.default.js",
+    "defaultMiddleware": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-security/config/config.default.js",
+    "xframe": {
+      "enable": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-security/config/config.default.js",
+      "value": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-security/config/config.default.js"
+    },
+    "hsts": {
+      "enable": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-security/config/config.local.js",
+      "maxAge": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-security/config/config.default.js",
+      "includeSubdomains": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-security/config/config.default.js"
+    },
+    "dta": {
+      "enable": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-security/config/config.default.js"
+    },
+    "methodnoallow": {
+      "enable": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-security/config/config.default.js"
+    },
+    "noopen": {
+      "enable": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-security/config/config.default.js"
+    },
+    "nosniff": {
+      "enable": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-security/config/config.default.js"
+    },
+    "referrerPolicy": {
+      "enable": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-security/config/config.default.js",
+      "value": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-security/config/config.default.js"
+    },
+    "xssProtection": {
+      "enable": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-security/config/config.default.js",
+      "value": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-security/config/config.default.js"
+    },
+    "csp": {
+      "enable": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-security/config/config.default.js",
+      "policy": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-security/config/config.default.js"
+    },
+    "ssrf": {
+      "ipBlackList": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-security/config/config.default.js",
+      "checkAddress": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-security/config/config.default.js"
+    }
+  },
+  "session": {
+    "maxAge": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-session/config/config.default.js",
+    "key": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-session/config/config.default.js",
+    "httpOnly": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-session/config/config.default.js",
+    "encrypt": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-session/config/config.default.js"
+  },
+  "helper": {
+    "shtml": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-security/config/config.default.js"
+  },
+  "jsonp": {
+    "limit": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-jsonp/config/config.default.js",
+    "callback": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-jsonp/config/config.default.js",
+    "csrf": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-jsonp/config/config.default.js"
+  },
+  "onerror": {
+    "errorPageUrl": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-onerror/config/config.default.js",
+    "appErrorFilter": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-onerror/config/config.default.js",
+    "templatePath": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-onerror/config/config.default.js"
+  },
+  "i18n": {
+    "defaultLocale": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-i18n/config/config.default.js",
+    "dirs": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-i18n/config/config.default.js",
+    "queryField": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-i18n/config/config.default.js",
+    "cookieField": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-i18n/config/config.default.js",
+    "cookieMaxAge": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-i18n/config/config.default.js"
+  },
+  "watcher": {
+    "type": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-watcher/config/config.local.js",
+    "eventSources": {
+      "default": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-watcher/config/config.default.js",
+      "development": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-watcher/config/config.default.js"
+    }
+  },
+  "customLogger": {
+    "scheduleLogger": {
+      "consoleLevel": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-schedule/config/config.default.js",
+      "file": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-schedule/config/config.default.js"
+    }
+  },
+  "multipart": {
+    "mode": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-multipart/config/config.default.js",
+    "autoFields": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-multipart/config/config.default.js",
+    "defaultCharset": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-multipart/config/config.default.js",
+    "fieldNameSize": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-multipart/config/config.default.js",
+    "fieldSize": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-multipart/config/config.default.js",
+    "fields": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-multipart/config/config.default.js",
+    "fileSize": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-multipart/config/config.default.js",
+    "files": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-multipart/config/config.default.js",
+    "fileExtensions": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-multipart/config/config.default.js",
+    "whitelist": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-multipart/config/config.default.js",
+    "tmpdir": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-multipart/config/config.default.js",
+    "cleanSchedule": {
+      "cron": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-multipart/config/config.default.js"
+    }
+  },
+  "development": {
+    "watchDirs": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-development/config/config.default.js",
+    "ignoreDirs": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-development/config/config.default.js",
+    "fastReady": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-development/config/config.default.js",
+    "reloadOnDebug": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-development/config/config.default.js",
+    "overrideDefault": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-development/config/config.default.js"
+  },
+  "logrotator": {
+    "filesRotateByHour": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-logrotator/config/config.default.js",
+    "hourDelimiter": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-logrotator/config/config.default.js",
+    "filesRotateBySize": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-logrotator/config/config.default.js",
+    "maxFileSize": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-logrotator/config/config.default.js",
+    "maxFiles": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-logrotator/config/config.default.js",
+    "rotateDuration": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-logrotator/config/config.default.js",
+    "maxDays": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-logrotator/config/config.default.js"
+  },
+  "static": {
+    "prefix": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-static/config/config.default.js",
+    "dir": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-static/config/config.default.js",
+    "dynamic": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-static/config/config.default.js",
+    "preload": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-static/config/config.default.js",
+    "buffer": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-static/config/config.default.js",
+    "maxFiles": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-static/config/config.default.js"
+  },
+  "view": {
+    "root": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-view/config/config.default.js",
+    "cache": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-view/config/config.local.js",
+    "defaultExtension": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-view/config/config.default.js",
+    "defaultViewEngine": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-view/config/config.default.js",
+    "mapping": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg-view/config/config.default.js"
+  },
+  "env": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+  "name": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+  "proxy": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+  "protocolHeaders": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+  "ipHeaders": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+  "hostHeaders": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+  "pkg": {
+    "name": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+    "version": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+    "description": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+    "private": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+    "dependencies": {
+      "egg": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+      "egg-sequelize": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+      "mysql2": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js"
+    },
+    "devDependencies": {
+      "autod": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+      "egg-bin": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+      "egg-mock": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+      "factory-girl": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+      "lodash": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+      "sequelize-cli": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js"
+    },
+    "engines": {
+      "node": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js"
+    },
+    "scripts": {
+      "dev": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+      "test": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+      "cov": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+      "ci": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+      "autod": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+      "sequelize": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+      "debug": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js"
+    },
+    "author": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+    "license": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js"
+  },
+  "baseDir": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+  "HOME": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+  "rundir": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+  "dump": {
+    "ignore": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js"
+  },
+  "confusedConfigurations": {
+    "bodyparser": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+    "notFound": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+    "sitefile": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+    "middlewares": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+    "httpClient": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js"
+  },
+  "notfound": {
+    "pageUrl": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js"
+  },
+  "siteFile": {
+    "/favicon.ico": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js"
+  },
+  "bodyParser": {
+    "enable": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+    "encoding": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+    "formLimit": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+    "jsonLimit": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+    "strict": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+    "queryString": {
+      "arrayLimit": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+      "depth": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+      "parameterLimit": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js"
+    }
+  },
+  "logger": {
+    "dir": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+    "encoding": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+    "env": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+    "level": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+    "consoleLevel": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+    "disableConsoleAfterReady": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+    "outputJSON": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+    "buffer": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+    "appLogName": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+    "coreLogName": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+    "agentLogName": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+    "errorLogName": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+    "coreLogger": {
+      "consoleLevel": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.local.js"
+    },
+    "allowDebugAtProd": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js"
+  },
+  "httpclient": {
+    "enableDNSCache": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+    "dnsCacheLookupInterval": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+    "dnsCacheMaxLength": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+    "request": {
+      "timeout": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js"
+    },
+    "httpAgent": {
+      "keepAlive": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+      "freeSocketKeepAliveTimeout": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+      "maxSockets": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+      "maxFreeSockets": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js"
+    },
+    "httpsAgent": {
+      "keepAlive": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+      "freeSocketKeepAliveTimeout": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+      "maxSockets": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+      "maxFreeSockets": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js"
+    }
+  },
+  "meta": {
+    "enable": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+    "logging": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js"
+  },
+  "coreMiddleware": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+  "workerStartTimeout": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+  "cluster": {
+    "listen": {
+      "path": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+      "port": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+      "hostname": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js"
+    }
+  },
+  "clusterClient": {
+    "maxWaitTime": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+    "responseTimeout": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js"
+  },
+  "onClientError": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js"
+}
