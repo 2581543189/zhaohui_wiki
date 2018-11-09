@@ -74,5 +74,11 @@ module.exports = app => {
   app.get('/overview/getActivity', app.controller.overview.getActivity);
   app.post('/overview/getInterest', app.controller.overview.getInterest);
   app.get('/overview/getInterest', app.controller.overview.getInterest);
-  
+  //留言相关的方法
+  app.post('/message/query', app.controller.message.query);
+  app.get('/message/query', app.controller.message.query);
+  app.post('/message/add', app.controller.message.add);
+  app.get('/message/add', app.controller.message.add);
+  app.post('/message/delete/:id', app.controller.message.delete);
+  app.get('/message/delete/:id', app.controller.message.delete);
 };

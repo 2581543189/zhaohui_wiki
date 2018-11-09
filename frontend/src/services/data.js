@@ -631,7 +631,8 @@ export const getTaskList = globalTryCatch(async function (payload) {
 export const getNews = globalTryCatch(async function (payload) {
     console.log('getNews',payload);
     let option={
-        method:'POST'
+        method:'POST',
+        body:payload,
     }
     const response = await request(_BASE_PATH + '/overview/getNews',option);
     return response;
@@ -654,5 +655,69 @@ export const getInterest = globalTryCatch(async function (payload) {
         method:'POST'
     }
     const response = await request(_BASE_PATH + '/overview/getInterest',option);
+    return response;
+});
+
+/**
+ * =======================================================================================
+ *                                      留言表相关查询
+ * =======================================================================================
+ */
+
+  /**查询留言信息 */
+export const queryMessage = globalTryCatch(async function (payload) {
+    console.log('queryMessage',payload);
+    //分页信息
+    let pagination = {
+        current:1,
+        pageSize:10,
+    }
+    if(payload.currentPage){
+        pagination = {
+        current:payload.currentPage,
+        pageSize:payload.pageSize,
+        }
+    }
+
+    let option={
+        method:'POST',
+    }
+    if(Object.keys(payload).length!=0){   
+        option={
+            method:'POST',
+            body:payload,
+        }
+    }
+    const response = await request(_BASE_PATH + '/message/query',option);
+
+    let result = {};
+    result.pagination = pagination;
+    result.pagination.total = response.count;
+    result.list = response.rows.map(function(value,key,arr){
+        value.key = value.id;
+        return value;
+    });
+
+    return result;
+});
+
+/**新增留言 */
+export const addMessage = globalTryCatch(async function (payload) {
+    console.log('addMessage',payload);
+    let option={
+        method:'POST',
+        body:payload,
+    }
+    const response = await request(_BASE_PATH + '/message/add',option);
+    return response;
+});
+
+/**删除留言信息 */
+export const deleteMessage = globalTryCatch(async function (payload) {
+    console.log('deleteMessage',payload);
+    let option={
+        method:'POST',
+    }
+    const response = await request(_BASE_PATH + '/message/delete/'+payload,option);
     return response;
 });

@@ -44,6 +44,23 @@ class BulletinController extends Controller {
     if(typeof(startDate)!= 'undefined' && startDate != ''&&typeof(endDate)!= 'undefined' && endDate != ''){
       util.dealKeyRange(query,'startDate',startDate,endDate)
     }
+    //处理任务状态 1 已完成 2 未完成
+    const {state} = body;
+    if(typeof(state)!= 'undefined' && state != ''){
+      if (typeof (query.where) == 'undefined') {
+        query.where = {};
+      }
+      if(state==='1'){
+        query.where['endDate'] = {
+          '$ne': null,
+        };
+      }else{
+        query.where['endDate'] = {
+          '$eq': null,
+        };
+      }
+
+    }
 
     ctx.body = await ctx.service.bulletin.query(query);
   }

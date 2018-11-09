@@ -1,4 +1,3 @@
-import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import React, { Component,Fragment} from 'react';
 import { connect } from 'dva';
 import {
@@ -11,14 +10,12 @@ import {
     Row, 
     Col, 
     Button,
-    Input,
     Tooltip,
 } from 'antd';
 const {Option} = Select;
 const FormItem = Form.Item;
-import StandardFormRow from '@/components/StandardFormRow';
 import {bulletinLevelText,bulletinLevelClass} from '../../constant/DataConstant';
-
+import styles from './Book.less';
 const formItemLayout = {
     wrapperCol: {
       xs: { span: 24 },
@@ -28,67 +25,100 @@ const formItemLayout = {
 };
 
 
-@Form.create({
-    onValuesChange({ dispatch }, changedValues, allValues) {
-      console.log(changedValues, allValues);
-    },
- })
+@Form.create({})
+@connect(({workbench_index,loading})=>({
+    workbench_index,
+    loading
+}))
 class Mission extends Component {
 
+    //初始化
+    componentWillMount(){
+        const {dispatch} = this.props;
+
+        dispatch({
+            type:'workbench_index/mission_fetch',
+        });
+
+    }
+    
+    //重置表单
+    handleFormReset(){
+        const { form, dispatch } = this.props;
+        form.resetFields();
+        dispatch({
+            type: 'workbench_index/mission_fetch',
+            payload: {
+                    state:'',
+            }
+        });
+    }
+    
+    
+    //获取更多数据
+    fetchMore(pagination){
+        const { dispatch, form } = this.props;
+        form.validateFields((err, fieldsValue) => {
+            if (err) return;
+            let payload = {
+                state:fieldsValue.state,
+            }
+
+            //设置分页
+            payload.pagination={
+            current:pagination.current+1,
+            pageSize:10,
+            total:pagination.total,
+            }
+            payload.append=true;
+            dispatch({
+                type:'workbench_index/mission_fetch',
+                payload:payload
+            });
+        });
+    }
+        //点击查询
+        handleSearch = e => {
+            e.preventDefault();
+            const { dispatch, form } = this.props;
+            form.validateFields((err, fieldsValue) => {
+                if (err) return;
+                let payload = {
+                    state:fieldsValue.state,
+                }
+    
+               //设置分页
+               payload.pagination={
+                current:1,
+                pageSize:8,
+                total:0,
+               }
+    
+                dispatch({
+                    type:'workbench_index/mission_fetch',
+                    payload:payload
+                });
+            });
+        };
     
     render(){
-        const {form} = this.props;
+        let {
+            form,
+            workbench_index,
+            loading,
+        } = this.props;
         const { getFieldDecorator } = form;
 
-        let list=[
-            {
-                title:'你听过 React Fragments吗？?',
-                level:2,
-                date:'2015-01-15',
-            },{
-                title:'母猪都产后护理，必须注意的10个小细节',
-                level:3,
-                date:'2015-01-15',
-            },{
-                title:'你听过 React Fragments吗？?',
-                level:2,
-                date:'2015-01-15',
-            },{
-                title:'母猪都产后护理，必须注意的10个小细节',
-                level:3,
-                date:'2015-01-15',
-            },{
-                title:'你听过 React Fragments吗？?',
-                level:2,
-                date:'2015-01-15',
-            },{
-                title:'母猪都产后护理，必须注意的10个小细节',
-                level:3,
-                date:'2015-01-15',
-            },{
-                title:'你听过 React Fragments吗？?',
-                level:2,
-                date:'2015-01-15',
-            },{
-                title:'母猪都产后护理，必须注意的10个小细节',
-                level:3,
-                date:'2015-01-15',
-            },{
-                title:'你听过 React Fragments吗？?',
-                level:2,
-                date:'2015-01-15',
-            },{
-                title:'母猪都产后护理，必须注意的10个小细节',
-                level:3,
-                date:'2015-01-15',
-            },
-        ];
-        let loading=false;
+        const mission = workbench_index.mission;
+        
+        let list=mission.list;
+        let pagination = mission.pagination;
+
         const loadMore =
-        list.length > 0 ? (
+        mission.hasNext ? (
           <div style={{ textAlign: 'center', marginTop: 16 }}>
-            <Button onClick={this.fetchMore} style={{ paddingLeft: 48, paddingRight: 48 }}>
-              {loading ? (
+            <Button onClick={()=>{this.fetchMore(pagination)}} style={{ paddingLeft: 48, paddingRight: 48 }}>
+              {loading.effects['workbench_index/mission_fetch'] ? (
                 <span>
                   <Icon type="loading" /> 加载中...
                 </span>
@@ -103,47 +133,64 @@ class Mission extends Component {
             <Fragment>
                 {/**搜索框 */}
                 <Card bordered={false}>
-                    <Form layout="inline">
-                    <StandardFormRow  grid last>
-                        <Row gutter={16}>
-                            <Col xl={8} lg={10} md={12} sm={24} xs={24}>
+                    <div className={styles.tableListForm}>
+                    <Form layout="inline" onSubmit={this.handleSearch}>
+                        <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+                            <Col md={8} sm={24}>
                             <FormItem {...formItemLayout} label="状态">
-                                {getFieldDecorator('state', {})(
+                                {getFieldDecorator('state', {
+                                })(
                                     <Select>
-                                        <Option key='1' value='1'>已完成</Option>
-                                        <Option key='2' value='2'>未完成</Option>
+                                        <Option key='所有' value=''>所有</Option>
+                                        <Option key='已完成' value='1'>已完成</Option>
+                                        <Option key='未完成' value='2'>未完成</Option>
                                     </Select>
                                 )}
                             </FormItem>
                             </Col>
                         </Row>
-                        </StandardFormRow>
+                        <Row>
+                            <Col md={8} sm={24}>
+                            <span className={styles.submitButtons}>
+                                <Button type="primary" htmlType="submit">
+                                查询
+                                </Button>
+                                <Button style={{ marginLeft: 8 }} onClick={()=>{this.handleFormReset()}}>
+                                重置
+                                </Button>
+                            </span>
+                            </Col>
+                        </Row>
                     </Form>
-
+                    </div>
                 </Card>
                 {/**列表 */}
                 <List
                     rowKey="id"
                     style={{ marginTop: 24 }}
                     grid={{ gutter: 24, xl: 4, lg: 3, md: 3, sm: 2, xs: 1 }}
-                    //loading={loading}
+                    loading={loading.effects['workbench_index/mission_fetch']}
                     dataSource={list}
                     loadMore={loadMore}
                     renderItem={item => (
                         <List.Item key={item.id}>
                         <Card
                             hoverable
-                            bodyStyle={{ paddingBottom: 20 }}
+                            bodyStyle={{ paddingBottom: 20 ,height:'100px',overflow:'hidden'}}
                             actions={[
                             <Tooltip title="执行任务">
-                                <Icon type="rocket" />
+                                <a href={item.startUrl} target="_blank"><Icon type="rocket" /></a>
                             </Tooltip>,
+                            item.endDate==null?
+                            <Tooltip title="未完成">
+                                <Icon type="ellipsis" />
+                            </Tooltip>:
                             <Tooltip title="查看结果">
-                                <Icon type="eye" />
-                            </Tooltip>,
+                                <a href={item.endUrl} target="_blank"><Icon type="eye" /></a>
+                            </Tooltip>
                             ]}
                         >
-                            <Tag color={bulletinLevelClass[item.level]}>{bulletinLevelText[item.level]}</Tag>{item.title}
+                            <Tag color={bulletinLevelClass[item.level]}>{bulletinLevelText[item.level]}</Tag>{item.sketch}
                         </Card>
                         </List.Item>
                     )}

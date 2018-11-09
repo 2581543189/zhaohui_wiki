@@ -13,9 +13,12 @@ import {
     Input,
     Progress,
     Divider,
+    Modal,
+    message,
 } from 'antd';
 const FormItem = Form.Item; 
 import styles from './Book.less';
+import moment from'moment';
 
 
 const formItemLayout = {
@@ -36,6 +39,61 @@ const IconText = ({ type, text,badge }) => (
       }
     </span>
 );
+
+
+/**
+ * 笔记列表展示
+ */
+class NoteList extends Component {
+
+    constructor(props) {
+        super(props);
+        this.changeShowNoteList=this.props.changeShowNoteList;
+      }
+
+    render() {
+    
+        const {showNoteList,noteList,loading} = this.props;
+        return (
+          <Modal
+            destroyOnClose
+            title="笔记列表"
+            visible={showNoteList}
+            footer={null}
+            closable={true}
+            centered
+            onCancel={() => this.changeShowNoteList(false)}
+          >
+          {
+              noteList.length>0?
+              <List>
+                  {noteList.map((item,index)=>(
+                      <List.Item >
+                        <Row gutter={24} style={{width:'200%'}}>
+                            <Col md={8} sm={24}>
+                                <Tag>日期</Tag>{moment(item.date).format('YYYY-MM-DD')}
+                            </Col>
+                            <Col md={8} sm={24}>
+                                <Tag>进度</Tag>
+                                <Progress percent={parseInt(item.current*100/item.book.count)} size="small" style={{width:'60%'}}/>
+                            </Col>
+                            <Col md={8} sm={24}>
+                                <a href={item.url} target="_blank"><Tag>查看</Tag></a>
+                            </Col>
+                        </Row>   
+                      </List.Item>
+                  ))}
+              </List>
+              :<h1>没数据</h1>
+
+          }
+
+          </Modal>
+        );
+    }
+
+}
+
 
 
 @Form.create({})
@@ -137,6 +195,37 @@ class Book extends Component {
         });
     };
 
+    //展示笔记
+    changeShowNoteList(state,item){
+
+
+        const { dispatch } = this.props;
+
+        if(item){
+            if(item.current===0){
+                //提示没有数据
+                message.error('还没有开始阅读《'+item.name+'》');
+                return;
+            }
+            if(state){
+                dispatch({
+                    type:'workbench_index/note_fetch',
+                    payload:{
+                        bookId:item.id,
+                    }
+                });
+            }
+        }
+        dispatch({
+            type:'workbench_index/changeStateBook',
+            payload:{
+                showNoteList:!!state,
+            }
+        });
+
+    }
+    
+
     render(){
 
 
@@ -180,7 +269,7 @@ class Book extends Component {
                     className={styles.card}
                     hoverable
                     cover={<img alt={item.name} src={item.img} style={{height:'280px',padding:'0 10%'}}/>}
-                    actions={[(<IconText type="eye" text='查看笔记' />),(<IconText type="star" text='豆瓣评分:'  badge={item.score}/>)]} 
+                    actions={[(<a onClick={()=>{this.changeShowNoteList(true,item)}}><IconText type="eye" text='查看笔记' /></a>),(<IconText type="star" text='豆瓣评分:'  badge={item.score}/>)]} 
                     
                   >
                     <Card.Meta
@@ -188,7 +277,7 @@ class Book extends Component {
                       
                     />
                     <div className={styles.cardItemContent}>
-                      <div className={styles.avatarList}>
+                      <div className={styles.avatarList} style={{paddingTop:'10px'}}>
                        {/**百分比 */}
                        <Tag>阅读进度</Tag><Progress percent={parseInt(item.current*100/item.count)} size="small" style={{width:'60%'}}/>
                       </div>
@@ -198,6 +287,15 @@ class Book extends Component {
               )}
             />
         ) : null;
+
+
+        const {showNoteList,noteList} = book;
+        const popParam={
+            showNoteList:showNoteList,
+            noteList:noteList,
+            changeShowNoteList:this.changeShowNoteList,
+            dispatch:this.props.dispatch,
+        }
 
         return(
             <Fragment>
@@ -239,7 +337,7 @@ class Book extends Component {
                 </Card>
                 {/**列表 */}
                 <div className={styles.cardList} style={{ marginTop: 24 }}>{cardList}</div>
-
+                <NoteList {...popParam}></NoteList>
             </Fragment>
         )
     }

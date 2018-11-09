@@ -51,7 +51,7 @@ export default {
             if(response.error!=1){
                 yield put({
                     type: 'setNews',
-                    payload: response,
+                    payload: response.list,
                   });
             }else{
                 openNotification('error',response.message);

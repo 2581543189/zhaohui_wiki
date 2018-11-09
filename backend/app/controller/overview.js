@@ -128,14 +128,29 @@ class OverviewController extends Controller {
     //获取动态
     async getNews(){
         let ctx = this.ctx;
+        if(typeof(ctx.request.body)=='undefined' || ctx.request.body==null){
+            ctx.request.body={};
+        }
         //从当前时间 往前减24小时30次，直到获取30个事件
         const news= [];
+        //入参
+        let {endDate,type}=ctx.request.body;
+        if(type===''){
+            type=null;
+        }
+        let resultEndDate;
         for(let i = 0;i<30;i++){
+
+            let theDate = (endDate ? moment(endDate):moment()).format('YYYY-MM-DD')+' 23:59:59';
+            const end = moment(theDate).subtract(i*24,'hours');
+            const start = moment(theDate).subtract((i+1)*24,'hours');
             if(news.length >=10){
+                resultEndDate=end.format('YYYY-MM-DD HH:mm:ss');
                 break;
             }
-            const end = moment().subtract(i*24,'hours');
-            const start = moment().subtract((i+1)*24,'hours');
+            if(i==29){
+                resultEndDate=end.format('YYYY-MM-DD HH:mm:ss');
+            }
 
             //查询article
             let param ={
@@ -145,17 +160,18 @@ class OverviewController extends Controller {
                     }
                 }
             }
-            const articles =  await ctx.service.article.query(param);
-            if(articles.count >0){
-                articles.rows.forEach((x)=>{
-                    news.push({
-                        icon:'highlight',
-                        date:moment(x.createDate).format('YYYY-MM-DD')+moment(x.timestamp).format(' HH:mm:ss'),
-                        desc:'在'+x.platform+'平台发表了《'+x.title+'》',
+            if(typeof(type)=='undefined' || type===null||type==='article'){
+                const articles =  await ctx.service.article.query(param);
+                if(articles.count >0){
+                    articles.rows.forEach((x)=>{
+                        news.push({
+                            icon:'highlight',
+                            date:moment(x.createDate).format('YYYY-MM-DD')+moment(x.timestamp).format(' HH:mm:ss'),
+                            desc:'在'+x.platform+'平台发表了《'+x.title+'》',
+                        });
                     });
-                });
+                }
             }
-
 
             //查询书籍 新增
             param ={
@@ -166,113 +182,125 @@ class OverviewController extends Controller {
                     }
                 }
             }
-            let newBooks =  await ctx.service.book.query(param);
-            if(newBooks.count >0){
-                newBooks.rows.forEach((x)=>{
-                    news.push({
-                        icon:'book',
-                        date:moment(x.startDate).format('YYYY-MM-DD')+moment(x.timestamp).format(' HH:mm:ss'),
-                        desc:'关注了书籍《'+x.name+'》,相关分类是['+x.skill.first+'/'+x.skill.second+'/'+x.skill.third+']',
+            if(typeof(type)=='undefined' || type===null||type==='book'){
+                let newBooks =  await ctx.service.book.query(param);
+                if(newBooks.count >0){
+                    newBooks.rows.forEach((x)=>{
+                        news.push({
+                            icon:'book',
+                            date:moment(x.startDate).format('YYYY-MM-DD')+moment(x.timestamp).format(' HH:mm:ss'),
+                            desc:'关注了书籍《'+x.name+'》,相关分类是['+x.skill.first+'/'+x.skill.second+'/'+x.skill.third+']',
+                        });
                     });
-                });
+                }
+                //读完书籍
+                param ={
+                    'include': [{ model: this.app.model.Skill}],
+                    'where':{
+                        'endDate':{
+                            '$between':[start.format('YYYY-MM-DD HH:mm:ss'),end.format('YYYY-MM-DD HH:mm:ss')]
+                        }
+                    }
+                }
+                newBooks =  await ctx.service.book.query(param);
+                if(newBooks.count >0){
+                    newBooks.rows.forEach((x)=>{
+                        let during = moment(x.startDate).diff(moment(x.endDate), 'days')
+                        news.push({
+                            icon:'book',
+                            date:moment(x.startDate).format('YYYY-MM-DD')+moment(x.timestamp).format(' HH:mm:ss'),
+                            desc:'读完了书籍《'+x.name+'》,相关分类是['+x.skill.first+'/'+x.skill.second+'/'+x.skill.third+']累计耗时['+during+']天',
+                        });
+                    });
+                }
+            }
+            
+
+            if(typeof(type)=='undefined' || type===null||type==='note'){
+                //笔记
+                param ={
+                    'include': [{ model: this.app.model.Book}],
+                    'where':{
+                        'date':{
+                            '$between':[start.format('YYYY-MM-DD HH:mm:ss'),end.format('YYYY-MM-DD HH:mm:ss')]
+                        }
+                    }
+                }
+                const notes =  await ctx.service.note.query(param);
+                if(notes.count >0){
+                    notes.rows.forEach((x)=>{
+                        news.push({
+                            icon:'tags',
+                            date:moment(x.date).format('YYYY-MM-DD')+moment(x.timestamp).format(' HH:mm:ss'),
+                            desc:'新增了《'+x.book.name+'》的读书笔记,目前已经阅读到['+x.current+'/'+x.book.count+']页',
+                        });
+                    });
+                }
             }
 
-            //读完书籍
-            param ={
-                'include': [{ model: this.app.model.Skill}],
-                'where':{
-                    'endDate':{
-                        '$between':[start.format('YYYY-MM-DD HH:mm:ss'),end.format('YYYY-MM-DD HH:mm:ss')]
-                    }
-                }
-            }
-            newBooks =  await ctx.service.book.query(param);
-            if(newBooks.count >0){
-                newBooks.rows.forEach((x)=>{
-                    let during = moment(x.startDate).diff(moment(x.endDate), 'days')
-                    news.push({
-                        icon:'book',
-                        date:moment(x.startDate).format('YYYY-MM-DD')+moment(x.timestamp).format(' HH:mm:ss'),
-                        desc:'读完了书籍《'+x.name+'》,相关分类是['+x.skill.first+'/'+x.skill.second+'/'+x.skill.third+']累计耗时['+during+']天',
-                    });
-                });
-            }
-            //笔记
-            param ={
-                'include': [{ model: this.app.model.Book}],
-                'where':{
-                    'date':{
-                        '$between':[start.format('YYYY-MM-DD HH:mm:ss'),end.format('YYYY-MM-DD HH:mm:ss')]
-                    }
-                }
-            }
-            const notes =  await ctx.service.note.query(param);
-            if(notes.count >0){
-                notes.rows.forEach((x)=>{
-                    news.push({
-                        icon:'tags',
-                        date:moment(x.date).format('YYYY-MM-DD')+moment(x.timestamp).format(' HH:mm:ss'),
-                        desc:'新增了《'+x.book.name+'》的读书笔记,目前已经阅读到['+x.current+'/'+x.book.count+']页',
-                    });
-                });
-            }
             //任务新增
-            param ={
-                'where':{
-                    'startDate':{
-                        '$between':[start.format('YYYY-MM-DD HH:mm:ss'),end.format('YYYY-MM-DD HH:mm:ss')]
+            if(typeof(type)=='undefined' || type===null||type==='mission'){
+                param ={
+                    'where':{
+                        'startDate':{
+                            '$between':[start.format('YYYY-MM-DD HH:mm:ss'),end.format('YYYY-MM-DD HH:mm:ss')]
+                        }
                     }
                 }
-            }
-            let tasks =  await ctx.service.bulletin.query(param);
-            if(tasks.count >0){
-                tasks.rows.forEach((x)=>{
-                    news.push({
-                        icon:'alert',
-                        date:moment(x.startDate).format('YYYY-MM-DD')+moment(x.timestamp).format(' HH:mm:ss'),
-                        desc:'新增了任务:'+x.sketch,
+                let tasks =  await ctx.service.bulletin.query(param);
+                if(tasks.count >0){
+                    tasks.rows.forEach((x)=>{
+                        news.push({
+                            icon:'alert',
+                            date:moment(x.startDate).format('YYYY-MM-DD')+moment(x.timestamp).format(' HH:mm:ss'),
+                            desc:'新增了任务:'+x.sketch,
+                        });
                     });
-                });
+                }
+    
+                //任务完成
+                param ={
+                    'where':{
+                        'endDate':{
+                            '$between':[start.format('YYYY-MM-DD HH:mm:ss'),end.format('YYYY-MM-DD HH:mm:ss')]
+                        }
+                    }
+                }
+                tasks =  await ctx.service.bulletin.query(param);
+                if(tasks.count >0){
+                    tasks.rows.forEach((x)=>{
+                        let during = moment(x.endDate).diff(moment(x.startDate), 'days')
+                        news.push({
+                            icon:'book',
+                            date:moment(x.startDate).format('YYYY-MM-DD')+moment(x.timestamp).format(' HH:mm:ss'),
+                            desc:'完成了任务:'+x.sketch+',累计耗时['+during+']天',
+                        });
+                    });
+                }
+
             }
 
-            //读完书籍
-            param ={
-                'where':{
-                    'endDate':{
-                        '$between':[start.format('YYYY-MM-DD HH:mm:ss'),end.format('YYYY-MM-DD HH:mm:ss')]
+            if(typeof(type)=='undefined' || type===null||type==='skill'){
+                //查询skill
+                param ={
+                    'where':{
+                        'timestamp':{
+                            '$between':[start.format('YYYY-MM-DD HH:mm:ss'),end.format('YYYY-MM-DD HH:mm:ss')]
+                        }
                     }
                 }
-            }
-            tasks =  await ctx.service.bulletin.query(param);
-            if(tasks.count >0){
-                tasks.rows.forEach((x)=>{
-                    let during = moment(x.startDate).diff(moment(x.endDate), 'days')
-                    news.push({
-                        icon:'book',
-                        date:moment(x.startDate).format('YYYY-MM-DD')+moment(x.timestamp).format(' HH:mm:ss'),
-                        desc:'完成了任务:'+x.sketch+',累计耗时['+during+']天',
+                const skills =  await ctx.service.skill.query(param);
+                if(skills.count >0){
+                    skills.rows.forEach((x)=>{
+                        news.push({
+                            icon:'tool',
+                            date:moment(x.timestamp).format('YYYY-MM-DD HH:mm:ss'),
+                            desc:'在'+x.first+'分类中增加了'+x.second+'-'+x.third,
+                        });
                     });
-                });
+                }
             }
 
-            //查询skill
-            param ={
-                'where':{
-                    'timestamp':{
-                        '$between':[start.format('YYYY-MM-DD HH:mm:ss'),end.format('YYYY-MM-DD HH:mm:ss')]
-                    }
-                }
-            }
-            const skills =  await ctx.service.skill.query(param);
-            if(skills.count >0){
-                skills.rows.forEach((x)=>{
-                    news.push({
-                        icon:'tool',
-                        date:moment(x.timestamp).format('YYYY-MM-DD HH:mm:ss'),
-                        desc:'在'+x.first+'分类中增加了'+x.second+'-'+x.third,
-                    });
-                });
-            }
         }
 
         //排序
@@ -283,7 +311,9 @@ class OverviewController extends Controller {
             return -1;
         });
         ctx.status = 200;
-        ctx.body = news;
+        ctx.body={};
+        ctx.body.list = news;
+        ctx.body.endDate = resultEndDate;
 
     }
     //获取活跃度信息

@@ -76,8 +76,15 @@ class NoteController extends Controller {
       ctx.status = 510;
       ctx.body = '查询书籍失败!';
     }else{
-      note.bookId = books.rows[0].id;
+      let book = books.rows[0];
+      note.bookId = book.id;
       const obj = await ctx.service.note.create(note);
+      //如果进度大于书籍进度 修改书籍数据
+      if(note.current > book.current){
+        //book.current=note.current;
+        const id = book.id;
+        await ctx.service.book.update({ id, updates: {current:note.current} });
+      }
       ctx.status = 201;
       ctx.body = obj;
     }

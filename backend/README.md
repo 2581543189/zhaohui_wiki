@@ -171,9 +171,37 @@ CREATE TABLE `bulletin` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ```
+##### &#160; &#160; &#160; &#160; 2.8 留言板(message)
+
+| 字段名称 | 数据类型   | 说明 | 默认值 |
+| :-: | :-: | :-: | :-: |
+| id | bigint(128) | 唯一主键 | - |
+| _timestamp | timedtamp | 时间戳 | CURRENT_TIMESTAMP |
+| name | varchar(128) | 用户名 | Empty String |
+| content | varchar(1024) | 留言内容 | Empty String |
+| avatar | varchar(1024) | 头像图片url | Empty String |
+
+##### &#160; &#160; &#160; &#160; 建表语句
+
+```
+CREATE TABLE `message` (
+  `id` bigint(32) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '时间戳',
+  `name` varchar(128) NOT NULL DEFAULT '' COMMENT '名称',
+  `avatar` varchar(1024) NOT NULL DEFAULT '' COMMENT '头像url',
+  `content` varchar(1024) NOT NULL DEFAULT '' COMMENT '内容',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='留言板'
+```
+
+
+
 #### 3. 接口设计
 
-未完待续...
+见前端菜单swagger
 #### 4. 构建部署
-未完待续...
+执行以下命令启动
+`
+nohup yarn run dev &
+`
 

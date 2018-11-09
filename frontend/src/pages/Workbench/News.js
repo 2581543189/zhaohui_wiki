@@ -1,4 +1,3 @@
-import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import React, { Component,Fragment} from 'react';
 import { connect } from 'dva';
 import {
@@ -6,19 +5,16 @@ import {
     Card, 
     Select, 
     List, 
-    Tag, 
     Icon, 
     Row, 
     Col, 
     Button,
-    Input,
-    Tooltip,
     Avatar,
+    Divider,
 } from 'antd';
 const {Option} = Select;
 const FormItem = Form.Item;
-import StandardFormRow from '@/components/StandardFormRow';
-import styles from './Overview.less';
+import styles from './Article.less';
 
 const formItemLayout = {
     wrapperCol: {
@@ -29,47 +25,89 @@ const formItemLayout = {
 };
 
 
-@Form.create({
-    onValuesChange({ dispatch }, changedValues, allValues) {
-      console.log(changedValues, allValues);
-    },
- })
+@Form.create({})
+@connect(({workbench_index,loading})=>({
+    workbench_index,
+    loading
+}))
 class News extends Component {
 
+    //初始化
+    componentWillMount(){
+        const {dispatch} = this.props;
+
+        dispatch({
+            type:'workbench_index/news_fetch',
+        });
+
+    }
+    
+    //重置表单
+    handleFormReset(){
+        const { form, dispatch } = this.props;
+        form.resetFields();
+        dispatch({
+            type: 'workbench_index/news_fetch',
+            payload: {
+                    type:'',
+            }
+        });
+    }
+    
+    
+    //获取更多数据
+    fetchMore(endDate){
+        const { dispatch, form } = this.props;
+        form.validateFields((err, fieldsValue) => {
+            if (err) return;
+            let payload = {
+                type:fieldsValue.type,
+            }
+
+            //设置分页
+            payload.endDate=endDate;
+            payload.append=true;
+            dispatch({
+                type:'workbench_index/news_fetch',
+                payload:payload
+            });
+        });
+    }
+    //点击查询
+    handleSearch = e => {
+        e.preventDefault();
+        const { dispatch, form } = this.props;
+        form.validateFields((err, fieldsValue) => {
+            if (err) return;
+            let payload = {
+                type:fieldsValue.type,
+            }
+
+            dispatch({
+                type:'workbench_index/news_fetch',
+                payload:payload
+            });
+        });
+    };
     
     render(){
-        const {form} = this.props;
+        let {
+            form,
+            workbench_index,
+            loading,
+        } = this.props;
         const { getFieldDecorator } = form;
-        let list=[
-            {
-                icon:'book',
-                date:'2018-10-21 10:00:00',
-                desc:'关注了书籍《xxxxxx》,相关分类是xxxxxx',
-            },{
-                icon:'tags',
-                date:'2018-10-22 20:00:00',
-                desc:'新增了《xxxxxx》的读书笔记,目前已经阅读到xx页',
-            },{
-                icon:'highlight',
-                date:'2018-10-22 20:00:00',
-                desc:'在xxx平台发表了《xxxxxxxxx》',
-            },{
-                icon:'tool',
-                date:'2018-10-23 20:00:00',
-                desc:'在xxx分类中增加了xxxx-xxxx',
-            },{
-                icon:'alert',
-                date:'2018-10-24 20:00:00',
-                desc:'完成了任务:xxxxxxxxxx,总计耗时xxxxx天',
-            }
-        ];
 
-        let loading=false;
+        const news = workbench_index.news;
+        
+        let list=news.list;
+        let endDate = news.endDate;
+
         const loadMore =
-        list.length > 0 ? (
+        news.hasNext ? (
           <div style={{ textAlign: 'center', marginTop: 16 }}>
-            <Button onClick={this.fetchMore} style={{ paddingLeft: 48, paddingRight: 48 }}>
-              {loading ? (
+            <Button onClick={()=>{this.fetchMore(endDate)}} style={{ paddingLeft: 48, paddingRight: 48 }}>
+              {loading.effects['workbench_index/news_fetch'] ? (
                 <span>
                   <Icon type="loading" /> 加载中...
                 </span>
@@ -84,49 +122,59 @@ class News extends Component {
             <Fragment>
                 {/**搜索框 */}
                 <Card bordered={false}>
-                    <Form layout="inline">
-                    <StandardFormRow  grid last>
-                        <Row gutter={16}>
-                            <Col xl={8} lg={10} md={12} sm={24} xs={24}>
+                    <div className={styles.tableListForm}>
+                    <Form layout="inline" onSubmit={this.handleSearch}>
+                        <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+                            <Col md={8} sm={24}>
                             <FormItem {...formItemLayout} label="类型">
-                                {getFieldDecorator('state', {})(
-                                    <Select>
-                                        <Option key='1' value='1'>已完成</Option>
-                                        <Option key='2' value='2'>未完成</Option>
+                                {getFieldDecorator('type', {
+                                })(
+                                    <Select style={{width:'100%'}}>
+                                        <Option key='article' value='article'><Icon type="highlight" /></Option>
+                                        <Option key='book' value='book'><Icon type="book" /></Option>
+                                        <Option key='note' value='note'><Icon type="tags" /></Option>
+                                        <Option key='mission' value='mission'><Icon type="alert" /></Option>
+                                        <Option key='skill' value='skill'><Icon type="tool" /></Option>
                                     </Select>
                                 )}
                             </FormItem>
                             </Col>
                         </Row>
-                        </StandardFormRow>
+                        <Row>
+                            <Col md={8} sm={24}>
+                            <span className={styles.submitButtons}>
+                                <Button type="primary" htmlType="submit">
+                                查询
+                                </Button>
+                                <Button style={{ marginLeft: 8 }} onClick={()=>{this.handleFormReset()}}>
+                                重置
+                                </Button>
+                            </span>
+                            </Col>
+                        </Row>
                     </Form>
-
+                    </div>
                 </Card>
                 {/**列表 */}
                 <Card
                     style={{ marginTop: 24 }}
                     bodyStyle={{ padding: 0 }}
                     bordered={false}
-                    //className={styles.activeCard}
-                    //title="动态"
-                    //loading={loading.effects['data_overview/getNews']}
-                    //extra={<Link to="/">more...</Link>}
-                    >   <div className={styles.activitiesList}>
-
+                    >   
+                        <div className={styles.activitiesList}>
                         <List 
-                            //loading={activitiesLoading} 
+                            loading={loading.effects['workbench_index/news_fetch']}
                             loadMore={loadMore}
                             size="large">
-                            {list.map(item => (
-                            <List.Item key={item.key}>
+                            {list.map((item,index) => (
+                            <List.Item key={index} style={{paddingLeft: '16px'}}>
                                 <List.Item.Meta
                                     avatar={<Avatar icon={item.icon} />}
                                     title={
-                                        item.desc
+                                        <Fragment>{index+1}<Divider type="vertical" />{item.desc}</Fragment>
                                     }
                                     description={
                                     <span className={styles.datetime} 
-                                    //title={item.updatedAt}
                                     >
                                         {item.date} 
                                     </span>
