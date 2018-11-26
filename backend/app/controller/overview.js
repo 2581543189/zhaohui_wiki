@@ -58,7 +58,7 @@ class OverviewController extends Controller {
         let param={
             'where':{
                 'createDate':{
-                    '$gt': moment().subtract(-7,'days').format('YYYY-MM-DD'),
+                    '$gt': moment().subtract(7,'days').format('YYYY-MM-DD'),
                 }
             }
         }
@@ -73,7 +73,7 @@ class OverviewController extends Controller {
             tasks.push({
                 level:1,
                 title:'发表文章',
-                desc:'任务已经完成<Icon type="like" theme="twoTone" />'
+                desc:'任务已经完成'
             })
         }
         //判断是否有未读完的书
@@ -205,10 +205,10 @@ class OverviewController extends Controller {
                 newBooks =  await ctx.service.book.query(param);
                 if(newBooks.count >0){
                     newBooks.rows.forEach((x)=>{
-                        let during = moment(x.startDate).diff(moment(x.endDate), 'days')
+                        let during = moment(x.endDate).diff(moment(x.startDate), 'days')
                         news.push({
                             icon:'book',
-                            date:moment(x.startDate).format('YYYY-MM-DD')+moment(x.timestamp).format(' HH:mm:ss'),
+                            date:moment(x.endDate).format('YYYY-MM-DD')+moment(x.timestamp).format(' HH:mm:ss'),
                             desc:'读完了书籍《'+x.name+'》,相关分类是['+x.skill.first+'/'+x.skill.second+'/'+x.skill.third+']累计耗时['+during+']天',
                         });
                     });
@@ -272,7 +272,7 @@ class OverviewController extends Controller {
                         let during = moment(x.endDate).diff(moment(x.startDate), 'days')
                         news.push({
                             icon:'book',
-                            date:moment(x.startDate).format('YYYY-MM-DD')+moment(x.timestamp).format(' HH:mm:ss'),
+                            date:moment(x.endDate).format('YYYY-MM-DD')+moment(x.timestamp).format(' HH:mm:ss'),
                             desc:'完成了任务:'+x.sketch+',累计耗时['+during+']天',
                         });
                     });
@@ -339,7 +339,27 @@ class OverviewController extends Controller {
         numbers['note'] = await ctx.service.note.count({});
         //文章
         numbers['article'] = await ctx.service.article.count({});
-
+        //算法 所有bulletin中名称中包含'[算法]'的
+        let query = {
+            where :{
+                sketch:{
+                    $like: '%[算法]%'
+                }
+            }
+        };
+        numbers['totalAlgorithm'] = await ctx.service.bulletin.count(query);
+        query= {
+            where :{
+                $and:[{
+                    sketch:{
+                        $like: '%[算法]%'
+                    }
+                },{
+                    endDate:{ $ne: null} 
+                }]
+            }
+        };
+        numbers['finishedAlgorithm'] = await ctx.service.bulletin.count(query);
         ctx.status = 200;
         ctx.body = util.generateActivity(numbers);
         

@@ -26,7 +26,7 @@ const { RangePicker } = DatePicker;
 
 const { Option } = Select;
 import styles from './TableList.less';
-import {getValue,urlValidFunction,bulletinLevelText,bulletinLevelClass, hanziValidFunction} from '../../constant/DataConstant';
+import {getValue,urlValidFunction,bulletinLevelText,bulletinLevelClass} from '../../constant/DataConstant';
 
 const FormItem = Form.Item;
 
@@ -65,7 +65,7 @@ class CreateForm extends Component {
           >
             <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="简述">
               {form.getFieldDecorator('sketch', {
-                rules: [{required: true,validator:hanziValidFunction}],
+                rules: [{required: true}],
               })(<Input placeholder="简单描述" />)}
             </FormItem>
             <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="难度">
@@ -155,7 +155,7 @@ class UpdateForm extends PureComponent {
         </FormItem>
         <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="简述">
             {form.getFieldDecorator('sketch', {
-            rules: [{required: true,validator:hanziValidFunction}],
+            rules: [{required: true}],
             initialValue: updateModalData.sketch,
             })(<Input placeholder="简单描述" />)}
         </FormItem>

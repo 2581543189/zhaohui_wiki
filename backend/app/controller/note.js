@@ -85,6 +85,11 @@ class NoteController extends Controller {
         const id = book.id;
         await ctx.service.book.update({ id, updates: {current:note.current} });
       }
+      //如果进度等于100% 增加完成时间
+      if(note.current = book.count){
+        const id = book.id;
+        await ctx.service.book.update({ id, updates: {endDate:note.date} });
+      }
       ctx.status = 201;
       ctx.body = obj;
     }

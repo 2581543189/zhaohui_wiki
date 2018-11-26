@@ -151,7 +151,7 @@ module.exports = {
               article: numbers.article,
               note: numbers.note,
               task: numbers.totalTask,
-              question: 0
+              algorithm: numbers.totalAlgorithm,
             },
             {
               name: '掌握',
@@ -159,7 +159,7 @@ module.exports = {
               article: numbers.article,
               note: numbers.note,
               task: numbers.finishedTask,
-              question: 0
+              algorithm: numbers.finishedAlgorithm,
             },
             {
               name: '未掌握',
@@ -167,7 +167,7 @@ module.exports = {
               article: 0,
               note: 0,
               task: numbers.totalTask - numbers.finishedTask,
-              question: 0
+              algorithm: numbers.totalAlgorithm - numbers.finishedAlgorithm,
             },
         ];
         const radarData = [];
@@ -176,7 +176,7 @@ module.exports = {
             article: '发表',
             note: '笔记',
             task: '兴趣',
-            question: '??',
+            algorithm: '算法',
         };
         radarOriginData.forEach(item => {
             Object.keys(item).forEach(key => {
