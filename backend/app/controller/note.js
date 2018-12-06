@@ -55,6 +55,11 @@ class NoteController extends Controller {
         util.dealKeyEqual(query,'bookId',book.rows[0].id);
       }
     }
+
+    const {bookId} = body;
+    if(typeof(bookId)!= 'undefined' && bookId!= null && bookId !=''){
+      util.dealKeyEqual(query,'bookId',bookId);
+    }
     
     ctx.body = await ctx.service.note.query(query);
   }
