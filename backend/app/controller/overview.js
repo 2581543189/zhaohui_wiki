@@ -101,14 +101,16 @@ class OverviewController extends Controller {
             })
         }
         //获取任务列表
+        param['order']=[['startDate','desc']];
         let taskObjs = await ctx.service.bulletin.query(param);
         taskObjs.rows.forEach((x)=>{
             if(tasks.length==6){
                 return;
             }
+            let during = moment().diff(moment(x.startDate), 'days')
             tasks.push({
                 level:x.level,
-                title:'感兴趣的东西',
+                title:'感兴趣的东西('+during+'天前)',
                 desc:x.sketch
             })
         });
