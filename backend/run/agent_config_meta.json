@@ -6,7 +6,8 @@
     "database": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/config/config.default.js",
     "host": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/config/config.default.js",
     "port": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/config/config.default.js",
-    "dialect": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/config/config.default.js"
+    "dialect": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/config/config.default.js",
+    "timezone": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/config/config.default.js"
   },
   "security": {
     "csrf": {
@@ -160,12 +161,16 @@
     "private": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
     "dependencies": {
       "egg": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+      "egg-jwt": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
       "egg-sequelize": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+      "egg-shell-decorators": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+      "moment": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
       "mysql2": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js"
     },
     "devDependencies": {
       "autod": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
       "egg-bin": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
+      "egg-cors": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
       "egg-mock": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
       "factory-girl": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",
       "lodash": "/Users/hui.zhao/workspace/VSCODE/zhaohui_wiki/backend/node_modules/egg/config/config.default.js",

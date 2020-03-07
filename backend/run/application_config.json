@@ -180,7 +180,8 @@
       "host": "47.99.76.20",
       "port": 3306,
       "username": "root",
-      "password": "<String len: 6>"
+      "password": "<String len: 6>",
+      "timezone": "+08:00"
     },
     "env": "local",
     "name": "sequelize-example",
@@ -196,12 +197,16 @@
       "private": true,
       "dependencies": {
         "egg": "^2.10.0",
+        "egg-jwt": "^3.0.0",
         "egg-sequelize": "^4.0.1",
+        "egg-shell-decorators": "^1.0.4",
+        "moment": "^2.22.2",
         "mysql2": "^1.6.1"
       },
       "devDependencies": {
         "autod": "^3.0.1",
         "egg-bin": "^4.8.1",
+        "egg-cors": "^2.1.0",
         "egg-mock": "^3.19.2",
         "factory-girl": "^5.0.2",
         "lodash": "^4.17.10",
@@ -211,7 +216,7 @@
         "node": ">=8.9.0"
       },
       "scripts": {
-        "dev": "egg-bin dev",
+        "dev": "egg-bin dev --port 7001",
         "test": "NODE_ENV=test egg-bin test",
         "cov": "egg-bin cov",
         "ci": "npm run cov",

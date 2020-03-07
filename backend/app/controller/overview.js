@@ -133,7 +133,7 @@ class OverviewController extends Controller {
         if(typeof(ctx.request.body)=='undefined' || ctx.request.body==null){
             ctx.request.body={};
         }
-        //从当前时间 往前减24小时30次，直到获取30个事件
+        //从当前时间 往前减7*24小时30次，直到获取10个事件
         const news= [];
         //入参
         let {endDate,type}=ctx.request.body;
@@ -144,8 +144,8 @@ class OverviewController extends Controller {
         for(let i = 0;i<30;i++){
 
             let theDate = (endDate ? moment(endDate):moment()).format('YYYY-MM-DD')+' 23:59:59';
-            const end = moment(theDate).subtract(i*24,'hours');
-            const start = moment(theDate).subtract((i+1)*24,'hours');
+            const end = moment(theDate).subtract(i*7*24,'hours');
+            const start = moment(theDate).subtract((i+1)*7*24,'hours');
             if(news.length >=10){
                 resultEndDate=end.format('YYYY-MM-DD HH:mm:ss');
                 break;
@@ -338,9 +338,13 @@ class OverviewController extends Controller {
         //完成任务
         numbers['finishedTask'] = await ctx.service.bulletin.count(param);
         //笔记
-        numbers['note'] = await ctx.service.note.count({});
+        let notebalance = await ctx.service.note.count({}) / numbers['totalBooks'] * numbers['finishedBooks'];//数量太多，平衡一下
+        numbers['note'] = parseInt(notebalance);
         //文章
         numbers['article'] = await ctx.service.article.count({});
+        
+        let totalAlgorithm = 0;
+        let finishedAlgorithm = 0;
         //算法 所有bulletin中名称中包含'[算法]'的
         let query = {
             where :{
@@ -349,7 +353,7 @@ class OverviewController extends Controller {
                 }
             }
         };
-        numbers['totalAlgorithm'] = await ctx.service.bulletin.count(query);
+        totalAlgorithm += await ctx.service.bulletin.count(query);
         query= {
             where :{
                 $and:[{
@@ -361,7 +365,86 @@ class OverviewController extends Controller {
                 }]
             }
         };
-        numbers['finishedAlgorithm'] = await ctx.service.bulletin.count(query);
+        finishedAlgorithm += await ctx.service.bulletin.count(query);
+        //获取技能中数学的id
+        query = {
+            where :{
+                $or:[{
+                    first:{
+                        $like: '%数学%'
+                    }
+                },{
+                    second:{
+                        $like: '%数学%'
+                    }
+                },{
+                    third:{
+                        $like: '%数学%'
+                    }
+                }]
+            }
+        };
+        let skills = await ctx.service.skill.query(query);
+        let skillIds = [];
+        skills.rows.forEach((x)=>{
+            skillIds.push(x.id);
+        });
+        
+        //书籍中属于数学的书籍
+        query = {
+            where :{
+                skill:{
+                    $in: skillIds
+                }
+            }
+        };
+
+        let books = await ctx.service.book.query(query);
+        totalAlgorithm += books.count;
+        query = {
+            where :{
+                $and:[{
+                    skill:{
+                        $in: skillIds
+                    }
+                },{
+                    endDate:{ $ne: null} 
+                }]
+            }
+        };
+        finishedAlgorithm+= await ctx.service.book.count(query);
+
+        //相关的读书笔记
+        let bookIds = [];
+        books.rows.forEach((x)=>{
+            bookIds.push(x.id);
+        });
+        //书籍中属于数学的书籍
+        query = {
+            where :{
+                book:{
+                    $in: bookIds
+                }
+            }
+        };
+        let noteCount = await ctx.service.note.count(query);
+        totalAlgorithm += noteCount;
+        finishedAlgorithm+= noteCount;
+
+        //发表的数学相关文章
+        query = {
+            where :{
+                skill:{
+                    $in: skillIds
+                }
+            }
+        };
+        let articleCount = await ctx.service.article.count(query);
+        totalAlgorithm += articleCount;
+        finishedAlgorithm+= articleCount;
+
+        numbers['totalAlgorithm'] = totalAlgorithm;
+        numbers['finishedAlgorithm'] = finishedAlgorithm;
         ctx.status = 200;
         ctx.body = util.generateActivity(numbers);
         
