@@ -3,6 +3,7 @@ import Link from 'umi/link';
 
 import styles from './UserLayout.less';
 import logo from '../assets/logo.png';
+import FooterView from './Footer'
 
 
 class UserLayout extends React.PureComponent {
@@ -23,6 +24,7 @@ class UserLayout extends React.PureComponent {
             <div className={styles.desc}></div>
           </div>
           {children}
+          <FooterView></FooterView>
         </div>
       </div>
     );

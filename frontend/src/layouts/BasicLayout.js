@@ -17,6 +17,7 @@ import Header from './Header';
 import Context from './MenuContext';
 import Exception403 from '../pages/Exception/403';
 import { getUsername } from '../utils/authority';
+import FooterView from './Footer'
 
 const { Content } = Layout;
 
@@ -261,6 +262,7 @@ class BasicLayout extends React.PureComponent {
               {children}
             </Authorized>
           </Content>
+          <FooterView></FooterView>
         </Layout>
       </Layout>
     );

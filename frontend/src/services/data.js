@@ -3,8 +3,8 @@ import request from '@/utils/request';
 import {rolesLogin} from '../constant/DataConstant'
 
 
-//let _BASE_PATH="http://localhost/backend";
-let _BASE_PATH="http://www.zhaohui.wiki/backend";
+let _BASE_PATH="http://localhost/backend";
+//let _BASE_PATH="http://www.zhaohui.wiki/backend";
 
 //TODO:模版方法希望后续能找到切面的方法不用每个方法都写这么费劲
 // export async function xxx(payload={}) {
