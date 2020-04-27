@@ -147,36 +147,44 @@ module.exports = {
         const radarOriginData = [
             {
               name: '汇总',
-              book: numbers.totalBooks,
+            //   book: numbers.totalBooks,
+            //   note: numbers.note,
+              read:numbers.totalBooks + numbers.note,
               article: numbers.article,
-              note: numbers.note,
               task: numbers.totalTask,
               algorithm: numbers.totalAlgorithm,
+              math:numbers.totalMath,
             },
             {
               name: '完成',
-              book: numbers.finishedBooks,
+            //   book: numbers.finishedBooks,
+            //   note: numbers.note,
+              read:numbers.finishedBooks + numbers.note,
               article: numbers.article,
-              note: numbers.note,
               task: numbers.finishedTask,
               algorithm: numbers.finishedAlgorithm,
+              math:numbers.finishedMath,
             },
             {
               name: '进行中',
-              book: numbers.totalBooks - numbers.finishedBooks,
+            //   book: numbers.totalBooks - numbers.finishedBooks,
+            //   note: 0,
+              read:numbers.totalBooks + numbers.note-numbers.finishedBooks,
               article: 0,
-              note: 0,
               task: numbers.totalTask - numbers.finishedTask,
               algorithm: numbers.totalAlgorithm - numbers.finishedAlgorithm,
+              math:numbers.totalMath - numbers.finishedMath,
             },
         ];
         const radarData = [];
         const radarTitleMap = {
-            book: '书籍',
-            article: '文章',
-            note: '笔记',
-            task: '任务',
-            algorithm: '数学',
+            // book: '书籍',
+            // note: '笔记',
+            read:'阅读',
+            article: '分享',
+            task: '目标',
+            algorithm: '算法',
+            math:'数学'
         };
         radarOriginData.forEach(item => {
             Object.keys(item).forEach(key => {

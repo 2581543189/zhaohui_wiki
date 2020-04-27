@@ -66,13 +66,13 @@ class OverviewController extends Controller {
         if(count==0){
             tasks.push({
                 level:1,
-                title:'发表文章',
+                title:'坚持分享',
                 desc:'这周什么都没有总结,抓紧时间'
             })
         }else{
             tasks.push({
                 level:1,
-                title:'发表文章',
+                title:'乐于分享',
                 desc:'任务已经完成'
             })
         }
@@ -110,7 +110,7 @@ class OverviewController extends Controller {
             let during = moment().diff(moment(x.startDate), 'days')
             tasks.push({
                 level:x.level,
-                title:'感兴趣的东西('+during+'天前)',
+                title:'一个小目标('+during+'天前)',
                 desc:x.sketch
             })
         });
@@ -342,109 +342,22 @@ class OverviewController extends Controller {
         numbers['note'] = parseInt(notebalance);
         //文章
         numbers['article'] = await ctx.service.article.count({});
+
+        //算法 书籍中 所有分类是算法的 + 所有bulletin中名称中包含'[算法]'的
         
-        let totalAlgorithm = 0;
-        let finishedAlgorithm = 0;
-        //算法 所有bulletin中名称中包含'[算法]'的
-        let query = {
-            where :{
-                sketch:{
-                    $like: '%[算法]%'
-                }
-            }
-        };
-        totalAlgorithm += await ctx.service.bulletin.count(query);
-        query= {
-            where :{
-                $and:[{
-                    sketch:{
-                        $like: '%[算法]%'
-                    }
-                },{
-                    endDate:{ $ne: null} 
-                }]
-            }
-        };
-        finishedAlgorithm += await ctx.service.bulletin.count(query);
-        //获取技能中数学的id
-        query = {
-            where :{
-                $or:[{
-                    first:{
-                        $like: '%数学%'
-                    }
-                },{
-                    second:{
-                        $like: '%数学%'
-                    }
-                },{
-                    third:{
-                        $like: '%数学%'
-                    }
-                }]
-            }
-        };
-        let skills = await ctx.service.skill.query(query);
-        let skillIds = [];
-        skills.rows.forEach((x)=>{
-            skillIds.push(x.id);
-        });
-        
-        //书籍中属于数学的书籍
-        query = {
-            where :{
-                skill:{
-                    $in: skillIds
-                }
-            }
-        };
-
-        let books = await ctx.service.book.query(query);
-        totalAlgorithm += books.count;
-        query = {
-            where :{
-                $and:[{
-                    skill:{
-                        $in: skillIds
-                    }
-                },{
-                    endDate:{ $ne: null} 
-                }]
-            }
-        };
-        finishedAlgorithm+= await ctx.service.book.count(query);
-
-        //相关的读书笔记
-        let bookIds = [];
-        books.rows.forEach((x)=>{
-            bookIds.push(x.id);
-        });
-        //书籍中属于数学的书籍
-        query = {
-            where :{
-                book:{
-                    $in: bookIds
-                }
-            }
-        };
-        let noteCount = await ctx.service.note.count(query);
-        totalAlgorithm += noteCount;
-        finishedAlgorithm+= noteCount;
-
-        //发表的数学相关文章
-        query = {
-            where :{
-                skill:{
-                    $in: skillIds
-                }
-            }
-        };
-        let articleCount = await ctx.service.article.count(query);
-        totalAlgorithm += articleCount;
-        finishedAlgorithm+= articleCount;
-
+        let tuple = await ctx.service.overview.getCount('算法');
+        let totalAlgorithm = tuple['totalCount'];
+        let finishedAlgorithm = tuple['finishCount'];
         numbers['totalAlgorithm'] = totalAlgorithm;
         numbers['finishedAlgorithm'] = finishedAlgorithm;
+
+        //数学 书籍中 所有分类是数学的 + 所有bulletin中名称中包含'[数学]'的
+        tuple = await ctx.service.overview.getCount('数学');
+        let totalMath = tuple['totalCount'];
+        let finishedMath = tuple['finishCount'];
+        numbers['totalMath'] = totalAlgorithm;
+        numbers['finishedMath'] = finishedAlgorithm;
+
         ctx.status = 200;
         ctx.body = util.generateActivity(numbers);
         
