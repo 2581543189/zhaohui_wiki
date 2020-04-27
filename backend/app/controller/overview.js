@@ -355,8 +355,8 @@ class OverviewController extends Controller {
         tuple = await ctx.service.overview.getCount('数学');
         let totalMath = tuple['totalCount'];
         let finishedMath = tuple['finishCount'];
-        numbers['totalMath'] = totalAlgorithm;
-        numbers['finishedMath'] = finishedAlgorithm;
+        numbers['totalMath'] = totalMath;
+        numbers['finishedMath'] = finishedMath;
 
         ctx.status = 200;
         ctx.body = util.generateActivity(numbers);
