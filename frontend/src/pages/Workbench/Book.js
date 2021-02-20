@@ -212,6 +212,8 @@ class Book extends Component {
                     type:'workbench_index/note_fetch',
                     payload:{
                         bookId:item.id,
+                        pageSize:100,
+                        currentPage:1
                     }
                 });
             }
