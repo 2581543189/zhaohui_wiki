@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS `user`
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8
+    COMMENT '用户表'
 ;
 
 CREATE TABLE IF NOT EXISTS `article`
@@ -25,6 +26,7 @@ CREATE TABLE IF NOT EXISTS `article`
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8
+    COMMENT '文章表'
 ;
 
 CREATE TABLE IF NOT EXISTS `book`
@@ -43,6 +45,7 @@ CREATE TABLE IF NOT EXISTS `book`
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8
+    COMMENT '书籍表'
 ;
 
 CREATE TABLE IF NOT EXISTS `message`
@@ -57,7 +60,8 @@ CREATE TABLE IF NOT EXISTS `message`
     `index`        int(32)       NOT NULL DEFAULT '0' COMMENT '主题下的index',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8 COMMENT ='留言板'
+  DEFAULT CHARSET = utf8
+    COMMENT ='留言表'
 ;
 
 CREATE TABLE IF NOT EXISTS `note`
@@ -73,6 +77,7 @@ CREATE TABLE IF NOT EXISTS `note`
     KEY `ix_book` (`book`) USING BTREE
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8
+    COMMENT ='笔记表'
 ;
 
 CREATE TABLE IF NOT EXISTS `classification`
@@ -88,6 +93,7 @@ CREATE TABLE IF NOT EXISTS `classification`
     UNIQUE KEY `ix_unique` (`type`, `first`, `second`, `third`) USING BTREE
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8
+    COMMENT ='分类表'
 ;
 
 
@@ -104,6 +110,7 @@ CREATE TABLE IF NOT EXISTS `event`
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8
+    COMMENT ='事件表'
 ;
 
 CREATE TABLE IF NOT EXISTS `leetcode`
@@ -120,6 +127,7 @@ CREATE TABLE IF NOT EXISTS `leetcode`
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8
+    COMMENT ='算法题表'
 ;
 
 CREATE TABLE IF NOT EXISTS `leetcode_experience`
@@ -134,6 +142,7 @@ CREATE TABLE IF NOT EXISTS `leetcode_experience`
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8
+    COMMENT ='算法题心得总结表'
 ;
 
 CREATE TABLE IF NOT EXISTS `bookmark`
@@ -148,6 +157,7 @@ CREATE TABLE IF NOT EXISTS `bookmark`
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8
+    COMMENT ='收藏夹表'
 ;
 
 CREATE TABLE IF NOT EXISTS `keyword`
@@ -161,6 +171,7 @@ CREATE TABLE IF NOT EXISTS `keyword`
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8
+    COMMENT ='热词表'
 ;
 
 CREATE TABLE IF NOT EXISTS `foreign_article`
@@ -175,6 +186,7 @@ CREATE TABLE IF NOT EXISTS `foreign_article`
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8
+    COMMENT ='外语文章表'
 ;
 
 CREATE TABLE IF NOT EXISTS `foreign_word`
@@ -187,6 +199,7 @@ CREATE TABLE IF NOT EXISTS `foreign_word`
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8
+    COMMENT ='生词表'
 ;
 
 CREATE TABLE IF NOT EXISTS `motto`
@@ -198,4 +211,5 @@ CREATE TABLE IF NOT EXISTS `motto`
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8
+    COMMENT ='箴言表'
 ;
