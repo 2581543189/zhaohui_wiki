@@ -41,7 +41,7 @@ func articleAll(c *gin.Context) {
 			return
 		}
 	}
-	order := util.ParseSorter(req.Sorter)
+	order := util.ParseSorter("article", req.Sorter)
 	where := make(map[string]interface{})
 	if len(req.Title) > 0 {
 		where["title like ?"] = "%" + req.Title + "%"

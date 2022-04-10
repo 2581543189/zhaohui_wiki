@@ -41,7 +41,7 @@ func classificationAll(c *gin.Context) {
 			return
 		}
 	}
-	order := util.ParseSorter(req.Sorter)
+	order := util.ParseSorter("classification", req.Sorter)
 	where := make(map[string]interface{})
 	if req.Id > 0 {
 		where["Id = ?"] = req.Id

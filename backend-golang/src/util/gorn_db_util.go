@@ -98,7 +98,7 @@ func getResourceCount(m interface{}, q *PaginationQuery) (uint, *gorm.DB) {
 }
 
 // 解析排序规则
-func ParseSorter(sorter string) string {
+func ParseSorter(table, sorter string) string {
 	ans := ""
 	if len(sorter) > 0 {
 		array := strings.Split(sorter, "|")
@@ -113,7 +113,7 @@ func ParseSorter(sorter string) string {
 		}
 	}
 	if len(ans) == 0 {
-		ans = "gmt_create desc"
+		ans = table + ".gmt_create desc"
 	}
 	return ans
 }

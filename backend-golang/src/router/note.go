@@ -39,7 +39,7 @@ func noteAll(c *gin.Context) {
 			return
 		}
 	}
-	order := util.ParseSorter(req.Sorter)
+	order := util.ParseSorter("note", req.Sorter)
 	where := make(map[string]interface{})
 	if len(req.Name) > 0 {
 		// 查询书籍
