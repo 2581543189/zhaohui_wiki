@@ -195,7 +195,7 @@ class Article extends Component {
                             <Col md={8} sm={24}>
                             <FormItem {...formItemLayout} label="分类">
                                 {getFieldDecorator('type', {})(
-                                    <SkillCascader style={{width:'100%'}}/>
+                                    <SkillCascader style={{width:'100%'}} type="SKILL"/>
                                 )}
                             </FormItem>
                             </Col>

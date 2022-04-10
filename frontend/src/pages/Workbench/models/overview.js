@@ -18,7 +18,7 @@ export default {
             if(response.error!=1){
                 yield put({
                     type: 'setJitang',
-                    payload: response.text,
+                    payload: response.data,
                   });
             }else{
                 openNotification('error',response.message);
@@ -29,7 +29,7 @@ export default {
             if(response.error!=1){
                 yield put({
                     type: 'setAchievement',
-                    payload: response,
+                    payload: response.data,
                   });
             }else{
                 openNotification('error',response.message);
@@ -51,7 +51,7 @@ export default {
             if(response.error!=1){
                 yield put({
                     type: 'setNews',
-                    payload: response.list,
+                    payload: response.data.list,
                   });
             }else{
                 openNotification('error',response.message);
@@ -73,7 +73,7 @@ export default {
             if(response.error!=1){
                 yield put({
                     type: 'setInterest',
-                    payload: response,
+                    payload: response.data,
                   });
             }else{
                 openNotification('error',response.message);

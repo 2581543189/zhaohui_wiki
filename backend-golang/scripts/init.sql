@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `book`
 (
     `id`             bigint(128)   NOT NULL AUTO_INCREMENT COMMENT '唯一主键',
     `gmt_create`     timestamp     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    `gmt_end`        timestamp     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '结束时间',
+    `gmt_end`        timestamp     NULL COMMENT '结束时间',
     `gmt_modified`   timestamp     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     `name`           varchar(1024) NOT NULL DEFAULT '' COMMENT '书籍名称',
     `author`         varchar(1024) NOT NULL DEFAULT '' COMMENT '作者名称',
@@ -85,7 +85,7 @@ CREATE TABLE IF NOT EXISTS `classification`
     `id`           bigint(128)  NOT NULL AUTO_INCREMENT COMMENT '唯一主键',
     `gmt_create`   timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `gmt_modified` timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-    `type`         varchar(128) NOT NULL DEFAULT 'SKILL' COMMENT '类型,取值有:SKILL,LEETCODE,LEETCODE_EXP,BOOK_MARK,ENGLISH',
+    `type`         varchar(128) NOT NULL DEFAULT 'SKILL' COMMENT '类型,取值有:SKILL,LEETCODE,LEETCODE_EXP,BOOK_MARK,FOREIGN_ARTICLE',
     `first`        varchar(128) NOT NULL DEFAULT '其他' COMMENT '大分类',
     `second`       varchar(128) NOT NULL DEFAULT '其他' COMMENT '二级分类',
     `third`        varchar(128) NOT NULL DEFAULT '其他' COMMENT '三级分类',

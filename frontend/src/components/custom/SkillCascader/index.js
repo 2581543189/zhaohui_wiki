@@ -12,6 +12,7 @@ class SkillCascader extends Component {
     constructor(){
         super();
         this.state={
+            type:'',
             options:[],//数据源
         }
     }
@@ -19,14 +20,14 @@ class SkillCascader extends Component {
     //如果有设置初始值，需要获取初始值对应的数据
     async componentWillMount(){
 
-        await this.loadData([]);
+        await this.loadData(this.props.type,[]);
         const data = this.props.initdata;
         console.log(data);
         if(data){
-            await this.loadData([
+            await this.loadData(this.props.type,[
                 {value:data.first}
             ]);
-            await this.loadData([
+            await this.loadData(this.props.type,[
                 {value:data.first},
                 {value:data.second}
             ]);
@@ -34,7 +35,7 @@ class SkillCascader extends Component {
     }
 
     //加载数据方法.
-    async loadData(selectedOptions){
+    async loadData(type,selectedOptions){
         //转化入参
         console.log(selectedOptions);
         let deepth = selectedOptions.length;
@@ -43,6 +44,7 @@ class SkillCascader extends Component {
 
         }else if(deepth==2){
             param={
+                type:type,
                 name:'third',
                 first:selectedOptions[0].value,
                 second:selectedOptions[1].value,
@@ -50,12 +52,14 @@ class SkillCascader extends Component {
 
         }else if(deepth==1){
             param={
+                type:type,
                 name:'second',
                 first:selectedOptions[0].value,
             }
 
         }else{
             param={
+                type:type,
                 name:'first',
             }
         }
@@ -140,11 +144,12 @@ class SkillCascader extends Component {
     render(){
 
         const {options} = this.state;
+        const {type} = this.props;
 
         return (
             <Cascader
             options={options}
-            loadData={(selectedOptions)=>this.loadData(selectedOptions)}
+            loadData={(selectedOptions)=>this.loadData(type,selectedOptions)}
             //onChange={(value, selectedOptions)=>this.onChange(value, selectedOptions)}
             changeOnSelect
             {...this.props}

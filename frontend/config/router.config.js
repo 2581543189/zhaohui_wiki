@@ -56,12 +56,12 @@ export default [
                 component: './Workbench/Book',
                 icon: 'read',
               },
-              {
-                path: '/website/workbench/index/missions',
-                name: 'missions',
-                component: './Workbench/Mission',
-                icon: 'bulb',
-              },
+              // {
+              //   path: '/website/workbench/index/missions',
+              //   name: 'missions',
+              //   component: './Workbench/Mission',
+              //   icon: 'bulb',
+              // },
               {
                 path: '/website/workbench/index/news',
                 name: 'news',
@@ -78,7 +78,7 @@ export default [
             ]
           },
           {
-            path: '[nginxs]/api-docs/',
+            path: '[nginxs]/backend/swagger/index.html',
             name: 'apiDocs',
             icon: 'api',
             target:'_blank'
@@ -122,12 +122,12 @@ export default [
             component: './Data/Notes',
             icon: 'tag',
           },
-          {
-            path: '/website/data/bulletin',
-            name: 'bulletin',
-            component: './Data/Bulletin',
-            icon: 'read',
-          },
+          // {
+          //   path: '/website/data/bulletin',
+          //   name: 'bulletin',
+          //   component: './Data/Bulletin',
+          //   icon: 'read',
+          // },
         ]
       }
 

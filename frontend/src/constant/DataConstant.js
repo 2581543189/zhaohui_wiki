@@ -9,6 +9,7 @@ const { Meta } = Card;
 //角色相关
 export const rolesLogin = ['admin', 'user', 'guest'];
 export const roles = ['管理员', '用户', '访客'];
+export const classificationtTypes = ['SKILL','LEETCODE','LEETCODE_EXP','BOOK_MARK','FOREIGN_ARTICLE'];
 export const rolesIcon = ['crown', 'smile', 'eye'];
 export const bulletinLevelText = ['普通', '稀有', '史诗','传说','??!!'];
 export const bulletinLevelClass = ['green', 'blue', 'magenta','gold','red'];

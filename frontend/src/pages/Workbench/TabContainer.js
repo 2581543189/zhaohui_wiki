@@ -39,10 +39,10 @@ class SearchList extends Component {
         key: 'books',
         tab: '书籍',
       },
-      {
-        key: 'missions',
-        tab: '任务',
-      },
+      // {
+      //   key: 'missions',
+      //   tab: '任务',
+      // },
       {
         key: 'news',
         tab: '动态',

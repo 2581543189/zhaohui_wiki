@@ -18,6 +18,7 @@ import {
     List,
 } from 'antd';
 const TabPane = Tabs.TabPane;
+import moment from 'moment';
 
 import {bulletinLevelText,bulletinLevelClass} from '../../constant/DataConstant';
 
@@ -49,6 +50,21 @@ class Overview extends PureComponent {
             type:'workbench_overview/getInterest'
         });
 
+    }
+    getIcon(type){
+        switch(type) {
+            case 'BOOK':return 'book'
+            case 'NOTE':return 'tags'
+            case 'ARTICLE':return 'highlight'
+            case 'LEETCODE':return 'calculator'
+            case 'FOREIGN_ARTICLE':return 'ie'
+            case 'BOOKMARK':return 'star-o'
+            case 'MESSAGE':return 'message'
+            case 'MOTTO':return 'picture'
+            case 'KEYWORD':return 'pushpin-o'
+            default:
+                return 'book'
+       } 
     }
     /**
      * 总览页框架
@@ -128,7 +144,7 @@ class Overview extends PureComponent {
                     style={{ marginBottom: 24 }}
                     title="任务栏"
                     bordered={false}
-                    extra={<Link to="/website/workbench/index/missions">more...</Link>}
+                    // extra={<Link to="/website/workbench/index/missions">more...</Link>}
                     loading={loading.effects['workbench_overview/getTaskList']}
                     bodyStyle={{ padding: 0 }}
                     >
@@ -165,7 +181,7 @@ class Overview extends PureComponent {
                             {news.map(item => (
                             <List.Item key={item.key}>
                                 <List.Item.Meta
-                                    avatar={<Avatar icon={item.icon} />}
+                                    avatar={<Avatar icon={this.getIcon(item.type)} />}
                                     title={
                                         item.desc
                                     }
@@ -173,7 +189,7 @@ class Overview extends PureComponent {
                                     <span className={styles.datetime} 
                                     //title={item.updatedAt}
                                     >
-                                        {item.date} 
+                                        {moment(item.gmt_create).format('YYYY-MM-DD HH:mm:ss')} 
                                     </span>
                                     }
                                 />

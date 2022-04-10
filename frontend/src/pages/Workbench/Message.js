@@ -38,13 +38,16 @@ class Message extends Component {
 
         dispatch({
             type:'workbench_index/message_fetch',
+            payload : {
+                offset:0
+            }
         });
 
     }
 
 
     //获取更多数据
-    fetchMore(pagination){
+    fetchMore(offset,pagination){
         const { dispatch, form } = this.props;
         let payload = {};
 
@@ -55,6 +58,7 @@ class Message extends Component {
         total:pagination.total,
         }
         payload.append=true;
+        payload.offset = offset;
         dispatch({
             type:'workbench_index/message_fetch',
             payload:payload
@@ -97,11 +101,12 @@ class Message extends Component {
         let pagination = message.pagination;
         let name = message.name;
         let avatar = message.avatar;
+        let offset = message.offset
 
         const loadMore =
         message.hasNext ? (
           <div style={{ textAlign: 'center', marginTop: 16 }}>
-            <Button onClick={()=>{this.fetchMore(pagination)}} style={{ paddingLeft: 48, paddingRight: 48 }}>
+            <Button onClick={()=>{this.fetchMore(offset,pagination)}} style={{ paddingLeft: 48, paddingRight: 48 }}>
               {loading.effects['workbench_index/message_fetch'] ? (
                 <span>
                   <Icon type="loading" /> 加载中...

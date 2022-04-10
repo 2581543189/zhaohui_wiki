@@ -22,8 +22,8 @@ class LoginPage extends Component {
       const { dispatch } = this.props;
 
       //密码进行md5
-      const md5 = crypto.createHash('md5');
-      values.password = md5.update(values.password).digest('hex');
+      //const md5 = crypto.createHash('md5');
+      //values.password = md5.update(values.password).digest('hex');
       dispatch({
         type: 'login/login',
         payload: {

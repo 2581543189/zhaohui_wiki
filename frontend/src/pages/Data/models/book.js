@@ -13,6 +13,7 @@ export default {
         },
         //查询条件    
         formValues:{
+            type:'SKILL',
             name:'',
             first:'',
             second:'',
@@ -63,7 +64,7 @@ export default {
                     type: 'setFormValues',
                     payload: {
                         formValues: {
-                            title:param.title,
+                            name:param.name,
                             first:param.first,
                             second:param.second,
                             third:param.third,
@@ -77,13 +78,14 @@ export default {
         },
         //增加book
         *add({ payload,callback }, { call, put,select }) {
+            delete payload.type
             const response = yield call(addBook, payload);
             if(response.error!=1){
                 yield put({
                     type: 'setModalVisible',
                     payload:false,
                 });
-                openNotification('success','新增书籍'+response.name+'['+response.id+']成功')
+                openNotification('success','新增书籍'+response.data.name+'['+response.data.id+']成功')
                 const formValues = yield select(state => state.data_book.formValues);
                 yield put({
                     type: 'fetch',
@@ -101,7 +103,7 @@ export default {
         *delete ({ payload }, { call, put ,select }){
             const response = yield call(deleteBook, payload);
             if(response.error!=1){
-                openNotification('success','删除书籍['+response.id+']成功')
+                openNotification('success','删除书籍['+response.data.id+']成功')
                 const formValues = yield select(state => state.data_book.formValues);
                 yield put({
                     type: 'fetch',
@@ -138,6 +140,7 @@ export default {
         },
         //更新用户step2
         *updateStep2({ payload }, { call, put ,select }){
+            delete payload.type
             const response = yield call(updateBook, payload);
             if(response.error!=1){
                 yield put({

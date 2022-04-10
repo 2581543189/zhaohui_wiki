@@ -21,6 +21,7 @@ export default {
         updateModalVisible:false,
         updateModalData:{
             id:0,
+            type:'',
             first:'-',
             second:'-',
             third:'-',
@@ -28,7 +29,8 @@ export default {
         //筛选条件
         options:[],
         //查询条件    
-        formValues:{},
+        formValues:{
+        },
 
     },
   
@@ -40,8 +42,8 @@ export default {
             }
             const formValues = yield select(state => state.data_skill.formValues);
             const param = {
-                ...payload,
                 ...formValues,
+                ...payload,
             }
             const response = yield call(querySkill, param);
             if(response.error!=1){
@@ -62,7 +64,7 @@ export default {
                     type: 'setModalVisible',
                     payload:false,
                 });
-                openNotification('success','新增技能'+response.name+'['+response.id+']成功')
+                openNotification('success','新增类别['+response.data.id+']成功')
                 const formValues = yield select(state => state.data_skill.formValues);
                 yield put({
                     type: 'fetch',
@@ -82,7 +84,7 @@ export default {
         *delete ({ payload }, { call, put ,select }){
             const response = yield call(deleteSkill, payload);
             if(response.error!=1){
-                openNotification('success','删除技能['+response.id+']成功')
+                openNotification('success','删除类别['+response.data.id+']成功')
                 const formValues = yield select(state => state.data_skill.formValues);
                 yield put({
                     type: 'fetch',
@@ -142,6 +144,7 @@ export default {
                         ...formValues,
                     },
                 });
+                openNotification('success','更新类别['+response.data.id+']成功')
             }else{
                 openNotification('error',response.message);
             }
@@ -152,8 +155,13 @@ export default {
          * 获取级联下拉框数据。
          * 
          */
-        *getOption({ payload }, { call, put }){
-            const response = yield call(distinctValue, payload);
+        *getOption({ payload }, { call, put,select }){
+            const formValues = yield select(state => state.data_skill.formValues);
+            const param = {
+                ...formValues,
+                ...payload,
+            }
+            const response = yield call(distinctValue, param);
             if(response.error!=1){
                 yield put({
                     type: 'addOptions',
@@ -164,7 +172,18 @@ export default {
                 openNotification('error',response.message);
             }
         },
-
+        *updateClassificationType({ payload }, { call, put,select }){
+            yield put({
+                type: 'setFormValues',
+                payload:{
+                    formValues:payload
+                },
+            });
+            yield put({
+                type: 'clearOptions'
+            });
+            
+        }
 
         // *manager ({ payload }, { call, put }){
         //     const response = yield call(managerUser, payload);
@@ -196,6 +215,7 @@ export default {
         setUpdateModalVisible(state, action){
             const _default = {
                 id:0,
+                type:'',
                 first:'-',
                 second:'-',
                 third:'-',
@@ -211,7 +231,7 @@ export default {
             const response = action.payload.body;
 
             
-            if(typeof(response.first)=='undefined' ||response.first===null){
+            if(typeof(response.first)=='undefined' ||response.first===null || response.first ===""){
                 //无条件
                 let options = [];
                 response.array.map(data=>{
@@ -227,7 +247,7 @@ export default {
                 let children=[];
                 const first = response.first;
 
-                if(typeof(response.second)=='undefined' ||response.second===null){ 
+                if(typeof(response.second)=='undefined' ||response.second===null ||response.second ===""){ 
                     //根据1 查2
                     response.array.map(data=>{
                         children.unshift({
@@ -272,6 +292,12 @@ export default {
         //通过级联select设置查询条件
         setFormValues(state, action){
             state.formValues=action.payload.formValues;
+            return{
+                ...state,
+            }
+        },
+        clearOptions(state, action){
+            state.options=[];
             return{
                 ...state,
             }

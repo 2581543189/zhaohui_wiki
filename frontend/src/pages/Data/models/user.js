@@ -53,7 +53,7 @@ export default {
                     type: 'setModalVisible',
                     payload:false,
                 });
-                openNotification('success','新增用户'+response.name+'['+response.id+']成功')
+                openNotification('success','新增用户'+response.data.name+'['+response.data.id+']成功')
                 yield put({
                     type: 'fetch',
                     payload:{
@@ -71,7 +71,7 @@ export default {
         *delete ({ payload }, { call, put }){
             const response = yield call(deleteUser, payload);
             if(response.error!=1){
-                openNotification('success','删除用户['+response.id+']成功')
+                openNotification('success','删除用户['+response.data.id+']成功')
                 yield put({
                     type: 'fetch',
                     payload:{

@@ -367,7 +367,7 @@ class Bulletin extends Component {
             ...filters,
         };
         if (sorter.field) {
-            params.sorter = `${sorter.field}_${sorter.order}`;
+            params.sorter = `${sorter.field}|${sorter.order}`;
         }
     
         dispatch({

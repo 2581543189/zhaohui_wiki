@@ -16,6 +16,7 @@ export default {
         platforms:[],
         //查询条件    
         formValues:{
+            type:'SKILL',
             title:'',
             platform:'',
             first:'',
@@ -30,7 +31,7 @@ export default {
         updateModalData:{
             id:0,
             title:'-',
-            createDate:'1970-01-01',
+            gmt_create:'1970-01-01 00:00:00',
             url:'http://',
             type:[],
             platform:'-'
@@ -97,7 +98,7 @@ export default {
                     type: 'setModalVisible',
                     payload:false,
                 });
-                openNotification('success','新增文章'+response.title+'['+response.id+']成功')
+                openNotification('success','新增文章'+response.data.title+'['+response.data.id+']成功')
                 const formValues = yield select(state => state.data_article.formValues);
                 yield put({
                     type: 'fetch',
@@ -116,7 +117,7 @@ export default {
         *delete ({ payload }, { call, put ,select }){
             const response = yield call(deleteArticle, payload);
             if(response.error!=1){
-                openNotification('success','删除文章['+response.id+']成功')
+                openNotification('success','删除文章['+response.data.id+']成功')
                 const formValues = yield select(state => state.data_article.formValues);
                 yield put({
                     type: 'fetch',
@@ -153,6 +154,7 @@ export default {
         },
         //更新用户step2
         *updateStep2({ payload }, { call, put ,select }){
+            delete payload.type
             const response = yield call(updateArticle, payload);
             if(response.error!=1){
                 yield put({
@@ -162,7 +164,7 @@ export default {
                         updateModalData:{
                             id:0,
                             title:'-',
-                            createDate:'1970-01-01',
+                            gmt_create:'1970-01-01',
                             url:'http://',
                             type:[],
                             platform:'-'
@@ -223,7 +225,7 @@ export default {
             const _default={
                 id:0,
                 title:'-',
-                createDate:'1970-01-01',
+                gmt_create:'1970-01-01',
                 url:'http://',
                 type:[],
                 platform:'-'
@@ -231,8 +233,8 @@ export default {
 
             return {
                 ...state,
-                updateModalVisible: action.payload.updateModalVisible,
                 updateModalData:action.payload.updateModalData?action.payload.updateModalData:_default,
+                updateModalVisible: action.payload.updateModalVisible,
             };
         },
 

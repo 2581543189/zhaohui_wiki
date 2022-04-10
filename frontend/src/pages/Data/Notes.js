@@ -105,10 +105,10 @@ class CreateForm extends Component {
               )}
             </FormItem>
             <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="日期">
-              {form.getFieldDecorator('date', {
+              {form.getFieldDecorator('gmt_create', {
                 rules: [{required: true}],
               })(
-                <DatePicker style={{ width: '100%' }}/>
+                <DatePicker showTime style={{ width: '100%' }} format="YYYY-MM-DD HH:mm:ss" placeholder="请选择时间"/>
               )}
             </FormItem>
 
@@ -173,10 +173,10 @@ class Notes extends Component {
         {
             title: '创建日期',
             sorter: true,
-            dataIndex: 'date',
+            dataIndex: 'gmt_create',
             align:'center',
             render(val) {
-                return moment(val).format("YYYY-MM-DD");
+                return moment(val).format("YYYY-MM-DD HH:mm:ss");
               },
         },
         {
@@ -187,7 +187,7 @@ class Notes extends Component {
         {
             title: '时间戳',
             sorter: true,
-            dataIndex: 'timestamp',
+            dataIndex: 'gmt_modified',
             align:'center',
             render(val) {
                 return moment(val).format("YYYY-MM-DD HH:mm:ss");
@@ -244,7 +244,7 @@ class Notes extends Component {
             ...filters,
         };
         if (sorter.field) {
-            params.sorter = `${sorter.field}_${sorter.order}`;
+            params.sorter = `${sorter.field}|${sorter.order}`;
         }
     
         dispatch({
@@ -373,7 +373,7 @@ class Notes extends Component {
         const { dispatch } = this.props;
 
         //处理date
-        fields.date = fields.date.format("YYYY-MM-DD");
+        fields.gmt_create = fields.gmt_create.format("YYYY-MM-DD HH:mm:ss");
 
 
         dispatch({
@@ -431,7 +431,7 @@ class Notes extends Component {
             onOk: () => {
 
                 //处理date
-                fields.date = fields.date.format("YYYY-MM-DD");
+                fields.gmt_create = fields.gmt_create.format("YYYY-MM-DD HH:mm:ss");
                 dispatch({
                     type: 'data_note/updateStep2',
                     payload: {

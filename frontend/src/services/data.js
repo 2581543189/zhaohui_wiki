@@ -3,7 +3,7 @@ import request from '@/utils/request';
 import {rolesLogin} from '../constant/DataConstant'
 
 
-//let _BASE_PATH="http://localhost/backend";
+// let _BASE_PATH="http://localhost/backend";
 let _BASE_PATH="http://www.zhaohui.wiki/backend";
 
 //TODO:模版方法希望后续能找到切面的方法不用每个方法都写这么费劲
@@ -69,12 +69,15 @@ export const queryUser = globalTryCatch(
                 body:payload,
             }
         }
-        const response = await request(_BASE_PATH + '/user/query',option);
-    
+        let response = await request(_BASE_PATH + '/api/v1/user',option);
         let result = {};
         result.pagination = pagination;
-        result.pagination.total = response.count;
-        result.list = response.rows.map(function(value,key,arr){
+        result.pagination.total = response.data.count;
+        if(response.code != 0){
+            return result;
+        }
+
+        result.list = response.data.list.map(function(value,key,arr){
             value.key = value.id;
             value.role = parseInt(value.role);
             return value;
@@ -85,12 +88,13 @@ export const queryUser = globalTryCatch(
 
 /**新增用户信息 */
 export const addUser = globalTryCatch(async function (payload) {
+    payload.role = parseInt(payload.role)
     console.log('addUser',payload);
     let option={
         method:'POST',
         body:payload,
     }
-    const response = await request(_BASE_PATH + '/user/add',option);
+    const response = await request(_BASE_PATH + '/api/v1/user/add',option);
     return response;
 });
 
@@ -101,7 +105,7 @@ export const deleteUser = globalTryCatch(async function (payload) {
     let option={
         method:'POST',
     }
-    const response = await request(_BASE_PATH + '/user/delete/'+payload,option);
+    const response = await request(_BASE_PATH + '/api/v1/user/delete/'+payload,option);
     return response;
 });
 
@@ -117,7 +121,7 @@ export const updateUser = globalTryCatch(async function (payload) {
         method:'POST',
         body:payload
     }
-    const response = await request(_BASE_PATH + '/user/update/'+payload.id,option);
+    const response = await request(_BASE_PATH + '/api/v1/user/update/'+payload.id,option);
     return response;
 });
 
@@ -134,19 +138,34 @@ export const login = globalTryCatch(async function (payload) {
             }
         }
     
-        const response = await request(_BASE_PATH + '/user/query',option);
+        const response = await request(_BASE_PATH + '/api/v1/common/login',option);
     
         let result = {};
     
-        const count = response.count;
-        if(count!=0){
+        // const count = response.count;
+        // if(count!=0){
+        //     result = {
+        //         status:true,
+        //         currentAuthority:rolesLogin[response.rows[0].role],
+        //         logout:false,
+        //         user:response.rows[0],
+        //     }
+        // }else {
+        //     result = {
+        //         status:false,
+        //         currentAuthority:'guest',
+        //         logout:false,
+        //         user:{},
+        //     }
+        // }
+        if(response.code == 0){
             result = {
                 status:true,
-                currentAuthority:rolesLogin[response.rows[0].role],
+                currentAuthority:rolesLogin[response.data.user.role],
                 logout:false,
-                user:response.rows[0],
+                user:response.data.user,
             }
-        }else {
+        }else{
             result = {
                 status:false,
                 currentAuthority:'guest',
@@ -191,12 +210,14 @@ export const querySkill = globalTryCatch(async function (payload) {
         }
     }
     
-    const response = await request(_BASE_PATH + '/skill/query',option);
-
+    const response = await request(_BASE_PATH + '/api/v1/classification',option);
     let result = {};
     result.pagination = pagination;
-    result.pagination.total = response.count;
-    result.list = response.rows.map(function(value,key,arr){
+    result.pagination.total = response.data.count;
+    if(response.code != 0){
+        return result;
+    }
+    result.list = response.data.list.map(function(value,key,arr){
         value.key = value.id;
         return value;
     });
@@ -211,7 +232,7 @@ export const addSkill = globalTryCatch(async function (payload) {
         method:'POST',
         body:payload,
     }
-    const response = await request(_BASE_PATH + '/skill/add',option);
+    const response = await request(_BASE_PATH + '/api/v1/classification/add',option);
     return response;
 });
 
@@ -222,7 +243,7 @@ export const deleteSkill = globalTryCatch(async function (payload) {
     let option={
         method:'POST',
     }
-    const response = await request(_BASE_PATH + '/skill/delete/'+payload,option);
+    const response = await request(_BASE_PATH + '/api/v1/classification/delete/'+payload,option);
     return response;
 });
 
@@ -233,7 +254,7 @@ export const updateSkill = globalTryCatch(async function (payload) {
         method:'POST',
         body:payload
     }
-    const response = await request(_BASE_PATH + '/skill/update/'+payload.id,option);
+    const response = await request(_BASE_PATH + '/api/v1/classification/update/'+payload.id,option);
     return response;
 });
 
@@ -254,10 +275,10 @@ export const distinctValue = globalTryCatch(async function (payload) {
         body:payload
     }
 
-    let response = await request(_BASE_PATH + '/skill/distinctValue',option);
+    let response = await request(_BASE_PATH + '/api/v1/classification/distinct',option);
     let array=[];
-    response.map(function(data){
-        array.push(data[name]);
+    response.data.map(function(x){
+        array.push(x);
     })
     response={};
     response.body = {
@@ -300,12 +321,12 @@ export const queryArticle = globalTryCatch(async function (payload) {
         }
     }
     
-    const response = await request(_BASE_PATH + '/article/query',option);
+    const response = await request(_BASE_PATH + '/api/v1/article',option);
 
     let result = {};
     result.pagination = pagination;
-    result.pagination.total = response.count;
-    result.list = response.rows.map(function(value,key,arr){
+    result.pagination.total = response.data.count;
+    result.list = response.data.list.map(function(value,key,arr){
         value.key = value.id;
         return value;
     });
@@ -322,10 +343,10 @@ export const distinctPlatforms = globalTryCatch(async function (payload) {
         method:'POST'
     }
 
-    let response = await request(_BASE_PATH + '/article/distinctPlatform',option);
+    let response = await request(_BASE_PATH + '/api/v1/article/distinctPlatform',option);
     let array=[];
-    response.map(function(data){
-        array.push(data['platform']);
+    response.data.map(function(x){
+        array.push(x);
     })
     response={};
     response.body = {
@@ -340,7 +361,7 @@ export const addArticle = globalTryCatch(async function (payload) {
         method:'POST',
         body:payload,
     }
-    const response = await request(_BASE_PATH + '/article/add',option);
+    const response = await request(_BASE_PATH + '/api/v1/article/add',option);
     return response;
 });
 
@@ -350,7 +371,7 @@ export const deleteArticle = globalTryCatch(async function (payload) {
     let option={
         method:'POST',
     }
-    const response = await request(_BASE_PATH + '/article/delete/'+payload,option);
+    const response = await request(_BASE_PATH + '/api/v1/article/delete/'+payload,option);
     return response;
 });
 
@@ -361,7 +382,7 @@ export const updateArticle = globalTryCatch(async function (payload) {
         method:'POST',
         body:payload
     }
-    const response = await request(_BASE_PATH + '/article/update/'+payload.id,option);
+    const response = await request(_BASE_PATH + '/api/v1/article/update/'+payload.id,option);
     return response;
 });
 
@@ -395,12 +416,12 @@ export const queryBook = globalTryCatch(async function (payload) {
                 body:payload,
             }
         }
-        const response = await request(_BASE_PATH + '/book/query',option);
+        const response = await request(_BASE_PATH + '/api/v1/book',option);
     
         let result = {};
         result.pagination = pagination;
-        result.pagination.total = response.count;
-        result.list = response.rows.map(function(value,key,arr){
+        result.pagination.total = response.data.count;
+        result.list = response.data.list.map(function(value,key,arr){
             value.key = value.id;
             return value;
         });
@@ -415,7 +436,7 @@ export const addBook = globalTryCatch(async function (payload) {
         method:'POST',
         body:payload,
     }
-    const response = await request(_BASE_PATH + '/book/add',option);
+    const response = await request(_BASE_PATH + '/api/v1/book/add',option);
     return response;
 });
 
@@ -425,7 +446,7 @@ export const deleteBook = globalTryCatch(async function (payload) {
     let option={
         method:'POST',
     }
-    const response = await request(_BASE_PATH + '/book/delete/'+payload,option);
+    const response = await request(_BASE_PATH + '/api/v1/book/delete/'+payload,option);
     return response;
 });
 
@@ -436,7 +457,7 @@ export const updateBook = globalTryCatch(async function (payload) {
         method:'POST',
         body:payload
     }
-    const response = await request(_BASE_PATH + '/book/update/'+payload.id,option);
+    const response = await request(_BASE_PATH + '/api/v1/book/update/'+payload.id,option);
     return response;
 });
 
@@ -470,12 +491,12 @@ export const queryNote = globalTryCatch(async function (payload) {
                 body:payload,
             }
         }
-        const response = await request(_BASE_PATH + '/note/query',option);
+        const response = await request(_BASE_PATH + '/api/v1/note',option);
     
         let result = {};
         result.pagination = pagination;
-        result.pagination.total = response.count;
-        result.list = response.rows.map(function(value,key,arr){
+        result.pagination.total = response.data.count;
+        result.list = response.data.list.map(function(value,key,arr){
             value.key = value.id;
             return value;
         });
@@ -490,7 +511,7 @@ export const addNote = globalTryCatch(async function (payload) {
         method:'POST',
         body:payload,
     }
-    const response = await request(_BASE_PATH + '/note/add',option);
+    const response = await request(_BASE_PATH + '/api/v1/note/add',option);
     return response;
 });
 
@@ -500,7 +521,7 @@ export const deleteNote = globalTryCatch(async function (payload) {
     let option={
         method:'POST',
     }
-    const response = await request(_BASE_PATH + '/note/delete/'+payload,option);
+    const response = await request(_BASE_PATH + '/api/v1/note/delete/'+payload,option);
     return response;
 });
 
@@ -511,7 +532,7 @@ export const updateNote = globalTryCatch(async function (payload) {
         method:'POST',
         body:payload
     }
-    const response = await request(_BASE_PATH + '/note/update/'+payload.id,option);
+    const response = await request(_BASE_PATH + '/api/v1/note/update/'+payload.id,option);
     return response;
 });
 
@@ -603,7 +624,7 @@ export const getJitang = globalTryCatch(async function (payload) {
     let option={
         method:'POST'
     }
-    const response = await request(_BASE_PATH + '/overview/randomJitang',option);
+    const response = await request(_BASE_PATH + '/api/v1/metto/random',option);
     return response;
 });
 
@@ -613,7 +634,7 @@ export const getAchievement = globalTryCatch(async function (payload) {
     let option={
         method:'POST'
     }
-    const response = await request(_BASE_PATH + '/overview/getAchievement',option);
+    const response = await request(_BASE_PATH + '/api/v1/overview/achievement',option);
     return response;
 });
 
@@ -623,8 +644,8 @@ export const getTaskList = globalTryCatch(async function (payload) {
     let option={
         method:'POST'
     }
-    const response = await request(_BASE_PATH + '/overview/getTaskList',option);
-    return response;
+    const response = await request(_BASE_PATH + '/api/v1/overview/task',option);
+    return response.data;
 });
 
 /**获取最新动态 */
@@ -634,7 +655,7 @@ export const getNews = globalTryCatch(async function (payload) {
         method:'POST',
         body:payload,
     }
-    const response = await request(_BASE_PATH + '/overview/getNews',option);
+    const response = await request(_BASE_PATH + '/api/v1/event',option);
     return response;
 });
 
@@ -644,8 +665,8 @@ export const getActivity = globalTryCatch(async function (payload) {
     let option={
         method:'POST'
     }
-    const response = await request(_BASE_PATH + '/overview/getActivity',option);
-    return response;
+    const response = await request(_BASE_PATH + '/api/v1/overview/activity',option);
+    return response.data;
 });
 
 /**获取兴趣数据 */
@@ -654,7 +675,7 @@ export const getInterest = globalTryCatch(async function (payload) {
     let option={
         method:'POST'
     }
-    const response = await request(_BASE_PATH + '/overview/getInterest',option);
+    const response = await request(_BASE_PATH + '/api/v1/overview/interest',option);
     return response;
 });
 
@@ -688,12 +709,12 @@ export const queryMessage = globalTryCatch(async function (payload) {
             body:payload,
         }
     }
-    const response = await request(_BASE_PATH + '/message/query',option);
+    const response = await request(_BASE_PATH + '/api/v1/message',option);
 
     let result = {};
     result.pagination = pagination;
-    result.pagination.total = response.count;
-    result.list = response.rows.map(function(value,key,arr){
+    result.pagination.total = response.data.count;
+    result.list = response.data.list.map(function(value,key,arr){
         value.key = value.id;
         return value;
     });
@@ -708,7 +729,7 @@ export const addMessage = globalTryCatch(async function (payload) {
         method:'POST',
         body:payload,
     }
-    const response = await request(_BASE_PATH + '/message/add',option);
+    const response = await request(_BASE_PATH + '/api/v1/message/add',option);
     return response;
 });
 

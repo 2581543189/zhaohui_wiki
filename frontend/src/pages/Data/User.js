@@ -285,7 +285,7 @@ class User extends Component {
       {
           title: '时间戳',
           sorter: true,
-          dataIndex: 'timestamp',
+          dataIndex: 'gmt_create',
           align:'center',
           render(val) {
               return moment(val).format("YYYY-MM-DD HH:mm:ss");
@@ -474,7 +474,7 @@ class User extends Component {
           ...filters,
         };
         if (sorter.field) {
-          params.sorter = `${sorter.field}_${sorter.order}`;
+          params.sorter = `${sorter.field}|${sorter.order}`;
         }
     
         dispatch({

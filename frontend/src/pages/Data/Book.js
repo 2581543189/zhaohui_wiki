@@ -78,7 +78,7 @@ class CreateForm extends Component {
               {form.getFieldDecorator('type', {
                 rules: [{required: true,validator:skillsValidFunction}],
               })(
-                <SkillCascader style={{width:'100%'}}/>
+                <SkillCascader style={{width:'100%'}} type="SKILL"/>
               )}
             </FormItem> 
             <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="总页数">
@@ -93,17 +93,17 @@ class CreateForm extends Component {
               })(<Input placeholder="当前阅读" />)}
             </FormItem>
             <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="开始日期">
-              {form.getFieldDecorator('startDate', {
+              {form.getFieldDecorator('gmt_create', {
                 rules: [{required: true}],
               })(
-                <DatePicker style={{ width: '100%' }}/>
+                <DatePicker showTime style={{ width: '100%' }} format="YYYY-MM-DD HH:mm:ss" placeholder="请选择时间"/>
               )}
             </FormItem>
             <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="结束日期">
-              {form.getFieldDecorator('endDate', {
+              {form.getFieldDecorator('gmt_end', {
                 rules: [],
               })(
-                <DatePicker style={{ width: '100%' }}/>
+                <DatePicker showTime style={{ width: '100%' }} format="YYYY-MM-DD HH:mm:ss" placeholder="请选择时间"/>
               )}
             </FormItem>
             <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="评分">
@@ -190,7 +190,7 @@ class UpdateForm extends PureComponent {
             rules: [{required: true,validator:skillsValidFunction}],
             initialValue: this.transfer(updateModalData.skill),
             })(
-                <SkillCascader style={{width:'100%'}} initdata={updateModalData.skill}/>
+                <SkillCascader style={{width:'100%'}} initdata={updateModalData.skill} type="SKILL"/>
             )}
         </FormItem> 
         <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="总页数">
@@ -206,19 +206,19 @@ class UpdateForm extends PureComponent {
             })(<Input placeholder="当前阅读" />)}
         </FormItem>
         <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="开始日期">
-            {form.getFieldDecorator('startDate', {
+            {form.getFieldDecorator('gmt_create', {
             rules: [{required: true}],
-            initialValue: moment(updateModalData.startDate),
+            initialValue: moment(updateModalData.gmt_create),
             })(
-            <DatePicker style={{ width: '100%' }}/>
+                <DatePicker showTime style={{ width: '100%' }} format="YYYY-MM-DD HH:mm:ss" placeholder="请选择时间"/>
             )}
         </FormItem>
         <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="结束日期">
-            {form.getFieldDecorator('endDate', {
+            {form.getFieldDecorator('gmt_end', {
             rules: [],
-            initialValue: updateModalData.endDate?moment(updateModalData.endDate):null,
+            initialValue: updateModalData.gmt_end?moment(updateModalData.gmt_end):null,
             })(
-            <DatePicker style={{ width: '100%' }}/>
+                <DatePicker showTime style={{ width: '100%' }} format="YYYY-MM-DD HH:mm:ss" placeholder="请选择时间"/>
             )}
         </FormItem>
         <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="评分">
@@ -288,7 +288,7 @@ class Book extends Component {
             align:'center',
             render: (text, record) => {
                 let skill = record.skill;
-                let skillId = record.skillId;
+                let skillId = skill.id;
                 if(skill!= null){
                     return <Tooltip title={'['+skill.first+'/'+skill.second+'/'+skill.third+']'}><span>{'['+skill.first+']['+skillId+']'}</span></Tooltip>;
                 }else{
@@ -312,11 +312,11 @@ class Book extends Component {
             title: '时间',
             align:'center',
             render:(text, record) => {
-                const timestamp = moment(record.timestamp).format("YYYY-MM-DD HH:mm:ss");
-                const startDate = moment(record.startDate).format("YYYY-MM-DD HH:mm:ss");
+                const timestamp = moment(record.gmt_modified).format("YYYY-MM-DD HH:mm:ss");
+                const startDate = moment(record.gmt_create).format("YYYY-MM-DD HH:mm:ss");
                 let endDate ='-';
-                if(typeof(record.endDate)!= 'undefined'&&record.endDate!=null){
-                    endDate= moment(record.endDate).format("YYYY-MM-DD HH:mm:ss");
+                if(typeof(record.gmt_end)!= 'undefined'&&record.gmt_end!=null){
+                    endDate= moment(record.gmt_end).format("YYYY-MM-DD HH:mm:ss");
                 }
                 
                 const toShow=(
@@ -374,7 +374,7 @@ class Book extends Component {
             cancelText: '取消',
             onOk: () => {
                 dispatch({
-                    type: 'data_article/delete',
+                    type: 'data_book/delete',
                     payload:item.id,
                     });
             },
@@ -419,7 +419,7 @@ class Book extends Component {
             ...filters,
         };
         if (sorter.field) {
-            params.sorter = `${sorter.field}_${sorter.order}`;
+            params.sorter = `${sorter.field}|${sorter.order}`;
         }
     
         dispatch({
@@ -456,7 +456,7 @@ class Book extends Component {
             <Col md={8} sm={24}>
                 <FormItem label="分类">
                 {getFieldDecorator('skills')(
-                    <SkillCascader />
+                    <SkillCascader type="SKILL"/>
                 )}
                 </FormItem>
             </Col>
@@ -535,13 +535,14 @@ class Book extends Component {
         fields.second = fields.type[1];
         fields.third = fields.type[2];
         //处理startDate
-        fields.startDate = fields.startDate.format("YYYY-MM-DD");
+        fields.gmt_create = fields.gmt_create.format("YYYY-MM-DD HH:mm:ss");
         //处理endDate
-        if(typeof(fields.endDate)!= 'undefined'&&fields.endDate != null){
-            fields.endDate = fields.endDate.format("YYYY-MM-DD");
+        if(typeof(fields.gmt_end)!= 'undefined'&&fields.gmt_end != null){
+            fields.gmt_end = fields.gmt_end.format("YYYY-MM-DD HH:mm:ss");
         }else{
-            fields.endDate =null;
+            fields.gmt_end = ""
         }
+        fields.current = "" + fields.current
 
         dispatch({
             type: 'data_book/add',
@@ -601,13 +602,16 @@ class Book extends Component {
                 fields.second = fields.type[1];
                 fields.third = fields.type[2];
                 //处理startDate
-                fields.startDate = fields.startDate.format("YYYY-MM-DD");
+                fields.gmt_create = fields.gmt_create.format("YYYY-MM-DD HH:mm:ss");
                 //处理endDate
-                if(typeof(fields.endDate)!= 'undefined'&&fields.endDate != null&&fields.endDate != ''){
-                    fields.endDate = fields.endDate.format("YYYY-MM-DD");
+                if(typeof(fields.gmt_end)!= 'undefined'&&fields.gmt_end != null&&fields.gmt_end != ''){
+                    fields.gmt_end = fields.gmt_end.format("YYYY-MM-DD HH:mm:ss");
                 }else{
-                    fields.endDate =null;
+                    fields.gmt_end ="";
                 }
+                fields.count = "" + fields.count
+                fields.score = "" + fields.score
+                fields.current = "" + fields.current
                 dispatch({
                     type: 'data_book/updateStep2',
                     payload: {

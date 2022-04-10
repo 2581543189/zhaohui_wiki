@@ -18,8 +18,9 @@ import {
   Modal,
   Divider,
   Cascader,
+  Select,
 } from 'antd';
-import {hanziValidFunction,getValue} from '../../constant/DataConstant';
+import {hanziValidFunction,getValue,classificationtTypes} from '../../constant/DataConstant';
 import styles from './TableList.less';
 
 const FormItem = Form.Item;
@@ -40,11 +41,20 @@ const CreateForm = Form.create()(props => {
     return (
       <Modal
         destroyOnClose
-        title="新建技能"
+        title="新建"
         visible={modalVisible}
         onOk={okHandle}
         onCancel={() => handleModalVisible(false)}
       >
+        <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="类目">
+          {form.getFieldDecorator('type', {
+            rules: [{ required: true, message: '请选择类目'}],
+          })(
+            <Select style={{ minWidth: 150 }}>
+                {[0,1,2,3,4].map((index) => <Option key={classificationtTypes[index]} >{classificationtTypes[index]}  </Option>)}
+            </Select>
+          )}
+        </FormItem>
         <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="分类1">
           {form.getFieldDecorator('first', {
             rules: [{required: true,validator:hanziValidFunction}],
@@ -93,7 +103,7 @@ class UpdateForm extends PureComponent {
     return (
       <Modal
         destroyOnClose
-        title="更新用户"
+        title="更新"
         visible={updateModalVisible}
         onOk={this.updateOkHandle}
         onCancel={() => handleUpdateModalVisible(false)}
@@ -104,20 +114,30 @@ class UpdateForm extends PureComponent {
             initialValue: updateModalData.id,
           })(<Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="" readOnly/>)}
         </FormItem>
-  
+        <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="类目">
+          {form.getFieldDecorator('type', {
+            rules: [{ required: true, message: '请选择类目'}],
+            initialValue: updateModalData.type,
+          })(
+            <Select style={{ minWidth: 150 }}>
+                {[0,1,2,3,4].map((index) => <Option key={classificationtTypes[index]} >{classificationtTypes[index]}  </Option>)}
+            </Select>
+          )}
+        </FormItem>
+
         <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="分类1">
           {form.getFieldDecorator('first', {
             rules: [{required: true,validator:hanziValidFunction}],
             initialValue: updateModalData.first,
           })(<Input prefix={<Icon type="ordered-list" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="不能为空" />)}
         </FormItem>
-        <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="分类1">
+        <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="分类2">
           {form.getFieldDecorator('second', {
             rules: [{required: true,validator:hanziValidFunction}],
             initialValue: updateModalData.second,
           })(<Input prefix={<Icon type="ordered-list" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="不能为空" />)}
         </FormItem>
-        <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="分类1">
+        <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="分类3">
           {form.getFieldDecorator('third', {
             rules: [{required: true,validator:hanziValidFunction}],
             initialValue: updateModalData.third,
@@ -153,6 +173,34 @@ class Skill extends Component {
           align:'center',
         },
         {
+            title: '类目',
+            dataIndex: 'type',
+            align:'center',
+            filters: [
+              {
+                text: classificationtTypes[0],
+                value: classificationtTypes[0],
+              },
+              {
+                text: classificationtTypes[1],
+                value: classificationtTypes[1],
+              }
+              ,
+              {
+                text: classificationtTypes[2],
+                value: classificationtTypes[2],
+              },
+              {
+                text: classificationtTypes[3],
+                value: classificationtTypes[3],
+              },
+              {
+                text: classificationtTypes[4],
+                value: classificationtTypes[4],
+              }
+            ]
+        },
+        {
             title: '第一分类',
             dataIndex: 'first',
             sorter: true,
@@ -174,7 +222,7 @@ class Skill extends Component {
         {
             title: '时间戳',
             sorter: true,
-            dataIndex: 'timestamp',
+            dataIndex: 'gmt_create',
             align:'center',
             render(val) {
                 return moment(val).format("YYYY-MM-DD HH:mm:ss");
@@ -198,7 +246,7 @@ class Skill extends Component {
         const { dispatch } = this.props;
         Modal.confirm({
             title: '删除能力',
-            content: '确定删除能力['+item.first+'-'+item.second+'-'+item.third+']['+item.id+']吗?',
+            content: '确定删除能力['+item.type+'-'+item.first+'-'+item.second+'-'+item.third+']['+item.id+']吗?',
             okText: '确认',
             cancelText: '取消',
             onOk: () => {
@@ -237,7 +285,7 @@ class Skill extends Component {
             ...filters,
         };
         if (sorter.field) {
-            params.sorter = `${sorter.field}_${sorter.order}`;
+            params.sorter = `${sorter.field}|${sorter.order}`;
         }
     
         dispatch({
@@ -279,7 +327,7 @@ class Skill extends Component {
         });
 
     };
-    onChange(value, selectedOptions){
+    onChange(type,value, selectedOptions){
         const { dispatch } = this.props;
         let deepth = selectedOptions.length;
         if(deepth==3){
@@ -287,6 +335,7 @@ class Skill extends Component {
                 type: 'data_skill/setFormValues',
                 payload: {
                     formValues:{
+                        type:type,
                         first:selectedOptions[0].value,
                         second:selectedOptions[1].value,
                         third:selectedOptions[2].value,
@@ -298,6 +347,7 @@ class Skill extends Component {
                 type: 'data_skill/setFormValues',
                 payload: {
                     formValues:{
+                        type:type,
                         first:selectedOptions[0].value,
                         second:selectedOptions[1].value,
                         third:'',
@@ -309,6 +359,7 @@ class Skill extends Component {
                 type: 'data_skill/setFormValues',
                 payload: {
                     formValues:{
+                        type:type,
                         first:selectedOptions[0].value,
                         second:'',
                         third:'',
@@ -320,6 +371,7 @@ class Skill extends Component {
                 type: 'data_skill/setFormValues',
                 payload: {
                     formValues:{
+                        type:type,
                         first:'',
                         second:'',
                         third:'',
@@ -334,20 +386,36 @@ class Skill extends Component {
     //select 选中
 
     //查询条件
-    renderForm(options){
+    renderForm(type,options){
         const {
              form: { getFieldDecorator },
         } = this.props;
         return (
             <Form onSubmit={this.handleSearch} layout="inline">
               <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+              <Col md={8} sm={24}>
+                <FormItem label="类目">
+                    {getFieldDecorator('type', {
+                      // rules: [{ required: fals, message: '请选择类目'}],
+                      initialValue:type,
+                    })(
+                    <Select 
+                      style={{ minWidth: 150 }}
+                      allowClear={true}
+                      onSelect={value => this.changeSelect(value)}
+                      >
+                        {[0,1,2,3,4].map((index) => <Option key={classificationtTypes[index]} >{classificationtTypes[index]}  </Option>)}
+                    </Select>
+                    )}
+                </FormItem>
+            </Col>
                 <Col md={15} sm={24}>
                   <FormItem label="筛选">
                     {getFieldDecorator('option')(
                         <Cascader
                             options={options}
                             loadData={(selectedOptions)=>this.loadData(selectedOptions)}
-                            onChange={(value, selectedOptions)=>this.onChange(value, selectedOptions)}
+                            onChange={(value, selectedOptions)=>this.onChange(type,value, selectedOptions)}
                             changeOnSelect
                         />
                     )}
@@ -366,6 +434,18 @@ class Skill extends Component {
               </Row>
             </Form>
           );
+    };
+    changeSelect = (value) => {
+      const { form, dispatch } = this.props;
+      dispatch({
+        type: 'data_skill/updateClassificationType',
+        payload:{
+          type:value
+        }
+      });
+      dispatch({
+        type: 'data_skill/getOption',
+      });
     }
 
     //清空查询条件
@@ -376,6 +456,7 @@ class Skill extends Component {
             type: 'data_skill/setFormValues',
             payload: {
                 formValues:{
+                    type:'',
                     first:'',
                     second:'',
                     third:'',
@@ -392,9 +473,22 @@ class Skill extends Component {
         e.preventDefault();
         const { dispatch, form } = this.props;
         form.validateFields((err, fieldsValue) => {
+              //处理type
+              if(typeof(fieldsValue.type)=='undefined'){
+                fieldsValue.type='';
+            }
+
+            let payload={};
+            //删除undifined
+            Object.keys(fieldsValue).forEach(function(key){
+                if(typeof(fieldsValue[key])!='undefined'){
+                    payload[key] = fieldsValue[key];
+                }
+            });
             if (err) return;
             dispatch({
                 type: 'data_skill/fetch',
+                payload:payload,
             });
         });
     };
@@ -440,7 +534,7 @@ class Skill extends Component {
         const { dispatch } = this.props;
         Modal.confirm({
             title: '修改能力',
-            content: '确定更新能力['+fields.first+'-'+fields.second+'-'+fields.third+']['+fields.id+']吗?',
+            content: '确定更新能力['+fields.type+'-'+fields.first+'-'+fields.second+'-'+fields.third+']['+fields.id+']吗?',
             okText: '确认',
             cancelText: '取消',
             onOk: () => {
@@ -491,7 +585,7 @@ class Skill extends Component {
 
     render(){
         const {
-            data_skill: { list,pagination,modalVisible,updateModalVisible,updateModalData,options},
+            data_skill: { list,pagination,modalVisible,updateModalVisible,updateModalData,options,formValues},
             loading,
         } = this.props;
 
@@ -523,7 +617,7 @@ class Skill extends Component {
                 <Card bordered={false}>
                 <div className={styles.tableList}>
                     {/*查询条件*/}
-                    <div className={styles.tableListForm}>{this.renderForm(options)}</div>
+                    <div className={styles.tableListForm}>{this.renderForm(formValues.type,options)}</div>
                     <div className={styles.tableListOperator}>
                         <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true)}>
                             新建

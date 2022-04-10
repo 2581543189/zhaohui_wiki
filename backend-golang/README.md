@@ -186,3 +186,25 @@
 nohup yarn run dev &
 `
 
+A GinBro RESTful APIs
+
+## Recommend Go version > 1.12
+- for Chinese users: set env GOPROXY=https://goproxy.io
+- run: go tidy
+
+## Usage
+- [swagger DOC ](http://127.0.0.1:7001/doc)`http://127.0.0.1:7001/swagger/`
+- [static ](http://127.0.0.1:7001)`http://127.0.0.1:7001`
+- [App INFO ](http://127.0.0.1:7001/App/info)`http://127.0.0.1:7001/App/info`
+- API baseURL : `http://127.0.0.1:7001/api/v1`
+
+## Info
+- table'schema which has no "ID","id","ID" or "iD" will not generate model or route.
+- the column which type is json value must be a string which is able to decode to a JSON,when call POST or PATCH.
+## Thanks
+- [swagger Specification](https://swagger.io/specification/)
+- [gin-gonic/gin](https://github.com/gin-gonic/gin)
+- [GORM](http://gorm.io/)
+- [viper](https://github.com/spf13/viper)
+- [cobra](https://github.com/spf13/cobra#getting-started)
+- [go-redis](https://go get github.com/go-redis/redis)

@@ -66,10 +66,10 @@ class CreateForm extends Component {
               })(<Input placeholder="不能为空" />)}
             </FormItem>
             <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="日期">
-              {form.getFieldDecorator('createDate', {
+              {form.getFieldDecorator('gmt_create', {
                 rules: [{required: true}],
               })(
-                <DatePicker style={{ width: '100%' }}/>
+                <DatePicker showTime style={{ width: '100%' }} format="YYYY-MM-DD HH:mm:ss" placeholder="请选择时间"/>
               )}
             </FormItem>
             <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="平台">
@@ -81,7 +81,7 @@ class CreateForm extends Component {
               {form.getFieldDecorator('type', {
                 rules: [{required: true,validator:skillsValidFunction}],
               })(
-                <SkillCascader style={{ width: '100%' }} />
+                <SkillCascader style={{ width: '100%' }} type="SKILL"/>
               )}
             </FormItem> 
             <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="url">
@@ -153,11 +153,11 @@ class UpdateForm extends PureComponent {
               })(<Input placeholder="不能为空" />)}
             </FormItem>
             <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="日期">
-              {form.getFieldDecorator('createDate', {
+              {form.getFieldDecorator('gmt_create', {
                 rules: [{required: true}],
-                initialValue: moment(updateModalData.createDate),
+                initialValue: moment(updateModalData.gmt_create),
               })(
-                <DatePicker style={{ width: '100%' }}/>
+                <DatePicker showTime style={{ width: '100%' }} format="YYYY-MM-DD HH:mm:ss" placeholder="请选择时间"/>
               )}
             </FormItem>
             <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="平台">
@@ -171,7 +171,7 @@ class UpdateForm extends PureComponent {
                 rules: [{required: true,validator:skillsValidFunction}],
                 initialValue: this.transfer(updateModalData.skill),
               })(
-                    <SkillCascader style={{ width: '100%' }} initdata={updateModalData.skill}/> 
+                    <SkillCascader style={{ width: '100%' }} initdata={updateModalData.skill} type="SKILL"/> 
               )}
             </FormItem> 
             <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="url">
@@ -229,12 +229,12 @@ class Article extends Component {
         },
         {
             title: '分类',
-            sorter: true,
+            // sorter: true,
             dataIndex: 'skill',
             align:'center',
             render: (text, record) => {
                 let skill = record.skill;
-                let skillId = record.skillId;
+                let skillId = skill.id;
                 if(skill!= null){
                     return <Tooltip title={'['+skill.first+'/'+skill.second+'/'+skill.third+']'}><span>{'['+skill.first+']['+skillId+']'}</span></Tooltip>;
                 }else{
@@ -246,8 +246,11 @@ class Article extends Component {
         {
             title: '发表时间',
             sorter: true,
-            dataIndex: 'createDate',
+            dataIndex: 'gmt_create',
             align:'center',
+            render(val) {
+              return moment(val).format("YYYY-MM-DD HH:mm:ss");
+            },
   
         },
         {
@@ -259,7 +262,7 @@ class Article extends Component {
         {
             title: '时间戳',
             sorter: true,
-            dataIndex: 'timestamp',
+            dataIndex: 'gmt_modified',
             align:'center',
             render(val) {
                 return moment(val).format("YYYY-MM-DD HH:mm:ss");
@@ -333,7 +336,7 @@ class Article extends Component {
             ...filters,
         };
         if (sorter.field) {
-            params.sorter = `${sorter.field}_${sorter.order}`;
+            params.sorter = `${sorter.field}|${sorter.order}`;
         }
     
         dispatch({
@@ -389,7 +392,7 @@ class Article extends Component {
             <Col md={8} sm={24}>
                 <FormItem label="分类">
                 {getFieldDecorator('skills')(
-                    <SkillCascader />
+                    <SkillCascader type="SKILL" />
                 )}
                 </FormItem>
             </Col>
@@ -473,8 +476,9 @@ class Article extends Component {
         fields.first = fields.type[0];
         fields.second = fields.type[1];
         fields.third = fields.type[2];
-        //处理createDate
-        fields.createDate = fields.createDate.format("YYYY-MM-DD");
+        fields.type = 'SKILL'
+        //gmt_create
+        fields.gmt_create = fields.gmt_create.format("YYYY-MM-DD HH:mm:ss");
         dispatch({
             type: 'data_article/add',
             payload: {
@@ -532,8 +536,8 @@ class Article extends Component {
                 fields.first = fields.type[0];
                 fields.second = fields.type[1];
                 fields.third = fields.type[2];
-                //处理createDate
-                fields.createDate = fields.createDate.format("YYYY-MM-DD");
+                //gmt_create
+                fields.gmt_create = fields.gmt_create.format("YYYY-MM-DD HH:mm:ss");
                 dispatch({
                     type: 'data_article/updateStep2',
                     payload: {

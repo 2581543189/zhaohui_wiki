@@ -15,6 +15,7 @@ import {
 const {Option} = Select;
 const FormItem = Form.Item;
 import styles from './Article.less';
+import moment from 'moment';
 
 const formItemLayout = {
     wrapperCol: {
@@ -38,6 +39,9 @@ class News extends Component {
 
         dispatch({
             type:'workbench_index/news_fetch',
+            payload: {
+                offset: 0
+            }
         });
 
     }
@@ -49,24 +53,24 @@ class News extends Component {
         dispatch({
             type: 'workbench_index/news_fetch',
             payload: {
-                    type:'',
+                offset: 0,
+                type:''
             }
         });
     }
     
     
     //获取更多数据
-    fetchMore(endDate){
+    fetchMore(type,offset){
         const { dispatch, form } = this.props;
         form.validateFields((err, fieldsValue) => {
             if (err) return;
             let payload = {
-                type:fieldsValue.type,
             }
 
             //设置分页
-            payload.endDate=endDate;
-            payload.append=true;
+            payload.offset=offset;
+            payload.type=type;
             dispatch({
                 type:'workbench_index/news_fetch',
                 payload:payload
@@ -89,6 +93,22 @@ class News extends Component {
             });
         });
     };
+
+    getIcon(type){
+        switch(type) {
+            case 'BOOK':return 'book'
+            case 'NOTE':return 'tags'
+            case 'ARTICLE':return 'highlight'
+            case 'LEETCODE':return 'calculator'
+            case 'FOREIGN_ARTICLE':return 'ie'
+            case 'BOOKMARK':return 'star-o'
+            case 'MESSAGE':return 'message'
+            case 'MOTTO':return 'picture'
+            case 'KEYWORD':return 'pushpin-o'
+            default:
+                return 'book'
+       } 
+    }
     
     render(){
         let {
@@ -101,12 +121,19 @@ class News extends Component {
         const news = workbench_index.news;
         
         let list=news.list;
-        let endDate = news.endDate;
+        let offset = news.offset;
+        let type = news.type;
+        let typeOptions = ["BOOK","NOTE","ARTICLE","LEETCODE","FOREIGN_ARTICLE","BOOKMARK","MESSAGE","MOTTO","KEYWORD"]
+
+        let typeOptionObj = [];
+        for (let i = 0; i < typeOptions.length; i++) {
+            typeOptionObj.push(<Option key={typeOptions[i]} value={typeOptions[i]}><Icon type={this.getIcon(typeOptions[i])} />{typeOptions[i]}</Option>);
+        }
 
         const loadMore =
         news.hasNext ? (
           <div style={{ textAlign: 'center', marginTop: 16 }}>
-            <Button onClick={()=>{this.fetchMore(endDate)}} style={{ paddingLeft: 48, paddingRight: 48 }}>
+            <Button onClick={()=>{this.fetchMore(type,offset)}} style={{ paddingLeft: 48, paddingRight: 48 }}>
               {loading.effects['workbench_index/news_fetch'] ? (
                 <span>
                   <Icon type="loading" /> 加载中...
@@ -130,11 +157,7 @@ class News extends Component {
                                 {getFieldDecorator('type', {
                                 })(
                                     <Select style={{width:'100%'}}>
-                                        <Option key='article' value='article'><Icon type="highlight" /></Option>
-                                        <Option key='book' value='book'><Icon type="book" /></Option>
-                                        <Option key='note' value='note'><Icon type="tags" /></Option>
-                                        <Option key='mission' value='mission'><Icon type="alert" /></Option>
-                                        <Option key='skill' value='skill'><Icon type="tool" /></Option>
+                                        {typeOptionObj}
                                     </Select>
                                 )}
                             </FormItem>
@@ -169,14 +192,14 @@ class News extends Component {
                             {list.map((item,index) => (
                             <List.Item key={index} style={{paddingLeft: '16px'}}>
                                 <List.Item.Meta
-                                    avatar={<Avatar icon={item.icon} />}
+                                    avatar={<Avatar icon={this.getIcon(item.type)} />}
                                     title={
                                         <Fragment>{index+1}<Divider type="vertical" />{item.desc}</Fragment>
                                     }
                                     description={
                                     <span className={styles.datetime} 
                                     >
-                                        {item.date} 
+                                        {moment(item.gmt_create).format('YYYY-MM-DD HH:mm:ss')} 
                                     </span>
                                     }
                                 />

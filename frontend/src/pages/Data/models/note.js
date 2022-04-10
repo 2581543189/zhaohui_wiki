@@ -96,7 +96,7 @@ export default {
                 yield put({
                     type: 'setAddBook',
                     payload: {
-                        addBook:response.list[0],
+                        addBook:response.data.list[0],
                     }
                 });
             }else{
@@ -111,7 +111,7 @@ export default {
                     type: 'setModalVisible',
                     payload:false,
                 });
-                openNotification('success','新增笔记['+response.id+']成功')
+                openNotification('success','新增笔记['+response.data.id+']成功')
                 yield put({
                     type: 'fetch',
                     payload:{
@@ -128,7 +128,7 @@ export default {
         *delete ({ payload }, { call, put ,select }){
             const response = yield call(deleteNote, payload);
             if(response.error!=1){
-                openNotification('success','删除笔记['+response.id+']成功')
+                openNotification('success','删除笔记['+response.data.id+']成功')
                 const formValues = yield select(state => state.data_note.formValues);
                 yield put({
                     type: 'fetch',
@@ -155,7 +155,7 @@ export default {
                     type: 'setUpdateModalVisible',
                     payload:{
                         updateModalVisible:true,
-                        updateModalData:response.list[0],
+                        updateModalData:response.data.list[0],
                     },
                 });
             }else{

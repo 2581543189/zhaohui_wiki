@@ -48,8 +48,8 @@ export default {
         news:{
             list:[],//列表数据
             hasNext:true,//是否有下一页
-            type:'',//任务状态
-            endDate:'',
+            type:'',//类别
+            offset:'',
         },
         message:{
             list:[],//列表数据
@@ -60,8 +60,9 @@ export default {
                 total:0,
             },
             name:'guest',
-            avatar:'http://cdn2.scratch.mit.edu/get_image/gallery/4789249_170x100.png',
+            avatar:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpiccn.ihuaben.com%2Fpic%2Fchapter%2F202003%2F0808%2F1583626759496-rKwIczdKAL_640-555.gif%3Fx-oss-process%3Dimage%2Fresize%2Cw_640&refer=http%3A%2F%2Fpiccn.ihuaben.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1652119219&t=1009b6ec3ded1149bc12a5282588570d',
             content:'',
+            offset:'',
         },
     },
 
@@ -93,6 +94,7 @@ export default {
                 append = payload.append;
             }
             let param = {
+                type:'SKILL',
                 title:payload.title,
                 first:payload.first,
                 second:payload.second,
@@ -138,6 +140,7 @@ export default {
                 append = payload.append;
             }
             let param = {
+                type:'SKILL',
                 name:payload.name,
                 first:payload.first,
                 second:payload.second,
@@ -234,31 +237,24 @@ export default {
         },        //获取书籍数据
         *news_fetch({ payload }, { call, put,select }) {
             //处理入参
-            let append=false;
-            if(typeof(payload)=='undefined'){
-                payload={};
-            }
-            if(payload.append){
-                append = payload.append;
-            }
             let param = {
-                type:payload.type,
-                endDate:payload.endDate,
+                limit:10,
+                offset:payload.offset,
             }
 
             const response = yield call(getNews, param);
             if(response.error!=1){
                 let hasNext = true;
-                if(response.list.length === 0){
+                if(response.data.list.length === 0){
                     hasNext=false;
                 }
                 yield put({
                     type: 'changeStateNews',
                     payload: {
-                        list:response.list,
+                        list:response.data.list,
                         hasNext:hasNext,
-                        endDate:response.endDate,
-                        append:append,
+                        offset:response.data.offset,
+                        append:true
                     }
                   });
                 
@@ -281,6 +277,7 @@ export default {
                 currentPage:payload.pagination?payload.pagination.current:1,
                 pageSize:10,
                 sorter:'timestamp_descend',
+                offset:payload.offset
             }
 
             const response = yield call(queryMessage, param);
@@ -297,7 +294,8 @@ export default {
                         pagination:{
                             current:param.currentPage,
                             pageSize:param.pageSize,
-                            total:response.count
+                            total:response.count,
+                            offset:response.offset,
                         },
                         append:append,
                     }
