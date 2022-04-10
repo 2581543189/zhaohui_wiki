@@ -461,6 +461,18 @@ paths:
       summary: 新增留言
       tags:
       - User
+  /api/v1/metto/random:
+    post:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: 查询箴言
+      tags:
+      - Metto
   /api/v1/node/update/{id}:
     post:
       produces:
@@ -523,6 +535,54 @@ paths:
       summary: 删除用户
       tags:
       - Note
+  /api/v1/overview/achievement:
+    post:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: 查询成就
+      tags:
+      - Overview
+  /api/v1/overview/activity:
+    post:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: 查询兴趣
+      tags:
+      - Overview
+  /api/v1/overview/interest:
+    post:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: 查询兴趣
+      tags:
+      - Overview
+  /api/v1/overview/task:
+    post:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: 查询任务
+      tags:
+      - Overview
   /api/v1/user:
     post:
       parameters:
