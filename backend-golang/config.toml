@@ -25,8 +25,8 @@
     password = "123456"
     database = "wiki_2022"
     charset = "utf8mb4"
-    max_idle = "50"
-    max_open = "50"
+    max_idle = "500"
+    max_open = "500"
 [redis]
     addr = "" # 127.0.0.1:6379 empty string will not init the redis db in model package
     password = ""

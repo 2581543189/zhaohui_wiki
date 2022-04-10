@@ -64,6 +64,7 @@ func getCount(sqlStr string) int {
 	if err != nil {
 		return 0
 	}
+	defer rows.Close()
 	for rows.Next() {
 		var val sql.NullInt32
 		err = rows.Scan(&val)

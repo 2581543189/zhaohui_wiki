@@ -112,6 +112,9 @@ func ParseSorter(sorter string) string {
 			}
 		}
 	}
+	if len(ans) == 0 {
+		ans = "gmt_create desc"
+	}
 	return ans
 }
 
