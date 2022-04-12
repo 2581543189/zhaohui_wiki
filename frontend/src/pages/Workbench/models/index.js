@@ -62,7 +62,7 @@ export default {
             name:'guest',
             avatar:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpiccn.ihuaben.com%2Fpic%2Fchapter%2F202003%2F0808%2F1583626759496-rKwIczdKAL_640-555.gif%3Fx-oss-process%3Dimage%2Fresize%2Cw_640&refer=http%3A%2F%2Fpiccn.ihuaben.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1652119219&t=1009b6ec3ded1149bc12a5282588570d',
             content:'',
-            offset:'',
+            offset:0,
         },
     },
 
@@ -240,6 +240,7 @@ export default {
             let param = {
                 limit:10,
                 offset:payload.offset,
+                type:payload.type,
             }
 
             const response = yield call(getNews, param);
@@ -254,7 +255,8 @@ export default {
                         list:response.data.list,
                         hasNext:hasNext,
                         offset:response.data.offset,
-                        append:true
+                        append:payload.append,
+                        type:payload.type
                     }
                   });
                 
@@ -291,11 +293,11 @@ export default {
                     payload: {
                         list:response.list,
                         hasNext:hasNext,
+                        offset:response.offset,
                         pagination:{
                             current:param.currentPage,
                             pageSize:param.pageSize,
                             total:response.count,
-                            offset:response.offset,
                         },
                         append:append,
                     }

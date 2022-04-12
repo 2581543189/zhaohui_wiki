@@ -53,6 +53,9 @@ func noteAll(c *gin.Context) {
 	if req.Id > 0 {
 		where["note.id = ?"] = req.Id
 	}
+	if req.BookId > 0 {
+		where["note.book = ?"] = req.BookId
+	}
 
 	query := &util.PaginationQuery{
 		Limit:  req.PageSize,

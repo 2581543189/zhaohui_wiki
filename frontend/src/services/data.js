@@ -679,6 +679,17 @@ export const getInterest = globalTryCatch(async function (payload) {
     return response;
 });
 
+
+/** 随机单词 */
+export const getRandomWord = globalTryCatch(async function (payload) {
+    console.log('getRandomWord',payload);
+    let option={
+        method:'POST'
+    }
+    const response = await request(_BASE_PATH + '/api/v1/overview/foreign_word',option);
+    return response;
+});
+
 /**
  * =======================================================================================
  *                                      留言表相关查询
@@ -718,6 +729,7 @@ export const queryMessage = globalTryCatch(async function (payload) {
         value.key = value.id;
         return value;
     });
+    result.offset = response.data.offset
 
     return result;
 });

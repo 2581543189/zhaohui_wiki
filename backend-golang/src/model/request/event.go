@@ -1,8 +1,9 @@
 package request
 
 type EventQueryRequest struct {
-	Offset int  `json:"offset"`
-	Limit  uint `json:"limit"`
+	Offset int    `json:"offset"`
+	Limit  uint   `json:"limit"`
+	Type   string `json:"type"`
 }
 
 func DefaultEventQueryRequest() EventQueryRequest {

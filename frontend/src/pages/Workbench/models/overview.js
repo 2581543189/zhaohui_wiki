@@ -1,4 +1,4 @@
-import {getJitang,getAchievement,getTaskList,getNews,getActivity,getInterest} from '@/services/data';
+import {getJitang,getAchievement,getTaskList,getNews,getActivity,getInterest,getRandomWord} from '@/services/data';
 import {openNotification} from '../../../utils/utils';
 export default {
     namespace: 'workbench_overview',
@@ -10,6 +10,7 @@ export default {
         news:[],
         activitys:[],
         interest:[],
+        foreignWord:[],
     },
 
     effects:{
@@ -79,6 +80,17 @@ export default {
                 openNotification('error',response.message);
             }
         },
+        *getRandomWord({ payload }, { call, put,select }) {
+            const response = yield call(getRandomWord, payload);
+            if(response.error!=1){
+                yield put({
+                    type: 'setRandomWord',
+                    payload: response.data,
+                  });
+            }else{
+                openNotification('error',response.message);
+            }
+        },
 
     },
     reducers:{
@@ -118,6 +130,12 @@ export default {
               interest: action.payload,
             };
         },
+        setRandomWord(state, action) {
+            return {
+              ...state,
+              foreignWord: action.payload,
+            };
+        }
 
     },
    

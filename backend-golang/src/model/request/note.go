@@ -2,6 +2,7 @@ package request
 
 type NoteQueryRequest struct {
 	Id          uint   `json:"id"`
+	BookId      uint   `json:"bookId"`
 	Name        string `json:"name"`
 	CurrentPage uint   `json:"currentPage"`
 	PageSize    uint   `json:"pageSize"`

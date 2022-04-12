@@ -59,7 +59,7 @@ func NewAchievement(count int, icon, start, end string) Achievement {
 		Desc: AchievementDesc{
 			Now:     start + strconv.Itoa(now) + end,
 			Next:    start + strconv.Itoa(total) + end,
-			Current: now,
+			Current: count,
 			Total:   total,
 			Hanzi:   hanzi,
 		},

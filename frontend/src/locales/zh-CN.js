@@ -15,7 +15,7 @@ export default {
   'menu.workbench.apiDocs':'swagger',
   'menu.data': '数据管理',
   'menu.data.user': '用户',
-  'menu.data.skill': '技能',
+  'menu.data.skill': '类目',
   'menu.data.article': '文章',
   'menu.data.book': '书籍',
   'menu.data.notes': '笔记',

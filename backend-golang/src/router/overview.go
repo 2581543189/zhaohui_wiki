@@ -10,6 +10,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"math/rand"
 	"reflect"
+	"sort"
 	"strconv"
 	"sync"
 )
@@ -21,6 +22,7 @@ func initOverViewRoute(Router *gin.RouterGroup) {
 		global.GroupApi.POST("overview/task", getTask)
 		global.GroupApi.POST("overview/interest", getInterest)
 		global.GroupApi.POST("overview/activity", getActivity)
+		global.GroupApi.POST("overview/foreign_word", getForeignWord)
 	}
 
 }
@@ -55,6 +57,13 @@ func getAchievement(c *gin.Context) {
 	bookmark := getCount("select count(id) from bookmark")
 	ans = append(ans, overview.NewAchievement(bookmark, "star-o", "累计收藏", "个网页"))
 
+	// 按照 level 排序
+	sort.Slice(ans, func(i, j int) bool {
+		if ans[i].Level == ans[j].Level {
+			return ans[i].Desc.Current > ans[j].Desc.Current
+		}
+		return ans[i].Level > ans[j].Level
+	})
 	util.JsonData(c, ans)
 }
 
@@ -227,7 +236,7 @@ func randomBySize(size int) int {
 }
 
 // @Tags Overview
-// @Summary 查询兴趣
+// @Summary 随机关键字
 // @Produce  application/json
 // @Success      200  {object}  response.Response
 // @Router /api/v1/overview/interest [post]
@@ -241,7 +250,31 @@ func getInterest(c *gin.Context) {
 }
 
 // @Tags Overview
-// @Summary 查询兴趣
+// @Summary 随机单词
+// @Produce  application/json
+// @Success      200  {object}  response.Response
+// @Router /api/v1/overview/foreign_world [post]
+func getForeignWord(c *gin.Context) {
+	ans := make([]overview.Interest, 0)
+	query := &util.PaginationQuery{
+		Offset: 0,
+		Limit:  100,
+	}
+	list, _, err := (&po.ForeignWord{}).All(query)
+	if err != nil || list == nil || len(*list) == 0 {
+		util.JsonData(c, ans)
+		return
+	} else {
+		for i := range *list {
+			rand := randomBySize(100)
+			ans = append(ans, overview.NewInterest(((*list)[i]).Word, rand%3, rand))
+		}
+	}
+	util.JsonData(c, ans)
+}
+
+// @Tags Overview
+// @Summary 查询活跃度
 // @Produce  application/json
 // @Success      200  {object}  response.Response
 // @Router /api/v1/overview/activity [post]
@@ -270,7 +303,7 @@ func getActivity(c *gin.Context) {
 		ForeignArticle: foreignArticle,
 	})
 	origin = append(origin, overview.ActivityOrigin{
-		Name:           "掌握",
+		Name:           "已完成",
 		Book:           finishedBooks,
 		Note:           note,
 		Article:        article,
@@ -278,7 +311,7 @@ func getActivity(c *gin.Context) {
 		ForeignArticle: foreignArticle,
 	})
 	origin = append(origin, overview.ActivityOrigin{
-		Name:           "未掌握",
+		Name:           "进行中",
 		Book:           totalBooks - finishedBooks,
 		Note:           0,
 		Article:        0,

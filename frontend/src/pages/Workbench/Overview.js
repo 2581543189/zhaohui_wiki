@@ -49,7 +49,10 @@ class Overview extends PureComponent {
         dispatch({
             type:'workbench_overview/getInterest'
         });
-
+        dispatch({
+            type:'workbench_overview/getRandomWord'
+        });
+        
     }
     getIcon(type){
         switch(type) {
@@ -73,7 +76,7 @@ class Overview extends PureComponent {
 
         let a=1;
         let {
-            workbench_overview:{jitang,achievement,taskList,news,activitys,interest},
+            workbench_overview:{jitang,achievement,taskList,news,activitys,interest,foreignWord},
             loading,
         } = this.props;
 
@@ -212,6 +215,17 @@ class Overview extends PureComponent {
                         <Radar hasLegend height={343} data={activitys} />
                     </div>
                     </Card>
+
+                    <Card
+                    title={"随机生词"}
+                    style={{ marginBottom: 24 }}
+                    loading={loading.effects['workbench_overview/getRandomWord']}
+                    bordered={false}
+                    bodyStyle={{ overflow: 'hidden' }}
+                    >
+                    <TagCloud data={foreignWord} height={161} />
+                    </Card>
+
                     <Card
                     title={"兴趣关键字"}
                     loading={loading.effects['workbench_overview/getInterest']}

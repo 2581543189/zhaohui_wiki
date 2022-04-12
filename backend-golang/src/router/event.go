@@ -35,10 +35,15 @@ func eventAll(c *gin.Context) {
 			return
 		}
 	}
+	where := make(map[string]interface{})
+	if len(req.Type) > 0 {
+		where["event.type = ?"] = req.Type
+	}
 	query := &util.PaginationQuery{
 		Limit:  req.Limit,
 		Offset: uint(req.Offset),
 		Order:  "gmt_create desc",
+		Where:  where,
 	}
 	list, _, err := (&po.Event{}).All(query)
 	newOffset := req.Offset

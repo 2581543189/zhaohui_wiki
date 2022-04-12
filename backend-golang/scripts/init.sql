@@ -182,6 +182,7 @@ CREATE TABLE IF NOT EXISTS `foreign_article`
     `name`         varchar(1024) NOT NULL DEFAULT '' COMMENT '名称',
     `desc`         text COMMENT '描述',
     `url`          varchar(1024) NOT NULL DEFAULT '' COMMENT '访问链接',
+    `classification` bigint(128)   NOT NULL DEFAULT '0' COMMENT 'classification 的主键id',
     `new_words`    int(32)       NOT NULL DEFAULT '0' COMMENT '生词数量',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB

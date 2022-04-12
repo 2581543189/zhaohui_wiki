@@ -71,6 +71,7 @@ class News extends Component {
             //设置分页
             payload.offset=offset;
             payload.type=type;
+            payload.append = true
             dispatch({
                 type:'workbench_index/news_fetch',
                 payload:payload
