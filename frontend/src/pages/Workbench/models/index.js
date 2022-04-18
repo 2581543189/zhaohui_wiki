@@ -339,7 +339,7 @@ export default {
             }
         },
         *getMissionOption({ payload }, { call, put,select }) {
-            const formValues = yield select(state => state.data_leetcode.formValues);
+            const formValues = yield select(state => state.workbench_index.mission.formValues);
             const param = {
                 ...formValues,
                 ...payload,
