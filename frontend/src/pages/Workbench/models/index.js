@@ -1,4 +1,4 @@
-import {distinctPlatforms,queryArticle,queryBook,queryBulletin,getNews,queryNote,queryMessage,addMessage,deleteMessage} from '@/services/data';
+import {distinctPlatforms,queryArticle,queryBook,queryBulletin,getNews,queryNote,queryMessage,addMessage,deleteMessage,queryLeetcode,distinctValue} from '@/services/data';
 import {openNotification} from '../../../utils/utils';
 export default {
     namespace: 'workbench_index',
@@ -44,6 +44,10 @@ export default {
                 pageSize:8,
                 total:0,
             },
+            formValues:{
+                type:'LEETCODE'
+            },
+            options:[]
         },
         news:{
             list:[],//列表数据
@@ -209,12 +213,13 @@ export default {
                 currentPage:payload.pagination?payload.pagination.current:1,
                 pageSize:10,
                 sorter:'startDate_descend',
+                ...payload
             }
 
-            const response = yield call(queryBulletin, param);
+            const response = yield call(queryLeetcode, param);
             if(response.error!=1){
                 let hasNext = false;
-                if(response.list.length === 8){
+                if(response.list.length > 0){
                     hasNext=true;
                 }
                 yield put({
@@ -228,6 +233,13 @@ export default {
                             total:response.count
                         },
                         append:append,
+                        formValues:{
+                            name:payload.name,
+                            difficulty:payload.difficulty,
+                            first:payload.first,
+                            second:payload.second,
+                            third:payload.third,
+                        }
                     }
                   });
                 
@@ -326,6 +338,36 @@ export default {
                 openNotification('error',response.message);
             }
         },
+        *getMissionOption({ payload }, { call, put,select }) {
+            const formValues = yield select(state => state.data_leetcode.formValues);
+            const param = {
+                ...formValues,
+                ...payload,
+            }
+            param['type'] = 'LEETCODE'
+            const response = yield call(distinctValue, param);
+            if(response.error!=1){
+                yield put({
+                    type: 'addOptions',
+                    payload:response,
+                });
+                
+            }else{
+                openNotification('error',response.message);
+            }
+        },
+        *updateClassificationType({ payload }, { call, put,select }){
+            yield put({
+                type: 'setFormValues',
+                payload:{
+                    formValues:payload
+                },
+            });
+            yield put({
+                type: 'clearOptions'
+            });
+            
+        }
     },
 
     reducers:{
@@ -400,6 +442,81 @@ export default {
                 }
             }
         },
+        //处理级联select
+        addOptions(state, action){
+            const response = action.payload.body;
+
+            
+            if(typeof(response.first)=='undefined' ||response.first===null || response.first ===""){
+                //无条件
+                let options = [];
+                response.array.map(data=>{
+                    options.unshift({
+                        value: data,
+                        label: data,
+                        isLeaf: false,
+                    })
+                })
+                state.mission.options = options;
+
+            }else{
+                let children=[];
+                const first = response.first;
+
+                if(typeof(response.second)=='undefined' ||response.second===null ||response.second ===""){ 
+                    //根据1 查2
+                    response.array.map(data=>{
+                        children.unshift({
+                            label: data,
+                            value: data,
+                            isLeaf: false,
+                        })
+                    })
+                    state.mission.options.map(data=>{
+                        if(data.value===first){
+                            data.children = children;
+                        }
+                    })
+    
+                }else{
+                    //根据1 2 查3
+                    const second = response.second;
+                    response.array.map(data=>{
+                        children.unshift({
+                            label: data,
+                            value: data,
+                        })
+                    })
+                    state.mission.options.map(data=>{
+                        if(data.value===first){
+                            data.children.map(data2=>{
+                                if(data2.value===second){
+                                    data2.children = children;
+                                }
+                            })
+                        }
+                    })
+                    //state.options[first][second].children = children;
+                }
+            }
+
+            return{
+                ...state,
+            }
+
+        },       
+        setFormValues(state, action){
+            state.formValues=action.payload.formValues;
+            return{
+                ...state,
+            }
+        },
+        clearOptions(state, action){
+            state.mission.options=[];
+            return{
+                ...state,
+            }
+        }
 
     }
 }

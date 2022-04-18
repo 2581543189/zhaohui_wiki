@@ -754,3 +754,153 @@ export const deleteMessage = globalTryCatch(async function (payload) {
     const response = await request(_BASE_PATH + '/message/delete/'+payload,option);
     return response;
 });
+
+/**
+ * =======================================================================================
+ *                                      算法题表相关查询
+ * =======================================================================================
+ */
+
+
+/**查询题目信息 */
+export const queryLeetcode = globalTryCatch(async function (payload) {
+    console.log('queryLeetcode',payload);
+    //分页信息
+    let pagination = {
+        current:1,
+        pageSize:10,
+    }
+    if(payload.currentPage){
+        pagination = {
+        current:payload.currentPage,
+        pageSize:payload.pageSize,
+        }
+    }
+
+    let option={
+        method:'POST',
+    }
+    if(Object.keys(payload).length!=0){   
+        option={
+            method:'POST',
+            body:payload,
+        }
+    }
+    
+    const response = await request(_BASE_PATH + '/api/v1/leetcode',option);
+    let result = {};
+    result.pagination = pagination;
+    result.pagination.total = response.data.count;
+    if(response.code != 0){
+        return result;
+    }
+    result.list = response.data.list.map(function(value,key,arr){
+        value.key = value.id;
+        return value;
+    });
+
+    return result;
+});
+
+/**新增题目信息 */
+export const addLeetcode = globalTryCatch(async function (payload) {
+    console.log('addLeetcode',payload);
+    let option={
+        method:'POST',
+        body:payload,
+    }
+    const response = await request(_BASE_PATH + '/api/v1/leetcode/add',option);
+    return response;
+});
+
+
+/**删除题目信息 */
+export const deleteLeetcode = globalTryCatch(async function (payload) {
+    console.log('deleteLeetcode',payload);
+    let option={
+        method:'POST',
+    }
+    const response = await request(_BASE_PATH + '/api/v1/leetcode/delete/'+payload,option);
+    return response;
+});
+
+/**更新题目 */
+export const updateLeetcode = globalTryCatch(async function (payload) {
+    console.log('updateLeetcode',payload);
+    let option={
+        method:'POST',
+        body:payload
+    }
+    const response = await request(_BASE_PATH + '/api/v1/leetcode/update/'+payload.id,option);
+    return response;
+});
+
+
+/**
+ * =======================================================================================
+ *                                      算法经验表相关查询
+ * =======================================================================================
+ */
+
+
+/**查询刷题经验信息 */
+export const queryLeetcodeExp = globalTryCatch(async function (payload) {
+    console.log('queryLeetcodeExp',payload);
+    //分页信息
+    let pagination = {
+        current:1,
+        pageSize:10,
+    }
+    if(payload.currentPage){
+        pagination = {
+        current:payload.currentPage,
+        pageSize:payload.pageSize,
+        }
+    }
+
+    let option={
+        method:'POST',
+    }
+    if(Object.keys(payload).length!=0){   
+        option={
+            method:'POST',
+            body:payload,
+        }
+    }
+    
+    const response = await request(_BASE_PATH + '/api/v1/leetcodeexp',option);
+    let result = {};
+    result.pagination = pagination;
+    result.pagination.total = response.data.count;
+    if(response.code != 0){
+        return result;
+    }
+    result.list = response.data.list.map(function(value,key,arr){
+        value.key = value.id;
+        return value;
+    });
+
+    return result;
+});
+
+/**新增刷题经验信息 */
+export const addLeetcodeExp = globalTryCatch(async function (payload) {
+    console.log('addLeetcodeExp',payload);
+    let option={
+        method:'POST',
+        body:payload,
+    }
+    const response = await request(_BASE_PATH + '/api/v1/leetcodeexp/add',option);
+    return response;
+});
+
+
+/**删除刷题经验信息 */
+export const deleteLeetcodeExp = globalTryCatch(async function (payload) {
+    console.log('deleteLeetcodeExp',payload);
+    let option={
+        method:'POST',
+    }
+    const response = await request(_BASE_PATH + '/api/v1/leetcodeexp/delete/'+payload,option);
+    return response;
+});

@@ -13,6 +13,8 @@ export const classificationtTypes = ['SKILL','LEETCODE','LEETCODE_EXP','BOOK_MAR
 export const rolesIcon = ['crown', 'smile', 'eye'];
 export const bulletinLevelText = ['普通', '稀有', '史诗','传说','??!!'];
 export const bulletinLevelClass = ['green', 'blue', 'magenta','gold','red'];
+export const leetcodeDifficculties = ['','简单','中等','困难']
+export const leetcodeStatus = ['正常','删除']
 
 //表单验证  必填 字母数字下划线  5-100
 const re1 = new RegExp(/^\w+$/);
@@ -170,6 +172,28 @@ export function dataToOptionsBook(data){
     });
     return options;
 }
+export function dataToOptionsLeetcode(data){
+    if(JSON.stringify(data) == "{}"){
+        data=[];
+    }else{
+        var arr = []
+        for (let i in data) {
+            data[i].key =  data[i].id;
+            arr.push(data[i]); //属性
+        }
+        data=arr;
+    }
+    const options = [];
+    data.map((value)=>{
+        const leetcode= value;
+
+        options.unshift(
+        <Option value={value.id}>
+            <span>{leetcode.name}</span>    
+        </Option>);
+    });
+    return options;
+};
 
 
 

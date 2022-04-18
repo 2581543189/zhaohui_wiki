@@ -28,6 +28,8 @@ func RoutersInit() *gin.Engine {
 	initMessageRoute(RouterGroup)
 	initMettoRoute(RouterGroup)
 	initOverViewRoute(RouterGroup)
+	initLeetcodeRoute(RouterGroup)
+	initLeetcodeExpRoute(RouterGroup)
 
 	global.Logger.Info("router register success")
 	return Router

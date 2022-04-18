@@ -51,7 +51,7 @@ func getAchievement(c *gin.Context) {
 
 	// 生词
 	foreignWord := getCount("select count(id) from foreign_word")
-	ans = append(ans, overview.NewAchievement(foreignWord, "file-text", "累计记录", "个生词"))
+	ans = append(ans, overview.NewAchievement(foreignWord/20, "file-text", "累计记录", " * 20 个生词"))
 
 	// 收藏
 	bookmark := getCount("select count(id) from bookmark")

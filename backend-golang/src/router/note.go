@@ -6,6 +6,7 @@ import (
 	"backend-golang/src/model/po"
 	"backend-golang/src/model/request"
 	"backend-golang/src/model/response"
+	"backend-golang/src/service"
 	"backend-golang/src/util"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
@@ -104,12 +105,16 @@ func noteAdd(c *gin.Context) {
 		return
 	}
 	req.Book = int(book.Id)
-	article := po.NewNote(req)
-	err = article.CreateUserOfRole()
+	note := po.NewNote(req)
+	err = note.CreateUserOfRole()
 	if util.HandleError(c, err) {
 		return
 	}
-	util.JsonData(c, article)
+	service.AddEvent(note)
+	// 更新书籍进度
+	book.Current = note.Current
+	book.Update()
+	util.JsonData(c, note)
 }
 
 // @Tags Note
@@ -118,7 +123,7 @@ func noteAdd(c *gin.Context) {
 // @Success      200  {object}  response.Response
 // @Router /api/v1/note/delete/{id} [post]
 func noteDelete(c *gin.Context) {
-	var mdl po.Article
+	var mdl po.Note
 	id, err := util.ParseParamID(c)
 	if util.HandleError(c, err) {
 		return
@@ -128,6 +133,7 @@ func noteDelete(c *gin.Context) {
 	if util.HandleError(c, err) {
 		return
 	}
+	service.DeleteEvent(mdl)
 	util.JsonData(c, mdl)
 }
 

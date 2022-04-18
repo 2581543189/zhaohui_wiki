@@ -96,7 +96,7 @@ export default {
                 yield put({
                     type: 'setAddBook',
                     payload: {
-                        addBook:response.data.list[0],
+                        addBook:response.list[0],
                     }
                 });
             }else{

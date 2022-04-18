@@ -6,6 +6,7 @@ import (
 	"backend-golang/src/model/po"
 	"backend-golang/src/model/request"
 	"backend-golang/src/model/response"
+	"backend-golang/src/service"
 	"backend-golang/src/util"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
@@ -67,10 +68,11 @@ func messageAdd(c *gin.Context) {
 			return
 		}
 	}
-	user := po.NewMessage(req)
-	err := user.CreateUserOfRole()
+	msg := po.NewMessage(req)
+	err := msg.CreateUserOfRole()
 	if util.HandleError(c, err) {
 		return
 	}
-	util.JsonData(c, user)
+	service.AddEvent(msg)
+	util.JsonData(c, msg)
 }

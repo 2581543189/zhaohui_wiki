@@ -42,13 +42,19 @@ export default [
             routes: [
               {
                 path: '/website/workbench/index',
-                redirt:'website/workbench/index/articles'
+                redirt:'website/workbench/index/news'
               },
               {
-                path: '/website/workbench/index/articles',
-                name: 'articles',
-                component: './Workbench/Article',
-                icon: 'form',
+                path: '/website/workbench/index/news',
+                name: 'news',
+                component: './Workbench/News',
+                icon: 'fire',
+              },
+              {
+                path: '/website/workbench/index/missions',
+                name: 'missions',
+                component: './Workbench/Mission',
+                icon: 'bulb',
               },
               {
                 path: '/website/workbench/index/books',
@@ -56,17 +62,11 @@ export default [
                 component: './Workbench/Book',
                 icon: 'read',
               },
-              // {
-              //   path: '/website/workbench/index/missions',
-              //   name: 'missions',
-              //   component: './Workbench/Mission',
-              //   icon: 'bulb',
-              // },
               {
-                path: '/website/workbench/index/news',
-                name: 'news',
-                component: './Workbench/News',
-                icon: 'fire',
+                path: '/website/workbench/index/articles',
+                name: 'articles',
+                component: './Workbench/Article',
+                icon: 'form',
               },
               {
                 path: '/website/workbench/index/messages',
@@ -121,6 +121,17 @@ export default [
             name: 'notes',
             component: './Data/Notes',
             icon: 'tag',
+          },
+          {
+            path: '/website/data/leetcode',
+            name: 'leetcode',
+            component: './Data/Leetcode',
+            icon: 'calculator',
+          },{
+            path: '/website/data/leetcodeExp',
+            name: 'leetcodeExp',
+            component: './Data/LeetcodeExp',
+            icon: 'bulb',
           },
           // {
           //   path: '/website/data/bulletin',

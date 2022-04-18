@@ -32,20 +32,20 @@ class SearchList extends Component {
   render() {
     const tabList = [
       {
-        key: 'articles',
-        tab: '文章',
+        key: 'news',
+        tab: '动态',
+      },
+      {
+        key: 'missions',
+        tab: '刷题',
       },
       {
         key: 'books',
         tab: '书籍',
       },
-      // {
-      //   key: 'missions',
-      //   tab: '任务',
-      // },
       {
-        key: 'news',
-        tab: '动态',
+        key: 'articles',
+        tab: '文章',
       },
       {
         key: 'messages',

@@ -6,6 +6,7 @@ import (
 	"backend-golang/src/model/po"
 	"backend-golang/src/model/request"
 	"backend-golang/src/model/response"
+	"backend-golang/src/service"
 	"backend-golang/src/util"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
@@ -101,12 +102,13 @@ func bookAdd(c *gin.Context) {
 		response.FailWithMessage("未查询到类型"+util.JsonNoException(classifyKey), c)
 	}
 	req.Classification = int(classify.Id)
-	article := po.NewBook(req)
-	err = article.CreateUserOfRole()
+	book := po.NewBook(req)
+	err = book.CreateUserOfRole()
 	if util.HandleError(c, err) {
 		return
 	}
-	util.JsonData(c, article)
+	service.AddEvent(book)
+	util.JsonData(c, book)
 }
 
 // @Tags Book
@@ -125,6 +127,7 @@ func bookDelete(c *gin.Context) {
 	if util.HandleError(c, err) {
 		return
 	}
+	service.DeleteEvent(mdl)
 	util.JsonData(c, mdl)
 }
 
