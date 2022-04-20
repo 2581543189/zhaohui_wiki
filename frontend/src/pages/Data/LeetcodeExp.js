@@ -345,7 +345,7 @@ class LeetcodeExp extends Component {
               <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
                 <Col md={8} sm={24}>
                     <FormItem label="题目">
-                    {getFieldDecorator('leetcode')(
+                    {getFieldDecorator('LeetcodeId')(
                         <Select
                         showSearch
                         placeholder="请输入关键字"

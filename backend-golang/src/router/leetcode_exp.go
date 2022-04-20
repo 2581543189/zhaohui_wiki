@@ -41,10 +41,10 @@ func leetcodeExpAll(c *gin.Context) {
 	order := util.ParseSorter("leetcode_experience", req.Sorter)
 	where := make(map[string]interface{})
 	if req.Id > 0 {
-		where["leetcode.id = ?"] = req.Id
+		where["leetcode_experience.id = ?"] = req.Id
 	}
 	if req.LeetcodeId > 0 {
-		where["leetcode.leetcode_id = ?"] = req.LeetcodeId
+		where["leetcode_experience.leetcode_id = ?"] = req.LeetcodeId
 	}
 
 	if len(req.Type) > 0 && len(req.First) > 0 && len(req.Second) > 0 && len(req.Third) > 0 {
@@ -54,7 +54,7 @@ func leetcodeExpAll(c *gin.Context) {
 			response.FailWithMessage("未查询到类型"+util.JsonNoException(classifyKey), c)
 			return
 		}
-		where["classification = ?"] = classify.Id
+		where["leetcode_experience.classification = ?"] = classify.Id
 	}
 
 	query := &util.PaginationQuery{

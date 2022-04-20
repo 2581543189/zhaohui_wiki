@@ -1,4 +1,4 @@
-import {distinctPlatforms,queryArticle,queryBook,queryBulletin,getNews,queryNote,queryMessage,addMessage,deleteMessage,queryLeetcode,distinctValue} from '@/services/data';
+import {distinctPlatforms,queryArticle,queryBook,queryBulletin,getNews,queryNote,queryMessage,addMessage,deleteMessage,queryLeetcode,distinctValue,queryLeetcodeExp} from '@/services/data';
 import {openNotification} from '../../../utils/utils';
 export default {
     namespace: 'workbench_index',
@@ -47,7 +47,9 @@ export default {
             formValues:{
                 type:'LEETCODE'
             },
-            options:[]
+            options:[],
+            showNoteList:false,//是否展示笔记列表页
+            noteList:[],//笔记列表
         },
         news:{
             list:[],//列表数据
@@ -189,6 +191,26 @@ export default {
             if(response.error!=1){
                 yield put({
                     type: 'changeStateBook',
+                    payload: {
+                        noteList:response.list,
+                    }
+                });
+                
+            }else{
+                openNotification('error',response.message);
+            }
+        },
+        //获取笔记数据
+        *leetcode_note_fetch({ payload }, { call, put,select }) {
+            //处理入参
+            if(typeof(payload)=='undefined'){
+                payload={};
+            }
+
+            const response = yield call(queryLeetcodeExp, payload);
+            if(response.error!=1){
+                yield put({
+                    type: 'changeStateMission',
                     payload: {
                         noteList:response.list,
                     }

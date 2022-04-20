@@ -24,6 +24,7 @@ const {Option} = Select;
 const FormItem = Form.Item;
 import {bulletinLevelText,bulletinLevelClass,leetcodeDifficculties,leetcodeStatus} from '../../constant/DataConstant';
 import styles from './Book.less';
+import moment from'moment';
 const formItemLayout = {
     wrapperCol: {
       xs: { span: 24 },
@@ -32,6 +33,61 @@ const formItemLayout = {
     },
 };
 
+
+
+/**
+ * 笔记列表展示
+ */
+ class NoteList extends Component {
+
+    constructor(props) {
+        super(props);
+        this.changeShowNoteList=this.props.changeShowNoteList;
+      }
+
+    render() {
+    
+        const {showNoteList,noteList,loading} = this.props;
+        noteList.sort(function(a, b){return a.index - b.index}); 
+        return (
+          <Modal
+            destroyOnClose
+            title="笔记列表"
+            visible={showNoteList}
+            footer={null}
+            closable={true}
+            centered
+            onCancel={() => this.changeShowNoteList(false)}
+            width={900}
+          >
+          {
+              noteList.length>0?
+              <List>
+                  {noteList.map((item,index)=>(
+                      <List.Item >
+                        <Row gutter={24} style={{width:'200%'}}>
+                            <Col md={1} sm={1}>
+                                {item.index}
+                            </Col>
+                            <Col md={7} sm={7}>
+                                {moment(item.gmt_create).format('YYYY-MM-DD HH:mm:ss')}
+                            </Col>
+                            <Col md={16} sm={16}>
+                            <Tag>{item.skill.first}</Tag><Tag>{item.skill.second}</Tag>{item.desc}
+                            </Col>
+                        </Row>   
+                      </List.Item>
+                  ))}
+              </List>
+              :<h1>没数据</h1>
+
+          }
+
+          </Modal>
+        );
+    }
+
+}
 
 @Form.create({})
 @connect(({workbench_index,loading})=>({
@@ -288,6 +344,35 @@ class Mission extends Component {
           type: 'data_leetcode/getOption',
         });
       }
+    //展示笔记
+    changeShowNoteList(state,item){
+
+
+        const { dispatch } = this.props;
+
+        if(item){
+            // if(item.current===0){
+            //     //提示没有数据
+            //     message.error('还没有开始阅读《'+item.name+'》');
+            //     return;
+            // }
+            if(state){
+                dispatch({
+                    type:'workbench_index/leetcode_note_fetch',
+                    payload:{
+                        leetcodeId:item.id,
+                    }
+                });
+            }
+        }
+        dispatch({
+            type:'workbench_index/changeStateMission',
+            payload:{
+                showNoteList:!!state,
+            }
+        });
+
+    }
     
     render(){
         let {
@@ -318,6 +403,14 @@ class Mission extends Component {
           </div>
         ) : null;
 
+        const {showNoteList,noteList} = mission;
+        const popParam={
+            showNoteList:showNoteList,
+            noteList:noteList,
+            changeShowNoteList:this.changeShowNoteList,
+            dispatch:this.props.dispatch,
+        }
+
         return(
             <Fragment>
                 {/**搜索框 */}
@@ -345,15 +438,21 @@ class Mission extends Component {
                                 <a href={item.url} target="_blank"><Icon type="rocket" /></a>
                             </Tooltip>,
                             <Tooltip title="查看笔记">
-                                <a href={item.url} target="_blank"><Icon type="eye" /></a>
+                                <a onClick={()=>{this.changeShowNoteList(true,item)}}><Icon type="eye" /></a>
                             </Tooltip>
                             ]}
                         >
-                            <Tag color={bulletinLevelClass[item.difficulty]}>{leetcodeDifficculties[item.difficulty]}</Tag>{item.name}
+                            <Tag color={bulletinLevelClass[item.difficulty]}>{leetcodeDifficculties[item.difficulty]}</Tag
+                            ><Tag>{item.skill.first}</Tag>
+                            <Tag>{item.skill.second}</Tag>
+                            <div></div>
+                            {item.name}
+                            
                         </Card>
                         </List.Item>
                     )}
                     />
+                <NoteList {...popParam}></NoteList>
 
             </Fragment>
         )
