@@ -168,6 +168,17 @@ class LeetcodeExp extends Component {
             dataIndex: 'desc',
             sorter: true,
             align:'center',
+            render(val) {
+                if(val.length >=20){
+                    let short = val.substr(0,20);
+                    short+='...';
+                    return  <Tooltip title={val}><span>{short}</span></Tooltip>
+
+                }else{
+                    return <span>{val}</span>
+                }
+               
+            },
         },
         ,
         {
