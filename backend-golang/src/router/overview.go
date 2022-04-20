@@ -172,11 +172,11 @@ func leetcodeTask() overview.Task {
 		query := &util.PaginationQuery{}
 		list, _, err := (&leetcodeDb).All(query)
 		if err != nil || list == nil || len(*list) == 0 {
-			ans = overview.NewTask(2, "算法刷题", strconv.Itoa(leetcode)+"道题目还可以再复习一下，加油！")
+			ans = overview.NewTask(2, "算法刷题", strconv.Itoa(len(*list))+"道题目还可以再复习一下，加油！")
 		} else {
 			rand := randomBySize(len(*list))
 			randomLeetCode := (*list)[rand]
-			desc := "「" + randomLeetCode.Name + "」等" + strconv.Itoa(leetcode) + "道题目还可以再复习一下，加油！"
+			desc := "「" + randomLeetCode.Name + "」等" + strconv.Itoa(len(*list)) + "道题目还可以再复习一下，加油！"
 			ans = overview.NewTask(2, "算法刷题", desc)
 		}
 	} else {
