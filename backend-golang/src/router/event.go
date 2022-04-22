@@ -42,7 +42,7 @@ func eventAll(c *gin.Context) {
 	query := &util.PaginationQuery{
 		Limit:  req.Limit,
 		Offset: uint(req.Offset),
-		Order:  "gmt_create desc",
+		Order:  "`gmt_create` desc, `type` desc",
 		Where:  where,
 	}
 	list, _, err := (&po.Event{}).All(query)

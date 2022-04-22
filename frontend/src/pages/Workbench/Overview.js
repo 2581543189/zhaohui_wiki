@@ -88,6 +88,9 @@ class Overview extends PureComponent {
             return x;
         });
         ket_index = 0;
+        if (typeof(news) == "undefined"){
+            news = []
+        }
         news = news.map((x)=>{
             ket_index++;
             x.key = ket_index;
